@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hover_hints",
+  "version": "${version}",
+  "name": "Hover Hints",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/hover_hints/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.kofllee.hoverhints.client.HoverHintClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
