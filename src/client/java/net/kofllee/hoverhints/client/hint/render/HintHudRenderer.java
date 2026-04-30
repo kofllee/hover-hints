@@ -30,6 +30,10 @@ public final class HintHudRenderer {
             return;
         }
 
+        if(client.currentScreen != null) {
+            return;
+        }
+
         if(client.crosshairTarget == null) {
             return;
         }

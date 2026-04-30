@@ -44,6 +44,6 @@ public final class FuelHintProvider implements HintProvider {
 
         int seconds = burnTicks / 20;
 
-        return Optional.of(new HintResult(Text.literal("Burn time: " + seconds + "s").styled(style -> style.withColor(Formatting.GOLD)), Formatting.GOLD.getColorValue()));
+        return Optional.of(new HintResult(Text.literal("Burn time: " + seconds + "s").styled(style -> style.withColor(Formatting.GOLD))));
     }
 }
