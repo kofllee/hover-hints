@@ -3,10 +3,10 @@ package net.kofllee.hoverhints.client.hint.render;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.kofllee.hoverhints.client.config.HintRenderConfig;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
+import net.kofllee.hoverhints.client.hint.HintActivationController;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintManager;
 import net.kofllee.hoverhints.client.hint.HintResult;
-import net.kofllee.hoverhints.client.hint.input.HintKeybinds;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipBackgroundRenderer;
@@ -41,9 +41,7 @@ public final class HintHudRenderer {
             return;
         }
 
-        long windowHandle = client.getWindow().getHandle();
-
-        if(!HintKeybinds.isHintModeActive(windowHandle)) {
+        if(!HintActivationController.shouldShowHints()) {
             return;
         }
 

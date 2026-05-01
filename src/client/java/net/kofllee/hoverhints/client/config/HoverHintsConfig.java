@@ -6,6 +6,8 @@ import java.util.Map;
 public final class HoverHintsConfig {
     public boolean enabled = true;
 
+    public HintActivationMode mode = HintActivationMode.HOLD_KEY;
+
     public HintRenderConfig renderConfig = new HintRenderConfig();
 
     public Map<String, ProviderConfig> providers = new HashMap<>();

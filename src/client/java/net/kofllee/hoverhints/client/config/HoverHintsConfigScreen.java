@@ -31,9 +31,18 @@ public final class HoverHintsConfigScreen {
                                 )
                                 .setDefaultValue(true)
                                 .setSaveConsumer(value -> config.enabled = value)
+                                .build(),
+
+                        entryBuilder.startEnumSelector(
+                                        Text.literal("Activation Mode"),
+                                        HintActivationMode.class,
+                                        config.mode
+                                )
+                                .setDefaultValue(HintActivationMode.HOLD_KEY)
+                                .setSaveConsumer(value -> config.mode = value)
                                 .build()
-                )).build()
-        );
+                )
+        ).build());
 
         settings.addEntry(
                 entryBuilder.startSubCategory(Text.literal("Rendering"), List.of(
@@ -43,9 +52,7 @@ public final class HoverHintsConfigScreen {
                                         config.renderConfig.anchor
                                 )
                                 .setDefaultValue(HintAnchor.BELOW_CROSSHAIR)
-                                .setSaveConsumer(value -> {
-                                    config.renderConfig.anchor = value;
-                                })
+                                .setSaveConsumer(value -> config.renderConfig.anchor = value)
                                 .build(),
 
                         entryBuilder.startIntField(

@@ -11,7 +11,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "net.kofllee.hoverhints.client.HoverHintClient"
+      "net.kofllee.hoverhints.client.HoverHintsClient"
     ],
     "modmenu": [
       "net.kofllee.hoverhints.client.config.HoverHintsModMenuIntegration"
