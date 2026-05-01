@@ -1,14 +1,17 @@
 package net.kofllee.hoverhints.client.hint.render;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.kofllee.hoverhints.client.HoverHintClient;
+import net.kofllee.hoverhints.client.config.HintRenderConfig;
+import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintManager;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.hint.input.HintKeybinds;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.tooltip.TooltipBackgroundRenderer;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.util.math.Vec2f;
 
 import java.util.Optional;
 
@@ -60,15 +63,52 @@ public final class HintHudRenderer {
     }
 
     private static void drawHint(DrawContext drawContext, MinecraftClient client, HintResult hintResult) {
+        HintRenderConfig config = HoverHintsConfigManager.getConfig().renderConfig;
+
+        int tooltipPadding = 4;
+
+        int textWidth = client.textRenderer.getWidth(hintResult.text());
+        int textHeight = client.textRenderer.fontHeight;
+
+        int hintWidth = textWidth + tooltipPadding * 2;
+        int hintHeight = textHeight + tooltipPadding * 2;
+
         int screenWidth = client.getWindow().getScaledWidth();
         int screenHeight = client.getWindow().getScaledHeight();
 
-        int tooltipWidth = client.textRenderer.getWidth(hintResult.text()) + 6;
-        int tooltipHeight = client.textRenderer.fontHeight + 4;
+        Vec2f position = HintAnchorResolver.resolveAnchor(
+                config.anchor,
+                screenWidth,
+                screenHeight,
+                hintWidth,
+                hintHeight
+        );
 
-        int x = (screenWidth - tooltipWidth) / 2;
-        int y = screenHeight / 2 + tooltipHeight + 16;
+        int x = (int) position.x + config.anchor.defaultOffsetX + config.offsetX + tooltipPadding;
+        int y = (int) position.y + config.anchor.defaultOffsetY + config.offsetY + tooltipPadding;
 
-        drawContext.drawTooltip(client.textRenderer, hintResult.text(), x, y);
+        drawContext.getMatrices().push();
+
+        TooltipBackgroundRenderer.render(
+                drawContext,
+                x,
+                y,
+                textWidth,
+                textHeight,
+                400
+        );
+
+        drawContext.getMatrices().translate(0.0F, 0.0F, 400.0F);
+
+        drawContext.drawText(
+                client.textRenderer,
+                hintResult.text(),
+                x,
+                y,
+                0xFFFFFFFF,
+                false
+        );
+
+        drawContext.getMatrices().pop();
     }
 }

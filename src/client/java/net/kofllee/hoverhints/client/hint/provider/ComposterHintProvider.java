@@ -12,6 +12,10 @@ import net.minecraft.util.hit.BlockHitResult;
 import java.util.Optional;
 
 public final class ComposterHintProvider implements HintProvider {
+    @Override
+    public String id() {
+        return "composter";
+    }
 
     @Override
     public Optional<HintResult> getHint(HintContext hintContext) {

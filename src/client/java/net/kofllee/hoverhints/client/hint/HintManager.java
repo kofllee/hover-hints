@@ -1,5 +1,7 @@
 package net.kofllee.hoverhints.client.hint;
 
+import net.kofllee.hoverhints.client.config.HoverHintsConfig;
+import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.provider.ComposterHintProvider;
 import net.kofllee.hoverhints.client.hint.provider.FuelHintProvider;
 
@@ -14,7 +16,17 @@ public final class HintManager {
     );
 
     public Optional<HintResult> resolve(HintContext hintContext) {
+        HoverHintsConfig config = HoverHintsConfigManager.getConfig();
+
+        if(!config.enabled) {
+            return Optional.empty();
+        }
+
         for(HintProvider hintProvider : hintProviders) {
+            if(!config.provider(hintProvider.id()).enabled) {
+                continue;
+            }
+
             Optional<HintResult> hintResult = hintProvider.getHint(hintContext);
 
             if(hintResult.isPresent()) {

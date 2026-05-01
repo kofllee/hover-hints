@@ -12,11 +12,18 @@
   "entrypoints": {
     "client": [
       "net.kofllee.hoverhints.client.HoverHintClient"
+    ],
+    "modmenu": [
+      "net.kofllee.hoverhints.client.config.HoverHintsModMenuIntegration"
     ]
   },
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": "*",
+    "cloth-config": "*"
   }
 }

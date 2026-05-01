@@ -5,7 +5,6 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
@@ -17,13 +16,16 @@ import java.util.Optional;
 
 public final class FuelHintProvider implements HintProvider {
 
+    public String id() {
+        return "fuel";
+    }
+
     @Override
     public Optional<HintResult> getHint(HintContext hintContext) {
         if(!(hintContext.hitResult() instanceof BlockHitResult blockHitResult)) {
             return Optional.empty();
         }
 
-        BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
         BlockEntity blockEntity = hintContext.world().getBlockEntity(blockHitResult.getBlockPos());
 
         if(!(blockEntity instanceof AbstractFurnaceBlockEntity)) {
