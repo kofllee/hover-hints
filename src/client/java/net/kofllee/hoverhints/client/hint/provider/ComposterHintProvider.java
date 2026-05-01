@@ -1,6 +1,7 @@
 package net.kofllee.hoverhints.client.hint.provider;
 
 import net.kofllee.hoverhints.client.hint.HintContext;
+import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.minecraft.block.BlockState;
@@ -43,7 +44,7 @@ public final class ComposterHintProvider implements HintProvider {
 
         int percent = Math.round(chance * 100);
 
-        return Optional.of(new HintResult(Text.literal("Compost chance: " + percent + "%").styled(style -> style.withColor(getColor(percent)))));
+        return Optional.of(new HintResult(HintIcons.GROWTH, Text.literal("Compost chance: " + percent + "%").styled(style -> style.withColor(getColor(percent)))));
     }
 
     private int getColor(int percent) {

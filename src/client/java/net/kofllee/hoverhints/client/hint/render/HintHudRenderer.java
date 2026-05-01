@@ -19,6 +19,14 @@ public final class HintHudRenderer {
 
     private static final HintManager HINT_MANAGER = new HintManager();
 
+    private static final int TOOLTIP_PADDING = 4;
+
+    private static final int ICON_SIZE = 9;
+    private static final int ICON_GAP = 4;
+
+    private static final int ICON_OFFSET_X = 1;
+    private static final int ICON_OFFSET_Y = 0;
+
     private HintHudRenderer(){}
 
     public static void register(){
@@ -63,13 +71,18 @@ public final class HintHudRenderer {
     private static void drawHint(DrawContext drawContext, MinecraftClient client, HintResult hintResult) {
         HintRenderConfig config = HoverHintsConfigManager.getConfig().renderConfig;
 
-        int tooltipPadding = 4;
+        boolean hasIcon = hintResult.icon() != null;
 
         int textWidth = client.textRenderer.getWidth(hintResult.text());
         int textHeight = client.textRenderer.fontHeight;
 
-        int hintWidth = textWidth + tooltipPadding * 2;
-        int hintHeight = textHeight + tooltipPadding * 2;
+        int iconSpace = hasIcon ? ICON_SIZE + ICON_GAP : 0;
+
+        int contentWidth = iconSpace + textWidth;
+        int contentHeight = textHeight;
+
+        int hintWidth = contentWidth + TOOLTIP_PADDING * 2;
+        int hintHeight = contentHeight + TOOLTIP_PADDING * 2;
 
         int screenWidth = client.getWindow().getScaledWidth();
         int screenHeight = client.getWindow().getScaledHeight();
@@ -83,29 +96,50 @@ public final class HintHudRenderer {
                 hintHeight
         );
 
-        int x = (int) position.x + config.offsetX + tooltipPadding;
-        int y = (int) position.y + config.offsetY + tooltipPadding;
+        int contentX = (int) position.x + config.offsetX + TOOLTIP_PADDING;
+        int contentY = (int) position.y + config.offsetY + TOOLTIP_PADDING;
 
         drawContext.getMatrices().push();
 
         TooltipBackgroundRenderer.render(
                 drawContext,
-                x,
-                y,
-                textWidth,
-                textHeight,
+                contentX,
+                contentY,
+                contentWidth,
+                contentHeight,
                 400
         );
 
         drawContext.getMatrices().translate(0.0F, 0.0F, 400.0F);
 
+        int textX = contentX;
+
+        if(hasIcon) {
+            int iconX = contentX + ICON_OFFSET_X;
+            int iconY = contentY + ICON_OFFSET_Y;
+
+            drawContext.drawTexture(
+                    hintResult.icon(),
+                    iconX,
+                    iconY,
+                    0,
+                    0,
+                    ICON_SIZE,
+                    ICON_SIZE,
+                    ICON_SIZE,
+                    ICON_SIZE
+            );
+
+            textX += iconSpace;
+        }
+
         drawContext.drawText(
                 client.textRenderer,
                 hintResult.text(),
-                x,
-                y,
+                textX,
+                contentY,
                 0xFFFFFFFF,
-                false
+                true
         );
 
         drawContext.getMatrices().pop();

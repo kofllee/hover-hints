@@ -2,13 +2,13 @@ package net.kofllee.hoverhints.client.hint.provider;
 
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.kofllee.hoverhints.client.hint.HintContext;
+import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
 
 import java.util.Optional;
@@ -45,6 +45,6 @@ public final class FuelHintProvider implements HintProvider {
 
         int seconds = burnTicks / 20;
 
-        return Optional.of(new HintResult(Text.literal("Burn time: " + seconds + "s").styled(style -> style.withColor(Formatting.GOLD))));
+        return Optional.of(new HintResult(HintIcons.FIRE, Text.literal("Burn time: " + seconds + "s").styled(style -> style.withColor(0xa11250))));
     }
 }
