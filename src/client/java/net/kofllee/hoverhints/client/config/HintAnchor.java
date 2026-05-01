@@ -1,16 +1,16 @@
 package net.kofllee.hoverhints.client.config;
 
 public enum HintAnchor{
-    BELOW_CROSSHAIR(0, 16),
-    ABOVE_CROSSHAIR(0, -16),
+    BELOW_CROSSHAIR(0, 4),
+    ABOVE_CROSSHAIR(0, -4),
 
-    SCREEN_TOP_LEFT(4, 4),
-    SCREEN_TOP_CENTER(0, 4),
-    SCREEN_TOP_RIGHT(-4, 4),
+    SCREEN_TOP_LEFT(2, 2),
+    SCREEN_TOP_CENTER(0, 2),
+    SCREEN_TOP_RIGHT(-2, 2),
 
-    SCREEN_CENTER_LEFT(4, 0),
+    SCREEN_CENTER_LEFT(2, 0),
     SCREEN_CENTER(0, 0),
-    SCREEN_CENTER_RIGHT(-4, 0);
+    SCREEN_CENTER_RIGHT(-2, 0);
 
     public final int defaultOffsetX;
     public final int defaultOffsetY;

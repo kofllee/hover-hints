@@ -76,14 +76,15 @@ public final class HintHudRenderer {
 
         Vec2f position = HintAnchorResolver.resolveAnchor(
                 config.anchor,
+                client,
                 screenWidth,
                 screenHeight,
                 hintWidth,
                 hintHeight
         );
 
-        int x = (int) position.x + config.anchor.defaultOffsetX + config.offsetX + tooltipPadding;
-        int y = (int) position.y + config.anchor.defaultOffsetY + config.offsetY + tooltipPadding;
+        int x = (int) position.x + config.offsetX + tooltipPadding;
+        int y = (int) position.y + config.offsetY + tooltipPadding;
 
         drawContext.getMatrices().push();
 
