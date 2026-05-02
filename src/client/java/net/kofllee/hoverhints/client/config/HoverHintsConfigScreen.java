@@ -77,7 +77,8 @@ public final class HoverHintsConfigScreen {
         settings.addEntry(
                 entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.hints"), List.of(
                         providerToggle(entryBuilder, config, "composter", Text.translatable("config.hover_hints.provider.composter")),
-                        providerToggle(entryBuilder, config, "fuel", Text.translatable("config.hover_hints.provider.fuel"))
+                        providerToggle(entryBuilder, config, "fuel", Text.translatable("config.hover_hints.provider.fuel")),
+                        providerToggle(entryBuilder, config, "grindstone", Text.translatable("config.hover_hints.provider.grindstone"))
                 )).setExpanded(true).build()
         );
 

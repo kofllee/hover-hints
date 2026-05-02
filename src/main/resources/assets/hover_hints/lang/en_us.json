@@ -4,6 +4,7 @@
 
   "hint.hover_hints.fuel_burn_time": "Burn time: %s",
   "hint.hover_hints.compost_chance": "Compost chance: %s%%",
+  "hint.hover_hints.grindstone_xp": "~%s–%s XP",
 
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
@@ -22,5 +23,6 @@
   "config.hover_hints.offset_y": "Offset Y",
   "config.hover_hints.section.hints": "Hints",
   "config.hover_hints.provider.composter": "Composting",
-  "config.hover_hints.provider.fuel": "Fuel Burn Time"
+  "config.hover_hints.provider.fuel": "Fuel Burn Time",
+  "config.hover_hints.provider.grindstone": "Grindstone XP"
 }

@@ -4,6 +4,7 @@ import net.kofllee.hoverhints.client.config.HoverHintsConfig;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.provider.ComposterHintProvider;
 import net.kofllee.hoverhints.client.hint.provider.FuelHintProvider;
+import net.kofllee.hoverhints.client.hint.provider.GrindStoneProvider;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,8 @@ public final class HintManager {
 
     private final List<HintProvider> hintProviders = List.of(
             new ComposterHintProvider(),
-            new FuelHintProvider()
+            new FuelHintProvider(),
+            new GrindStoneProvider()
     );
 
     public Optional<HintResult> resolve(HintContext hintContext) {
