@@ -6,6 +6,18 @@
   "hint.hover_hints.compost_chance": "Compost chance: %s%%",
   "hint.hover_hints.grindstone_xp": "~%s–%s XP",
 
+  "hint.hover_hints.bone_meal_chance": "Grow chance: %s%%",
+  "hint.hover_hints.bone_meal_stage_chance": "Grow chance: %s%% (+%s stages)",
+  "hint.hover_hints.bone_meal_stages": "Growth: +%s–%s stages",
+  "hint.hover_hints.bone_meal_stage_one_value": "Growth: only +%s stages",
+  "hint.hover_hints.bone_meal_blocks": "Growth: +%s–%s blocks",
+  "hint.hover_hints.bone_meal_unbounded_blocks": "Growth: %s+ blocks",
+  "hint.hover_hints.bone_meal_blocks_one_value": "Growth: +%s blocks",
+  "hint.hover_hints.bone_meal_generic": "Bone meal works here",
+  "hint.hover_hints.bone_meal_drops_item": "Drops item",
+  "hint.hover_hints.bone_meal_taller": "Grows taller",
+  "hint.hover_hints.bone_meal_spread": "Spreads nearby",
+
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
@@ -24,5 +36,6 @@
   "config.hover_hints.section.hints": "Hints",
   "config.hover_hints.provider.composter": "Composting",
   "config.hover_hints.provider.fuel": "Fuel Burn Time",
-  "config.hover_hints.provider.grindstone": "Grindstone XP"
+  "config.hover_hints.provider.grindstone": "Grindstone XP",
+  "config.hover_hints.provider.bone_meal": "Bone Meal Chance"
 }

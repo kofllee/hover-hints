@@ -1,0 +1,101 @@
+package net.kofllee.hoverhints.client.hint.provider;
+
+import net.kofllee.hoverhints.client.hint.HintContext;
+import net.kofllee.hoverhints.client.hint.HintIcons;
+import net.kofllee.hoverhints.client.hint.HintProvider;
+import net.kofllee.hoverhints.client.hint.HintResult;
+import net.kofllee.hoverhints.client.hint.resolver.BoneMealInfo;
+import net.kofllee.hoverhints.client.hint.resolver.BoneMealResolver;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Fertilizable;
+import net.minecraft.item.Items;
+import net.minecraft.text.Text;
+import net.minecraft.util.hit.BlockHitResult;
+
+import java.util.Optional;
+
+public class BoneMealHintProvider implements HintProvider {
+    @Override
+    public String id() {
+        return "bone_meal";
+    }
+
+    @Override
+    public Optional<HintResult> getHint(HintContext hintContext) {
+        if (!(hintContext.hitResult() instanceof BlockHitResult blockHitResult)) {
+            return Optional.empty();
+        }
+
+        if (!hintContext.heldStack().isOf(Items.BONE_MEAL)) {
+            return Optional.empty();
+        }
+
+        BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
+
+        if (!(state.getBlock() instanceof Fertilizable fertilizable)) {
+            return Optional.empty();
+        }
+
+        if(!fertilizable.isFertilizable(hintContext.world(), blockHitResult.getBlockPos(), state)) {
+            return Optional.empty();
+        }
+
+        Optional<BoneMealInfo> info = BoneMealResolver.resolve(state);
+
+        if(info.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Text text = toText(info.get());
+
+        return Optional.of(new HintResult(HintIcons.GROWTH, text.copy().styled(style -> style.withColor(0x55FF55))));
+    }
+
+    private Text toText(BoneMealInfo info) {
+        return switch (info.type()) {
+            case GENERIC -> Text.translatable(
+                    "hint.hover_hints.bone_meal_generic",
+                    info.min(), info.max(), info.chance()
+            );
+            case STAGES -> info.min() == info.max()
+                    ? Text.translatable(
+                    "hint.hover_hints.bone_meal_stage_one_value",
+                    info.min())
+                    : Text.translatable(
+                    "hint.hover_hints.bone_meal_stages",
+                    info.min(), info.max()
+            );
+
+            case BLOCKS -> info.min() == info.max()
+                    ? Text.translatable(
+                    "hint.hover_hints.bone_meal_blocks_one_value",
+                    info.min())
+                    : Text.translatable(
+                    "hint.hover_hints.bone_meal_blocks",
+                    info.min(), info.max()
+            );
+
+            case UNBOUNDED_BLOCKS -> Text.translatable(
+                    "hint.hover_hints.bone_meal_unbounded_blocks",
+                    info.min()
+            );
+
+            case CHANCE -> Text.translatable(
+                    "hint.hover_hints.bone_meal_chance",
+                    info.chance()
+            );
+
+            case CHANCE_STAGE -> Text.translatable(
+                    "hint.hover_hints.bone_meal_stage_chance",
+                    info.chance(),
+                    info.min()
+            );
+
+            case DROPS_ITEM -> Text.translatable("hint.hover_hints.bone_meal_drops_item");
+
+            case TALLER -> Text.translatable("hint.hover_hints.bone_meal_taller");
+
+            case SPREAD -> Text.translatable("hint.hover_hints.bone_meal_spread");
+        };
+    }
+}
