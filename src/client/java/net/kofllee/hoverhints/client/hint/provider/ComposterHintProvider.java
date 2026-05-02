@@ -44,7 +44,7 @@ public final class ComposterHintProvider implements HintProvider {
 
         int percent = Math.round(chance * 100);
 
-        return Optional.of(new HintResult(HintIcons.GROWTH, Text.literal("Compost chance: " + percent + "%").styled(style -> style.withColor(getColor(percent)))));
+        return Optional.of(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.compost_chance", percent).styled(style -> style.withColor(getColor(percent)))));
     }
 
     private int getColor(int percent) {

@@ -15,18 +15,18 @@ public final class HoverHintsConfigScreen {
 
         ConfigBuilder builder =  ConfigBuilder.create()
                 .setParentScreen(parentScreen)
-                .setTitle(Text.literal("Hover Hints"));
+                .setTitle(Text.translatable("config.hover_hints.title"));
 
         builder.setSavingRunnable(HoverHintsConfigManager::save);
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
-        ConfigCategory settings = builder.getOrCreateCategory(Text.literal("Settings"));
+        ConfigCategory settings = builder.getOrCreateCategory(Text.translatable("config.hover_hints.category.settings"));
 
         settings.addEntry(
-                entryBuilder.startSubCategory(Text.literal("General"), List.of(
+                entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.general"), List.of(
                         entryBuilder.startBooleanToggle(
-                                        Text.literal("Enabled"),
+                                        Text.translatable("config.hover_hints.enabled"),
                                         config.enabled
                                 )
                                 .setDefaultValue(true)
@@ -34,20 +34,21 @@ public final class HoverHintsConfigScreen {
                                 .build(),
 
                         entryBuilder.startEnumSelector(
-                                        Text.literal("Activation Mode"),
+                                        Text.translatable("config.hover_hints.activation_mode"),
                                         HintActivationMode.class,
                                         config.mode
                                 )
                                 .setDefaultValue(HintActivationMode.HOLD_KEY)
+                                .setEnumNameProvider(mode -> ((HintActivationMode) mode).asText())
                                 .setSaveConsumer(value -> config.mode = value)
                                 .build()
-                )
-        ).build());
+                )).setExpanded(true).build()
+        );
 
         settings.addEntry(
-                entryBuilder.startSubCategory(Text.literal("Rendering"), List.of(
+                entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.rendering"), List.of(
                         entryBuilder.startEnumSelector(
-                                        Text.literal("Anchor"),
+                                        Text.translatable("config.hover_hints.anchor"),
                                         HintAnchor.class,
                                         config.renderConfig.anchor
                                 )
@@ -56,7 +57,7 @@ public final class HoverHintsConfigScreen {
                                 .build(),
 
                         entryBuilder.startIntField(
-                                        Text.literal("Offset X"),
+                                        Text.translatable("config.hover_hints.offset_x"),
                                         config.renderConfig.offsetX
                                 )
                                 .setDefaultValue(0)
@@ -64,20 +65,20 @@ public final class HoverHintsConfigScreen {
                                 .build(),
 
                         entryBuilder.startIntField(
-                                        Text.literal("Offset Y"),
+                                        Text.translatable("config.hover_hints.offset_y"),
                                         config.renderConfig.offsetY
                                 )
                                 .setDefaultValue(0)
                                 .setSaveConsumer(value -> config.renderConfig.offsetY = value)
                                 .build()
-                )).build()
+                )).setExpanded(true).build()
         );
 
         settings.addEntry(
-                entryBuilder.startSubCategory(Text.literal("Hints"), List.of(
-                        providerToggle(entryBuilder, config, "composter", "Composting"),
-                        providerToggle(entryBuilder, config, "fuel", "Fuel Burn Time")
-                )).build()
+                entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.hints"), List.of(
+                        providerToggle(entryBuilder, config, "composter", Text.translatable("config.hover_hints.provider.composter")),
+                        providerToggle(entryBuilder, config, "fuel", Text.translatable("config.hover_hints.provider.fuel"))
+                )).setExpanded(true).build()
         );
 
         return builder.build();
@@ -87,10 +88,10 @@ public final class HoverHintsConfigScreen {
             ConfigEntryBuilder entryBuilder,
             HoverHintsConfig config,
             String id,
-            String name) {
+            Text name) {
         ProviderConfig providerConfig = config.provider(id);
 
-        return entryBuilder.startBooleanToggle(Text.literal(name), providerConfig.enabled)
+        return entryBuilder.startBooleanToggle(name, providerConfig.enabled)
                 .setDefaultValue(true)
                 .setSaveConsumer(value -> providerConfig.enabled = value)
                 .build();

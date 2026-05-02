@@ -1,0 +1,26 @@
+{
+  "key.hoverhints.show_hints": "Show Hover Hints",
+  "category.hoverhints": "Hover Hints",
+
+  "hint.hover_hints.fuel_burn_time": "Burn time: %s",
+  "hint.hover_hints.compost_chance": "Compost chance: %s%%",
+
+  "hint.hover_hints.time.seconds": "%ss",
+  "hint.hover_hints.time.minutes": "%sm",
+  "hint.hover_hints.time.minutes_seconds": "%sm %ss",
+
+  "config.hover_hints.title": "Hover Hints",
+  "config.hover_hints.category.settings": "Settings",
+  "config.hover_hints.section.general": "General",
+  "config.hover_hints.enabled": "Enabled",
+  "config.hover_hints.activation_mode": "Activation Mode",
+  "config.hover_hints.activation_mode.hold_key": "Hold key",
+  "config.hover_hints.activation_mode.always": "Always",
+  "config.hover_hints.section.rendering": "Rendering",
+  "config.hover_hints.anchor": "Anchor",
+  "config.hover_hints.offset_x": "Offset X",
+  "config.hover_hints.offset_y": "Offset Y",
+  "config.hover_hints.section.hints": "Hints",
+  "config.hover_hints.provider.composter": "Composting",
+  "config.hover_hints.provider.fuel": "Fuel Burn Time"
+}
