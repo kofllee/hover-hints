@@ -10,7 +10,7 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 
-import java.util.Optional;
+import java.util.List;
 
 public class TameableAnimalHintProvider implements HintProvider {
 
@@ -20,51 +20,51 @@ public class TameableAnimalHintProvider implements HintProvider {
     }
 
     @Override
-    public Optional<HintResult> getHint(HintContext hintContext) {
+    public void getHint(HintContext hintContext, List<HintResult> out) {
         if (!(hintContext.hitResult() instanceof EntityHitResult entityHitResult)) {
-            return Optional.empty();
+            return;
         }
 
         Entity entity = entityHitResult.getEntity();
 
         if (entity instanceof WolfEntity wolf) {
             if (wolf.isTamed() || !hintContext.heldStack().isOf(Items.BONE)) {
-                return Optional.empty();
+                return;
             }
 
-            return tameChance(33.3f);
+            out.add(tameChance(33.3f));
         }
 
         if (entity instanceof CatEntity cat) {
             if (cat.isTamed() || !cat.isBreedingItem(hintContext.heldStack())) {
-                return Optional.empty();
+                return;
             }
 
-            return tameChance(33.3f);
+            out.add(tameChance(33.3f));
         }
 
         if (entity instanceof ParrotEntity parrot) {
             if (parrot.isTamed() || !parrot.isBreedingItem(hintContext.heldStack())) {
-                return Optional.empty();
+                return;
             }
 
-            return tameChance(10f);
+            out.add(tameChance(10f));
         }
 
         if (entity instanceof OcelotEntity ocelot) {
             if (!ocelot.isBreedingItem(hintContext.heldStack())) {
-                return Optional.empty();
+                return;
             }
 
-            return trustChance(33.3f);
+            out.add(trustChance(33.3f));
         }
 
         if (entity instanceof FoxEntity fox) {
             if (!fox.isBreedingItem(hintContext.heldStack())) {
-                return Optional.empty();
+                return;
             }
 
-            return trustChance(100f);
+            out.add(trustChance(100f));
         }
 
         if (entity instanceof HorseEntity ||
@@ -72,29 +72,27 @@ public class TameableAnimalHintProvider implements HintProvider {
                 entity instanceof MuleEntity ||
                 entity instanceof LlamaEntity ||
                 entity instanceof TraderLlamaEntity) {
-            return Optional.of(new HintResult(
+            out.add(new HintResult(
                     HintIcons.GROWTH,
                     Text.translatable("hint.hover_hints.ride_to_tame")
                             .styled(style -> style.withColor(0x55FF55))
             ));
         }
-
-        return Optional.empty();
     }
 
-    private Optional<HintResult> tameChance(float percent) {
-        return Optional.of(new HintResult(
+    private HintResult tameChance(float percent) {
+        return new HintResult(
                 HintIcons.GROWTH,
                 Text.translatable("hint.hover_hints.tame_chance", percent)
                         .styled(style -> style.withColor(0x55FF55))
-        ));
+        );
     }
 
-    private Optional<HintResult> trustChance(float percent) {
-        return Optional.of(new HintResult(
+    private HintResult trustChance(float percent) {
+        return new HintResult(
                 HintIcons.GROWTH,
                 Text.translatable("hint.hover_hints.trust_chance", percent)
                         .styled(style -> style.withColor(0x55FF55))
-        ));
+        );
     }
 }

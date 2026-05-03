@@ -1,8 +1,9 @@
 package net.kofllee.hoverhints.client.hint;
 
-import java.util.Optional;
+import java.util.List;
+
 
 public interface HintProvider {
     String id();
-    Optional<HintResult> getHint(HintContext hintContext);
+    public void getHint(HintContext hintContext, List<HintResult> out);
 }

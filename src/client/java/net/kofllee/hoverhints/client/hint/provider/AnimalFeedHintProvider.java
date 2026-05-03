@@ -7,7 +7,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 
-import java.util.Optional;
+import java.util.List;
 
 public class AnimalFeedHintProvider implements HintProvider {
 
@@ -17,31 +17,32 @@ public class AnimalFeedHintProvider implements HintProvider {
     }
 
     @Override
-    public Optional<HintResult> getHint(HintContext hintContext) {
+    public void getHint(HintContext hintContext, List<HintResult> out) {
         if(!(hintContext.hitResult() instanceof EntityHitResult entityHitResult)) {
-            return Optional.empty();
+            return;
         }
 
         if(!(entityHitResult.getEntity() instanceof AnimalEntity animal)) {
-            return Optional.empty();
+            return;
         }
 
         if(!animal.isBreedingItem(hintContext.heldStack())){
-            return Optional.empty();
+            return;
         }
 
         if(animal.isBaby()){
-            return Optional.of(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.animal_feed_baby").styled(style -> style.withColor(0x55FF55))));
+            out.add(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.animal_feed_baby").styled(style -> style.withColor(0x55FF55))));
+            return;
         }
 
         Identifier id = Registries.ENTITY_TYPE.getId(animal.getType());
-        boolean isVanilla = id != null && id.getNamespace().equals("minecraft");
+        boolean isVanilla = id.getNamespace().equals("minecraft");
 
         String key = isVanilla
                 ? "hint.hover_hints.animal_can_breed_vanilla"
                 : "hint.hover_hints.animal_can_breed";
 
-        return Optional.of(new HintResult(
+        out.add(new HintResult(
                 HintIcons.GROWTH,
                 Text.translatable(key)
                         .styled(style -> style.withColor(0x55FF55))

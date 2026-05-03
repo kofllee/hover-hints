@@ -16,7 +16,7 @@ import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 
-import java.util.Optional;
+import java.util.List;
 
 public class GrindStoneProvider implements HintProvider {
     @Override
@@ -25,30 +25,30 @@ public class GrindStoneProvider implements HintProvider {
     }
 
     @Override
-    public Optional<HintResult> getHint(HintContext hintContext) {
+    public void getHint(HintContext hintContext, List<HintResult> out) {
         if(!(hintContext.hitResult() instanceof BlockHitResult blockHitResult)) {
-            return Optional.empty();
+            return;
         }
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
 
         if(!(state.getBlock() instanceof GrindstoneBlock)) {
-            return Optional.empty();
+            return;
         }
 
         ItemStack stack = hintContext.heldStack();
 
         if(stack.isEmpty() || !stack.hasEnchantments()) {
-            return Optional.empty();
+            return;
         }
 
         XpRange range = GrindstoneXpCalculator.calculate(stack);
 
         if(range.isEmpty()) {
-            return Optional.empty();
+            return;
         }
 
-        return Optional.of(new HintResult(HintIcons.XP_ORB, Text.translatable("hint.hover_hints.grindstone_xp", range.min, range.max).styled(style -> style.withColor(0x4ea14c))));
+        out.add(new HintResult(HintIcons.XP_ORB, Text.translatable("hint.hover_hints.grindstone_xp", range.min, range.max).styled(style -> style.withColor(0x4ea14c))));
 
     }
 

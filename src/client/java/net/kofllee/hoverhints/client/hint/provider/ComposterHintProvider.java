@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 
-import java.util.Optional;
+import java.util.List;
 
 public final class ComposterHintProvider implements HintProvider {
     @Override
@@ -19,32 +19,32 @@ public final class ComposterHintProvider implements HintProvider {
     }
 
     @Override
-    public Optional<HintResult> getHint(HintContext hintContext) {
+    public void getHint(HintContext hintContext, List<HintResult> out) {
         if(!(hintContext.hitResult() instanceof BlockHitResult blockHitResult)) {
-            return Optional.empty();
+            return;
         }
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
 
         if(!(state.getBlock() instanceof ComposterBlock)) {
-            return Optional.empty();
+            return;
         }
 
         ItemStack stack = hintContext.heldStack();
 
         if(stack.isEmpty()) {
-            return Optional.empty();
+            return;
         }
 
         Float chance = ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.get(stack.getItem());
 
         if(chance == null) {
-            return Optional.empty();
+            return;
         }
 
         int percent = Math.round(chance * 100);
 
-        return Optional.of(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.compost_chance", percent).styled(style -> style.withColor(getColor(percent)))));
+        out.add(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.compost_chance", percent).styled(style -> style.withColor(getColor(percent)))));
     }
 
     private int getColor(int percent) {

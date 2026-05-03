@@ -13,19 +13,17 @@ import net.minecraft.client.gui.tooltip.TooltipBackgroundRenderer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.math.Vec2f;
 
-import java.util.Optional;
+import java.util.List;
 
 public final class HintHudRenderer {
 
     private static final HintManager HINT_MANAGER = new HintManager();
 
     private static final int TOOLTIP_PADDING = 4;
+    private static final int LINE_GAP = 2;
 
-    private static final int ICON_SIZE = 9;
     private static final int ICON_GAP = 4;
-
-    private static final int ICON_OFFSET_X = 1;
-    private static final int ICON_OFFSET_Y = 0;
+    
 
     private HintHudRenderer(){}
 
@@ -59,27 +57,44 @@ public final class HintHudRenderer {
                 client.world,
                 client.crosshairTarget,
                 client.player.getMainHandStack());
-        Optional<HintResult> result = HINT_MANAGER.resolve(hintContext);
+        List<HintResult> results = HINT_MANAGER.resolve(hintContext);
 
-        if(result.isEmpty()) {
+        if(results.isEmpty()) {
             return;
         }
 
-        drawHint(drawContext, client, result.get());
+        drawHints(drawContext, client, results);
     }
 
-    private static void drawHint(DrawContext drawContext, MinecraftClient client, HintResult hintResult) {
+    private static void drawHints(DrawContext drawContext, MinecraftClient client, List<HintResult> results) {
         HintRenderConfig config = HoverHintsConfigManager.getConfig().renderConfig;
 
-        boolean hasIcon = hintResult.icon() != null;
+        int contentWidth = 0;
+        int contentHeight = 0;
 
-        int textWidth = client.textRenderer.getWidth(hintResult.text());
-        int textHeight = client.textRenderer.fontHeight;
+        for(int i = 0; i < results.size(); i++) {
+            HintResult result = results.get(i);
 
-        int iconSpace = hasIcon ? ICON_SIZE + ICON_GAP : 0;
+            int textWidth = client.textRenderer.getWidth(result.text());
+            int textHeight = client.textRenderer.fontHeight;
 
-        int contentWidth = iconSpace + textWidth;
-        int contentHeight = textHeight;
+            boolean hasIcon = result.icon() != null;
+
+            Vec2f iconSize = hasIcon ? TextureSizeCache.getSize(client, result.icon()) : Vec2f.ZERO;
+            int iconWidth = (int) iconSize.x;
+            int iconHeight= (int) iconSize.y;
+            int iconSpace = hasIcon ? iconWidth + ICON_GAP : 0;
+
+            int lineWidth = iconSpace + textWidth;
+            int lineHeight = Math.max(iconHeight, textHeight);
+
+            contentWidth = Math.max(contentWidth, lineWidth);
+            contentHeight += lineHeight;
+
+            if(i < results.size() - 1) {
+                contentHeight += LINE_GAP;
+            }
+        }
 
         int hintWidth = contentWidth + TOOLTIP_PADDING * 2;
         int hintHeight = contentHeight + TOOLTIP_PADDING * 2;
@@ -112,35 +127,58 @@ public final class HintHudRenderer {
 
         drawContext.getMatrices().translate(0.0F, 0.0F, 400.0F);
 
-        int textX = contentX;
+        int y = contentY;
 
-        if(hasIcon) {
-            int iconX = contentX + ICON_OFFSET_X;
-            int iconY = contentY + ICON_OFFSET_Y;
+        for(int i = 0; i < results.size(); i++) {
+            HintResult result = results.get(i);
 
-            drawContext.drawTexture(
-                    hintResult.icon(),
-                    iconX,
-                    iconY,
-                    0,
-                    0,
-                    ICON_SIZE,
-                    ICON_SIZE,
-                    ICON_SIZE,
-                    ICON_SIZE
+            int textHeight = client.textRenderer.fontHeight;
+
+            boolean hasIcon = result.icon() != null;
+
+            Vec2f iconSize = hasIcon ? TextureSizeCache.getSize(client, result.icon()) : Vec2f.ZERO;
+            int iconWidth = (int) iconSize.x;
+            int iconHeight= (int) iconSize.y;
+            int lineHeight = Math.max(textHeight, iconHeight);
+
+            int x = contentX;
+            int textX = x;
+
+            if(hasIcon) {
+                int iconY = y + (lineHeight - iconHeight) / 2;
+
+                drawContext.drawTexture(
+                        result.icon(),
+                        x,
+                        iconY,
+                        0,
+                        0,
+                        iconWidth,
+                        iconHeight,
+                        iconWidth,
+                        iconHeight
+                );
+
+                textX += iconWidth + ICON_GAP;
+            }
+
+            int textY = y + (lineHeight - textHeight) / 2;
+
+            drawContext.drawText(
+                    client.textRenderer,
+                    result.text(),
+                    textX,
+                    textY,
+                    0xFFFFFFFF,
+                    true
             );
 
-            textX += iconSpace;
-        }
+            y +=  lineHeight;
 
-        drawContext.drawText(
-                client.textRenderer,
-                hintResult.text(),
-                textX,
-                contentY,
-                0xFFFFFFFF,
-                true
-        );
+             if(i < results.size() - 1) {
+                y += LINE_GAP;
+            }
+        }
 
         drawContext.getMatrices().pop();
     }

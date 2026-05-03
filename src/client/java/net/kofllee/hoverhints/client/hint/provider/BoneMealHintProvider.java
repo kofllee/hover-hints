@@ -12,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BoneMealHintProvider implements HintProvider {
@@ -21,34 +22,34 @@ public class BoneMealHintProvider implements HintProvider {
     }
 
     @Override
-    public Optional<HintResult> getHint(HintContext hintContext) {
+    public void getHint(HintContext hintContext, List<HintResult> out) {
         if (!(hintContext.hitResult() instanceof BlockHitResult blockHitResult)) {
-            return Optional.empty();
+            return;
         }
 
         if (!hintContext.heldStack().isOf(Items.BONE_MEAL)) {
-            return Optional.empty();
+            return;
         }
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
 
         if (!(state.getBlock() instanceof Fertilizable fertilizable)) {
-            return Optional.empty();
+            return;
         }
 
         if(!fertilizable.isFertilizable(hintContext.world(), blockHitResult.getBlockPos(), state)) {
-            return Optional.empty();
+            return;
         }
 
         Optional<BoneMealInfo> info = BoneMealResolver.resolve(state);
 
         if(info.isEmpty()) {
-            return Optional.empty();
+            return;
         }
 
         Text text = toText(info.get());
 
-        return Optional.of(new HintResult(HintIcons.GROWTH, text.copy().styled(style -> style.withColor(0x55FF55))));
+        out.add(new HintResult(HintIcons.GROWTH, text.copy().styled(style -> style.withColor(0x55FF55))));
     }
 
     private Text toText(BoneMealInfo info) {
