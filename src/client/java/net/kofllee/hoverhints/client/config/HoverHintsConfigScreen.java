@@ -79,7 +79,8 @@ public final class HoverHintsConfigScreen {
                         providerToggle(entryBuilder, config, "composter", Text.translatable("config.hover_hints.provider.composter")),
                         providerToggle(entryBuilder, config, "fuel", Text.translatable("config.hover_hints.provider.fuel")),
                         providerToggle(entryBuilder, config, "grindstone", Text.translatable("config.hover_hints.provider.grindstone")),
-                        providerToggle(entryBuilder, config, "bone_meal", Text.translatable("config.hover_hints.provider.bone_meal"))
+                        providerToggle(entryBuilder, config, "bone_meal", Text.translatable("config.hover_hints.provider.bone_meal")),
+                        providerToggle(entryBuilder, config, "animal_feed", Text.translatable("config.hover_hints.provider.animal_feed"))
                 )).setExpanded(true).build()
         );
 

@@ -18,6 +18,10 @@
   "hint.hover_hints.bone_meal_taller": "Grows taller",
   "hint.hover_hints.bone_meal_spread": "Spreads nearby",
 
+  "hint.hover_hints.animal_feed_baby": "Reduce growth time by 10%",
+  "hint.hover_hints.animal_can_breed": "Can feed to breed",
+  "hint.hover_hints.animal_can_breed_vanilla": "Can feed to breed, 5 min cooldown after",
+
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
@@ -37,5 +41,6 @@
   "config.hover_hints.provider.composter": "Composting",
   "config.hover_hints.provider.fuel": "Fuel Burn Time",
   "config.hover_hints.provider.grindstone": "Grindstone XP",
-  "config.hover_hints.provider.bone_meal": "Bone Meal Chance"
+  "config.hover_hints.provider.bone_meal": "Bone Meal Chance",
+  "config.hover_hints.provider.animal_feed": "Animal Feed"
 }
