@@ -14,6 +14,7 @@ public final class HintManager {
             new FuelHintProvider(),
             new GrindStoneProvider(),
             new BoneMealHintProvider(),
+            new TameableAnimalHintProvider(),
             new AnimalFeedHintProvider()
     );
 

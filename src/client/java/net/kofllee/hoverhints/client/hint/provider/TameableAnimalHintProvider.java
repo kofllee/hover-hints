@@ -1,0 +1,100 @@
+package net.kofllee.hoverhints.client.hint.provider;
+
+import net.kofllee.hoverhints.client.hint.HintContext;
+import net.kofllee.hoverhints.client.hint.HintIcons;
+import net.kofllee.hoverhints.client.hint.HintProvider;
+import net.kofllee.hoverhints.client.hint.HintResult;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.*;
+import net.minecraft.item.Items;
+import net.minecraft.text.Text;
+import net.minecraft.util.hit.EntityHitResult;
+
+import java.util.Optional;
+
+public class TameableAnimalHintProvider implements HintProvider {
+
+    @Override
+    public String id() {
+        return "tameable_animal";
+    }
+
+    @Override
+    public Optional<HintResult> getHint(HintContext hintContext) {
+        if (!(hintContext.hitResult() instanceof EntityHitResult entityHitResult)) {
+            return Optional.empty();
+        }
+
+        Entity entity = entityHitResult.getEntity();
+
+        if (entity instanceof WolfEntity wolf) {
+            if (wolf.isTamed() || !hintContext.heldStack().isOf(Items.BONE)) {
+                return Optional.empty();
+            }
+
+            return tameChance(33.3f);
+        }
+
+        if (entity instanceof CatEntity cat) {
+            if (cat.isTamed() || !cat.isBreedingItem(hintContext.heldStack())) {
+                return Optional.empty();
+            }
+
+            return tameChance(33.3f);
+        }
+
+        if (entity instanceof ParrotEntity parrot) {
+            if (parrot.isTamed() || !parrot.isBreedingItem(hintContext.heldStack())) {
+                return Optional.empty();
+            }
+
+            return tameChance(10f);
+        }
+
+        if (entity instanceof OcelotEntity ocelot) {
+            if (!ocelot.isBreedingItem(hintContext.heldStack())) {
+                return Optional.empty();
+            }
+
+            return trustChance(33.3f);
+        }
+
+        if (entity instanceof FoxEntity fox) {
+            if (!fox.isBreedingItem(hintContext.heldStack())) {
+                return Optional.empty();
+            }
+
+            return trustChance(100f);
+        }
+
+        if (entity instanceof HorseEntity ||
+                entity instanceof DonkeyEntity ||
+                entity instanceof MuleEntity ||
+                entity instanceof LlamaEntity ||
+                entity instanceof TraderLlamaEntity) {
+            return Optional.of(new HintResult(
+                    HintIcons.GROWTH,
+                    Text.translatable("hint.hover_hints.ride_to_tame")
+                            .styled(style -> style.withColor(0x55FF55))
+            ));
+        }
+
+        return Optional.empty();
+    }
+
+    private Optional<HintResult> tameChance(float percent) {
+        return Optional.of(new HintResult(
+                HintIcons.GROWTH,
+                Text.translatable("hint.hover_hints.tame_chance", percent)
+                        .styled(style -> style.withColor(0x55FF55))
+        ));
+    }
+
+    private Optional<HintResult> trustChance(float percent) {
+        return Optional.of(new HintResult(
+                HintIcons.GROWTH,
+                Text.translatable("hint.hover_hints.trust_chance", percent)
+                        .styled(style -> style.withColor(0x55FF55))
+        ));
+    }
+}
