@@ -20,7 +20,7 @@
 
   "hint.hover_hints.animal_feed_baby": "Reduce growth time by 10%",
   "hint.hover_hints.animal_can_breed": "Can feed to breed",
-  "hint.hover_hints.animal_can_breed_vanilla": "Can feed to breed, 5 min cooldown after",
+  "hint.hover_hints.animal_can_breed.vanilla_suffix": " (5 min cooldown)",
 
   "hint.hover_hints.tame_chance": "Tame chance: %s%%",
   "hint.hover_hints.trust_chance": "Trust chance: %s%%",
@@ -28,6 +28,10 @@
 
   "hint.hover_hints.redstone_unpowered": "Unpowered",
   "hint.hover_hints.redstone_power": "Power: %s",
+
+  "hint.hover_hints.dispenser_uses_item": "Dispenser will use this item",
+  "hint.hover_hints.dispenser_drops_item": "Dispenser will drop this item",
+  "hint.hover_hints.dropper_drops_item": "Dropper only drops items",
 
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
@@ -51,5 +55,6 @@
   "config.hover_hints.provider.bone_meal": "Bone Meal Chance",
   "config.hover_hints.provider.animal_feed": "Animal Feed",
   "config.hover_hints.provider.tameable_animal": "Tameable Animals",
-  "config.hover_hints.provider.redstone_power": "Redstone Power"
+  "config.hover_hints.provider.redstone_power": "Redstone Power",
+  "config.hover_hints.provider.dispenser": "Dispenser Behavior"
 }

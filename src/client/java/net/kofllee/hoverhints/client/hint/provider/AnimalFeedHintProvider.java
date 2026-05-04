@@ -38,13 +38,20 @@ public class AnimalFeedHintProvider implements HintProvider {
         Identifier id = Registries.ENTITY_TYPE.getId(animal.getType());
         boolean isVanilla = id.getNamespace().equals("minecraft");
 
-        String key = isVanilla
-                ? "hint.hover_hints.animal_can_breed_vanilla"
-                : "hint.hover_hints.animal_can_breed";
+        if(isVanilla){
+            out.add(new HintResult(
+                    HintIcons.GROWTH,
+                    Text.translatable("hint.hover_hints.animal_can_breed")
+                            .styled(style -> style.withColor(0x55FF55)).
+                            append(Text.translatable("hint.hover_hints.animal_can_breed.vanilla_suffix")
+                                    .styled(style -> style.withColor(0xAAAAAA)))
+            ));
+            return;
+        }
 
         out.add(new HintResult(
                 HintIcons.GROWTH,
-                Text.translatable(key)
+                Text.translatable("hint.hover_hints.animal_can_breed")
                         .styled(style -> style.withColor(0x55FF55))
         ));
     }
