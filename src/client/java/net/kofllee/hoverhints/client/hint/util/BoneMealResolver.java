@@ -1,4 +1,4 @@
-package net.kofllee.hoverhints.client.hint.resolver;
+package net.kofllee.hoverhints.client.hint.util;
 
 import net.minecraft.block.*;
 

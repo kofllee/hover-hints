@@ -4,13 +4,13 @@
 
   "hint.hover_hints.fuel_burn_time": "Burn time: %s",
   "hint.hover_hints.compost_chance": "Compost chance: %s%%",
-  "hint.hover_hints.grindstone_xp": "~%s–%s XP",
+  "hint.hover_hints.grindstone_xp": "%s-%s XP",
 
   "hint.hover_hints.bone_meal_chance": "Grow chance: %s%%",
   "hint.hover_hints.bone_meal_stage_chance": "Grow chance: %s%% (+%s stages)",
-  "hint.hover_hints.bone_meal_stages": "Growth: +%s–%s stages",
+  "hint.hover_hints.bone_meal_stages": "Growth: +%s-%s stages",
   "hint.hover_hints.bone_meal_stage_one_value": "Growth: only +%s stages",
-  "hint.hover_hints.bone_meal_blocks": "Growth: +%s–%s blocks",
+  "hint.hover_hints.bone_meal_blocks": "Growth: +%s-%s blocks",
   "hint.hover_hints.bone_meal_unbounded_blocks": "Growth: %s+ blocks",
   "hint.hover_hints.bone_meal_blocks_one_value": "Growth: +%s blocks",
   "hint.hover_hints.bone_meal_generic": "Bone meal works here",

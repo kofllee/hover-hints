@@ -1,4 +1,4 @@
-package net.kofllee.hoverhints.client.hint.resolver;
+package net.kofllee.hoverhints.client.hint.util;
 
 public record BoneMealInfo(Type type, int min, int max, int chance) {
     public enum Type {

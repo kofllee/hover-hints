@@ -20,7 +20,7 @@ public final class HintHudRenderer {
     private static final HintManager HINT_MANAGER = new HintManager();
 
     private static final int TOOLTIP_PADDING = 4;
-    private static final int LINE_GAP = 2;
+    private static final int LINE_GAP = 0;
 
     private static final int ICON_GAP = 4;
     

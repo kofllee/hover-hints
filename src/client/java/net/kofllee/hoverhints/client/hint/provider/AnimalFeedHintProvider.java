@@ -31,7 +31,7 @@ public class AnimalFeedHintProvider implements HintProvider {
         }
 
         if(animal.isBaby()){
-            out.add(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.animal_feed_baby").styled(style -> style.withColor(0x55FF55))));
+            out.add(new HintResult(HintIcons.HEARTS, Text.translatable("hint.hover_hints.animal_feed_baby").styled(style -> style.withColor(0x55FF55))));
             return;
         }
 
@@ -40,9 +40,9 @@ public class AnimalFeedHintProvider implements HintProvider {
 
         if(isVanilla){
             out.add(new HintResult(
-                    HintIcons.GROWTH,
+                    HintIcons.HEARTS,
                     Text.translatable("hint.hover_hints.animal_can_breed")
-                            .styled(style -> style.withColor(0x55FF55)).
+                            .styled(style -> style.withColor(0xFF5555)).
                             append(Text.translatable("hint.hover_hints.animal_can_breed.vanilla_suffix")
                                     .styled(style -> style.withColor(0xAAAAAA)))
             ));
@@ -50,9 +50,9 @@ public class AnimalFeedHintProvider implements HintProvider {
         }
 
         out.add(new HintResult(
-                HintIcons.GROWTH,
+                HintIcons.HEARTS,
                 Text.translatable("hint.hover_hints.animal_can_breed")
-                        .styled(style -> style.withColor(0x55FF55))
+                        .styled(style -> style.withColor(0xFF5555))
         ));
     }
 }

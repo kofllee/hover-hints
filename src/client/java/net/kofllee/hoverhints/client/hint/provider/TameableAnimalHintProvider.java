@@ -4,6 +4,7 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
+import net.kofllee.hoverhints.client.hint.util.AnimalHintItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.Items;
@@ -44,7 +45,7 @@ public class TameableAnimalHintProvider implements HintProvider {
         }
 
         if (entity instanceof ParrotEntity parrot) {
-            if (parrot.isTamed() || !parrot.isBreedingItem(hintContext.heldStack())) {
+            if (parrot.isTamed() || !AnimalHintItems.isParrotTamingItem(hintContext.heldStack())) {
                 return;
             }
 
@@ -73,26 +74,26 @@ public class TameableAnimalHintProvider implements HintProvider {
                 entity instanceof LlamaEntity ||
                 entity instanceof TraderLlamaEntity) {
             out.add(new HintResult(
-                    HintIcons.GROWTH,
+                    HintIcons.HEARTS,
                     Text.translatable("hint.hover_hints.ride_to_tame")
-                            .styled(style -> style.withColor(0x55FF55))
+                            .styled(style -> style.withColor(0xFF5555))
             ));
         }
     }
 
     private HintResult tameChance(float percent) {
         return new HintResult(
-                HintIcons.GROWTH,
+                HintIcons.HEARTS,
                 Text.translatable("hint.hover_hints.tame_chance", percent)
-                        .styled(style -> style.withColor(0x55FF55))
+                        .styled(style -> style.withColor(0xFF5555))
         );
     }
 
     private HintResult trustChance(float percent) {
         return new HintResult(
-                HintIcons.GROWTH,
+                HintIcons.HEARTS,
                 Text.translatable("hint.hover_hints.trust_chance", percent)
-                        .styled(style -> style.withColor(0x55FF55))
+                        .styled(style -> style.withColor(0xFF5555))
         );
     }
 }

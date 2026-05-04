@@ -40,6 +40,6 @@ public final class FuelHintProvider implements HintProvider {
             return;
         }
 
-        out.add(new HintResult(HintIcons.FIRE, Text.translatable("hint.hover_hints.fuel_burn_time", HintTimeFormatter.formatTicks(burnTicks)).styled(style -> style.withColor(0xa11250))));
+        out.add(new HintResult(HintIcons.FIRE, Text.translatable("hint.hover_hints.fuel_burn_time", HintTimeFormatter.formatTicks(burnTicks)).styled(style -> style.withColor(0xd84c45))));
     }
 }
