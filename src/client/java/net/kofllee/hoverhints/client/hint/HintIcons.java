@@ -4,6 +4,7 @@ import net.minecraft.util.Identifier;
 
 public final class HintIcons {
     public static final Identifier XP_ORB = id("xp_orb");
+    public static final Identifier REDSTONE = id("redstone");
     public static Identifier FIRE = id("fire");
     public static Identifier GROWTH = id("growth");
 

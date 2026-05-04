@@ -162,7 +162,7 @@ public final class HintHudRenderer {
                 textX += iconWidth + ICON_GAP;
             }
 
-            int textY = y + (lineHeight - textHeight) / 2;
+            int textY = y + Math.round((lineHeight - textHeight) / 2f);
 
             drawContext.drawText(
                     client.textRenderer,

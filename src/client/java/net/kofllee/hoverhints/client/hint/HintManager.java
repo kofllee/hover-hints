@@ -15,7 +15,8 @@ public final class HintManager {
             new GrindStoneProvider(),
             new BoneMealHintProvider(),
             new TameableAnimalHintProvider(),
-            new AnimalFeedHintProvider()
+            new AnimalFeedHintProvider(),
+            new RedstonePowerHintProvider()
     );
 
     public List<HintResult> resolve(HintContext hintContext) {

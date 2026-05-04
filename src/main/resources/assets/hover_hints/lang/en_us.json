@@ -26,6 +26,9 @@
   "hint.hover_hints.trust_chance": "Trust chance: %s%%",
   "hint.hover_hints.ride_to_tame": "Ride to tame",
 
+  "hint.hover_hints.redstone_unpowered": "Unpowered",
+  "hint.hover_hints.redstone_power": "Power: %s",
+
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
@@ -47,5 +50,6 @@
   "config.hover_hints.provider.grindstone": "Grindstone XP",
   "config.hover_hints.provider.bone_meal": "Bone Meal Chance",
   "config.hover_hints.provider.animal_feed": "Animal Feed",
-  "config.hover_hints.provider.tameable_animal": "Tameable Animals"
+  "config.hover_hints.provider.tameable_animal": "Tameable Animals",
+  "config.hover_hints.provider.redstone_power": "Redstone Power"
 }
