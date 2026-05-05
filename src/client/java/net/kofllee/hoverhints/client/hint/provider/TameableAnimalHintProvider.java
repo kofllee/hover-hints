@@ -73,6 +73,10 @@ public class TameableAnimalHintProvider implements HintProvider {
                 entity instanceof MuleEntity ||
                 entity instanceof LlamaEntity ||
                 entity instanceof TraderLlamaEntity) {
+            if(((AbstractHorseEntity) entity).isTame()){
+                return;
+            }
+
             out.add(new HintResult(
                     HintIcons.HEARTS,
                     Text.translatable("hint.hover_hints.ride_to_tame")
