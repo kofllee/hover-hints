@@ -17,7 +17,8 @@ public final class HintManager {
             new TameableAnimalHintProvider(),
             new AnimalFeedHintProvider(),
             new RedstonePowerHintProvider(),
-            new MobLootHintProvider()
+            new MobLootHintProvider(),
+            new ArchaeologyLootHintProvider()
     );
 
     public List<HintResult> resolve(HintContext hintContext) {

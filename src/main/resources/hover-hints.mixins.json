@@ -8,7 +8,8 @@
     "loot.LeafEntryAccessor",
     "loot.ItemEntryAccessor",
     "loot.SetCountLootFunctionAccessor",
-    "loot.EnchantedCountIncreaseLootFunctionAccessor"
+    "loot.EnchantedCountIncreaseLootFunctionAccessor",
+    "archaeology.BrushableBlockEntityAccessor"
   ],
   "client": [],
   "injectors": {

@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.input.HoverHintKeybinds;
 import net.kofllee.hoverhints.client.hint.render.HintHudRenderer;
+import net.kofllee.hoverhints.client.network.ArchaeologyLootClientNetworking;
 import net.kofllee.hoverhints.client.network.MobLootClientNetworking;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,7 @@ public class HoverHintsClient implements ClientModInitializer {
         LOGGER.info("HoverHints client initialized");
 
         MobLootClientNetworking.register();
+        ArchaeologyLootClientNetworking.register();
 
         HoverHintsConfigManager.load();
         HoverHintKeybinds.register();

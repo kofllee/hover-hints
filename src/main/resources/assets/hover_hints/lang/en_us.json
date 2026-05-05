@@ -35,6 +35,8 @@
   "hint.hover_hints.dispenser_drops_item": "Dispenser will drop this item",
   "hint.hover_hints.dropper_drops_item": "Dropper only drops items",
 
+  "hint.hover_hints.archaeology_loot_entry": "%s%%",
+
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
@@ -58,6 +60,6 @@
   "config.hover_hints.provider.animal_feed": "Animal Feed",
   "config.hover_hints.provider.tameable_animal": "Tameable Animals",
   "config.hover_hints.provider.redstone_power": "Redstone Power",
-  "config.hover_hints.provider.dispenser": "Dispenser Behavior",
-  "config.hover_hints.provider.mob_loot": "Mob Loot"
+  "config.hover_hints.provider.mob_loot": "Mob Loot",
+  "config.hover_hints.provider.archaeology_loot": "Archaeology Loot"
 }
