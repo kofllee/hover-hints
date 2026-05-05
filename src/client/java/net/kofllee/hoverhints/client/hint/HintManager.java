@@ -16,7 +16,8 @@ public final class HintManager {
             new BoneMealHintProvider(),
             new TameableAnimalHintProvider(),
             new AnimalFeedHintProvider(),
-            new RedstonePowerHintProvider()
+            new RedstonePowerHintProvider(),
+            new MobLootHintProvider()
     );
 
     public List<HintResult> resolve(HintContext hintContext) {

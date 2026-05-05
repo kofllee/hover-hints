@@ -18,6 +18,8 @@
   "hint.hover_hints.bone_meal_taller": "Grows taller",
   "hint.hover_hints.bone_meal_spread": "Spreads nearby",
 
+  "hint.hover_hints.mob_loot_entry_short": "%s-%s, %s%%",
+
   "hint.hover_hints.animal_feed_baby": "Reduce growth time by 10%",
   "hint.hover_hints.animal_can_breed": "Can feed to breed",
   "hint.hover_hints.animal_can_breed.vanilla_suffix": " (5 min cooldown)",
@@ -56,5 +58,6 @@
   "config.hover_hints.provider.animal_feed": "Animal Feed",
   "config.hover_hints.provider.tameable_animal": "Tameable Animals",
   "config.hover_hints.provider.redstone_power": "Redstone Power",
-  "config.hover_hints.provider.dispenser": "Dispenser Behavior"
+  "config.hover_hints.provider.dispenser": "Dispenser Behavior",
+  "config.hover_hints.provider.mob_loot": "Mob Loot"
 }

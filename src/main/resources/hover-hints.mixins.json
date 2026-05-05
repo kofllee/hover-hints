@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "net.kofllee.hoverhints.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "loot.LootTableAccessor",
+    "loot.LootPoolAccessor",
+    "loot.LeafEntryAccessor",
+    "loot.ItemEntryAccessor",
+    "loot.SetCountLootFunctionAccessor",
+    "loot.EnchantedCountIncreaseLootFunctionAccessor"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

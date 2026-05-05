@@ -82,7 +82,8 @@ public final class HoverHintsConfigScreen {
                         providerToggle(entryBuilder, config, "bone_meal", Text.translatable("config.hover_hints.provider.bone_meal")),
                         providerToggle(entryBuilder, config, "animal_feed", Text.translatable("config.hover_hints.provider.animal_feed")),
                         providerToggle(entryBuilder, config, "tameable_animal", Text.translatable("config.hover_hints.provider.tameable_animal")),
-                        providerToggle(entryBuilder, config, "redstone_power", Text.translatable("config.hover_hints.provider.redstone_power"))
+                        providerToggle(entryBuilder, config, "redstone_power", Text.translatable("config.hover_hints.provider.redstone_power")),
+                        providerToggle(entryBuilder, config, "mob_loot", Text.translatable("config.hover_hints.provider.mob_loot"))
                 )).setExpanded(true).build()
         );
 

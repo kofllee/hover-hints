@@ -10,6 +10,9 @@
   "icon": "assets/hover_hints/icon.png",
   "environment": "client",
   "entrypoints": {
+    "main": [
+      "net.kofllee.hoverhints.HoverHints"
+    ],
     "client": [
       "net.kofllee.hoverhints.client.HoverHintsClient"
     ],
@@ -17,6 +20,9 @@
       "net.kofllee.hoverhints.client.config.HoverHintsModMenuIntegration"
     ]
   },
+  "mixins": [
+    "hover-hints.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
