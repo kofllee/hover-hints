@@ -4,7 +4,6 @@ import net.kofllee.hoverhints.client.HoverHintsClient;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
-import net.kofllee.hoverhints.client.hint.util.ItemTextureResolver;
 import net.kofllee.hoverhints.client.loot.ClientMobLootCache;
 import net.kofllee.hoverhints.client.loot.MobLootRequestSender;
 import net.kofllee.hoverhints.loot.MobLootEntry;
@@ -72,7 +71,7 @@ public class MobLootHintProvider implements HintProvider {
             int max = Math.max(0, entry.maxCount());
 
             out.add(new HintResult(
-                    ItemTextureResolver.getTexture(entry.item()),
+                    new ItemStack(entry.item()),
                     Text.translatable(
                             "hint.hover_hints.mob_loot_entry_short",
                             min,

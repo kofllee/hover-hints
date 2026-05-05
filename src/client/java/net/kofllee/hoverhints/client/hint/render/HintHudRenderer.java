@@ -20,7 +20,7 @@ public final class HintHudRenderer {
     private static final HintManager HINT_MANAGER = new HintManager();
 
     private static final int TOOLTIP_PADDING = 4;
-    private static final int LINE_GAP = 0;
+    private static final int LINE_GAP = 1;
 
     private static final int ICON_GAP = 4;
     
@@ -78,9 +78,11 @@ public final class HintHudRenderer {
             int textWidth = client.textRenderer.getWidth(result.text());
             int textHeight = client.textRenderer.fontHeight;
 
-            boolean hasIcon = result.icon() != null;
+            boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
 
-            Vec2f iconSize = hasIcon ? TextureSizeCache.getSize(client, result.icon()) : Vec2f.ZERO;
+            Vec2f iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2f.ZERO;
+            iconSize = result.iconStack() != null ? new Vec2f(16, 16) : iconSize;
+
             int iconWidth = (int) iconSize.x;
             int iconHeight= (int) iconSize.y;
             int iconSpace = hasIcon ? iconWidth + ICON_GAP : 0;
@@ -134,9 +136,11 @@ public final class HintHudRenderer {
 
             int textHeight = client.textRenderer.fontHeight;
 
-            boolean hasIcon = result.icon() != null;
+            boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
 
-            Vec2f iconSize = hasIcon ? TextureSizeCache.getSize(client, result.icon()) : Vec2f.ZERO;
+            Vec2f iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2f.ZERO;
+            iconSize = result.iconStack() != null ? new Vec2f(16, 16) : iconSize;
+
             int iconWidth = (int) iconSize.x;
             int iconHeight= (int) iconSize.y;
             int lineHeight = Math.max(textHeight, iconHeight);
@@ -147,17 +151,21 @@ public final class HintHudRenderer {
             if(hasIcon) {
                 int iconY = y + (lineHeight - iconHeight) / 2;
 
-                drawContext.drawTexture(
-                        result.icon(),
-                        x,
-                        iconY,
-                        0,
-                        0,
-                        iconWidth,
-                        iconHeight,
-                        iconWidth,
-                        iconHeight
-                );
+                if (result.iconStack() != null) {
+                    drawContext.drawItem(result.iconStack(), x, iconY);
+                } else {
+                    drawContext.drawTexture(
+                            result.iconTexture(),
+                            x,
+                            iconY,
+                            0,
+                            0,
+                            iconWidth,
+                            iconHeight,
+                            iconWidth,
+                            iconHeight
+                    );
+                }
 
                 textX += iconWidth + ICON_GAP;
             }
