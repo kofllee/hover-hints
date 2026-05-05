@@ -7,10 +7,12 @@ import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.hint.util.BoneMealInfo;
 import net.kofllee.hoverhints.client.hint.util.BoneMealResolver;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.Direction;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,12 @@ public class BoneMealHintProvider implements HintProvider {
         }
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
+        BlockState stateAbove = hintContext.world().getBlockState(blockHitResult.getBlockPos().up());
+
+        if(stateAbove.isOf(Blocks.WATER) && stateAbove.getFluidState().isStill() && state.isSideSolidFullSquare(hintContext.world(), blockHitResult.getBlockPos(), Direction.UP)) {
+            out.add(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.bone_meal_generic").styled(style -> style.withColor(0x55FF55))));
+            return;
+        }
 
         if (!(state.getBlock() instanceof Fertilizable fertilizable)) {
             return;
