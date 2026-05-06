@@ -61,15 +61,39 @@
   "config.hover_hints.offset_x": "Offset X",
   "config.hover_hints.offset_y": "Offset Y",
   "config.hover_hints.section.hints": "Hints",
+
   "config.hover_hints.provider.composter": "Composting",
+  "config.hover_hints.provider.composter.desc": "Shows composting chance when holding compostable items",
+
   "config.hover_hints.provider.fuel": "Fuel Burn Time",
+  "config.hover_hints.provider.fuel.desc": "Shows burn time when holding fuel and looking at furnaces",
+
   "config.hover_hints.provider.grindstone": "Grindstone XP",
+  "config.hover_hints.provider.grindstone.desc": "Shows XP gained when holding enchantable items",
+
   "config.hover_hints.provider.bone_meal": "Bone Meal Chance",
-  "config.hover_hints.provider.animal_feed": "Animal Feed",
-  "config.hover_hints.provider.tameable_animal": "Tameable Animals",
+  "config.hover_hints.provider.bone_meal.desc": "Shows growth effect when holding bone meal and targeting plants",
+
+  "config.hover_hints.provider.animal_feed": "Animal Feeding",
+  "config.hover_hints.provider.animal_feed.desc": "Shows growth time and breeding state when holding valid food",
+
+  "config.hover_hints.provider.tameable_animal": "Taming Chance",
+  "config.hover_hints.provider.tameable_animal.desc": "Shows taming chance when holding taming items",
+
   "config.hover_hints.provider.redstone_power": "Redstone Power",
+  "config.hover_hints.provider.redstone_power.desc": "Shows power level when holding redstone dust or a redstone torch",
+
   "config.hover_hints.provider.mob_loot": "Mob Loot",
+  "config.hover_hints.provider.mob_loot.desc": "Shows possible drops when targeting mobs with a weapon",
+
   "config.hover_hints.provider.archaeology_loot": "Archaeology Loot",
-  "config.hover_hints.provider.villager_poi": "Villager POI",
-  "config.hover_hints.provider.silk_touch": "Silk Touch Requirement"
+  "config.hover_hints.provider.archaeology_loot.desc": "Shows possible loot when holding brush and targeting suspicious blocks",
+
+  "config.hover_hints.provider.villager_poi": "Villager POIs",
+  "config.hover_hints.provider.villager_poi.desc": "Shows if a villager POI (workstations, beds, bell) is claimed",
+
+  "config.hover_hints.provider.silk_touch": "Silk Touch Requirement",
+  "config.hover_hints.provider.silk_touch.desc": "Shows if Silk Touch is required when holding tools",
+
+  "config.hover_hints.server_only": " (server required)"
 }

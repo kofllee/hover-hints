@@ -21,6 +21,11 @@ public class AnimalFeedHintProvider implements HintProvider {
     }
 
     @Override
+    public boolean requiresServer() {
+        return true;
+    }
+
+    @Override
     public void getHint(HintContext hintContext, List<HintResult> out) {
         if(!(hintContext.hitResult() instanceof EntityHitResult entityHitResult)) {
             return;

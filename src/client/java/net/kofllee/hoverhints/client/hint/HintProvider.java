@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface HintProvider {
     String id();
+
+    boolean requiresServer();
+
     public void getHint(HintContext hintContext, List<HintResult> out);
 
     default Text configName() {

@@ -24,6 +24,11 @@ public class VillagerPoiHintProvider implements HintProvider {
     }
 
     @Override
+    public boolean requiresServer() {
+        return true;
+    }
+
+    @Override
     public void getHint(HintContext hintContext, List<HintResult> out) {
         if (!hintContext.heldStack().isOf(Items.EMERALD)) {
             return;

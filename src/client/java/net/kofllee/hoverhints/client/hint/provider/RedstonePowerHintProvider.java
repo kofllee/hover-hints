@@ -21,6 +21,11 @@ public class RedstonePowerHintProvider implements HintProvider {
     }
 
     @Override
+    public boolean requiresServer() {
+        return false;
+    }
+
+    @Override
     public void getHint(HintContext hintContext, List<HintResult> out) {
         if (!(hintContext.hitResult() instanceof BlockHitResult blockHitResult)) {
             return;

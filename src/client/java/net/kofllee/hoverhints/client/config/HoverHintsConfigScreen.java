@@ -101,8 +101,14 @@ public final class HoverHintsConfigScreen {
     ) {
         ProviderConfig providerConfig = config.provider(provider.id());
 
+        Text name = provider.configName();
+
+        if (provider.requiresServer()) {
+            name = name.copy().append(Text.translatable("config.hover_hints.server_only"));
+        }
+
         return entryBuilder.startBooleanToggle(
-                        provider.configName(),
+                        name,
                         providerConfig.enabled
                 )
                 .setDefaultValue(true)
