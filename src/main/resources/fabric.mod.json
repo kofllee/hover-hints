@@ -3,10 +3,12 @@
   "id": "hover_hints",
   "version": "${version}",
   "name": "Hover Hints",
-  "description": "",
-  "authors": [],
-  "contact": {},
-  "license": "All-Rights-Reserved",
+  "description": "Shows small contextual hints for hidden vanilla Minecraft mechanics",
+  "authors": ["apathee"],
+  "contact": {
+    "homepage": "https://modrinth.com/user/apathee"
+  },
+  "license": "MIT",
   "icon": "assets/hover_hints/icon.png",
   "environment": "client",
   "entrypoints": {
@@ -26,10 +28,10 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft_version}",
+    "cloth-config": "*"
   },
   "suggests": {
-    "modmenu": "*",
-    "cloth-config": "*"
+    "modmenu": "*"
   }
 }
