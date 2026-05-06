@@ -41,10 +41,8 @@
     "minecraft:nether_gold_ore",
     "minecraft:nether_quartz_ore",
 
-    "minecraft:gilded_blackstone",
     "minecraft:glowstone",
     "minecraft:grass_block",
-    "minecraft:gravel",
 
     "minecraft:glass",
     "minecraft:white_stained_glass",
@@ -105,8 +103,6 @@
     "minecraft:sculk_shrieker",
     "minecraft:sculk_vein",
 
-    "minecraft:turtle_egg",
-    "minecraft:twisting_vines",
-    "minecraft:weeping_vines"
+    "minecraft:turtle_egg"
   ]
 }

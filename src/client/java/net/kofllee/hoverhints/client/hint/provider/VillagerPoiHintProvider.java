@@ -8,11 +8,14 @@ import net.kofllee.hoverhints.client.villager.VillagerPoiRequestSender;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Items;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.world.poi.PointOfInterestType;
 import net.minecraft.world.poi.PointOfInterestTypes;
 
 import java.util.List;
+import java.util.Optional;
 
 public class VillagerPoiHintProvider implements HintProvider {
     @Override
@@ -32,7 +35,7 @@ public class VillagerPoiHintProvider implements HintProvider {
 
         BlockState state = hintContext.world().getBlockState(blockHit.getBlockPos());
 
-        if (PointOfInterestTypes.getTypeForState(hintContext.world().getBlockState(blockHit.getBlockPos())).isEmpty() && !(state.getBlock() instanceof BedBlock)) {
+        if (!isVillagerPoi(state) && !(state.getBlock() instanceof BedBlock)) {
             return;
         }
 
@@ -52,5 +55,16 @@ public class VillagerPoiHintProvider implements HintProvider {
                                 : "hint.hover_hints.villager_poi_free"
                 ).styled(style -> style.withColor(occupied ? 0xFFAA00 : 0x55FF55))
         ));
+    }
+
+    private static boolean isVillagerPoi(BlockState state) {
+        Optional<RegistryEntry<PointOfInterestType>> poi =
+                PointOfInterestTypes.getTypeForState(state);
+
+        if (poi.isEmpty()) {
+            return false;
+        }
+
+        return poi.get().value().ticketCount() > 0;
     }
 }
