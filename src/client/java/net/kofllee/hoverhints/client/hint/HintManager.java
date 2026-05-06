@@ -19,7 +19,8 @@ public final class HintManager {
             new RedstonePowerHintProvider(),
             new MobLootHintProvider(),
             new ArchaeologyLootHintProvider(),
-            new VillagerPoiHintProvider()
+            new VillagerPoiHintProvider(),
+            new SilkTouchHintProvider()
     );
 
     public List<HintResult> resolve(HintContext hintContext) {
