@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.input.HoverHintKeybinds;
 import net.kofllee.hoverhints.client.hint.render.HintHudRenderer;
+import net.kofllee.hoverhints.client.network.AnimalAgeClientNetworking;
 import net.kofllee.hoverhints.client.network.ArchaeologyLootClientNetworking;
 import net.kofllee.hoverhints.client.network.MobLootClientNetworking;
 import net.kofllee.hoverhints.client.network.VillagerPoiClientNetworking;
@@ -20,6 +21,7 @@ public class HoverHintsClient implements ClientModInitializer {
         MobLootClientNetworking.register();
         ArchaeologyLootClientNetworking.register();
         VillagerPoiClientNetworking.register();
+        AnimalAgeClientNetworking.register();
 
         HoverHintsConfigManager.load();
         HoverHintKeybinds.register();

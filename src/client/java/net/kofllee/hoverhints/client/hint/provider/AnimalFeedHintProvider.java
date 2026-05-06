@@ -1,6 +1,10 @@
 package net.kofllee.hoverhints.client.hint.provider;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.kofllee.hoverhints.client.animal.AnimalAgeRequestSender;
+import net.kofllee.hoverhints.client.animal.ClientAnimalAgeState;
 import net.kofllee.hoverhints.client.hint.*;
+import net.kofllee.hoverhints.network.AnimalAgeRequestPayload;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
@@ -28,6 +32,60 @@ public class AnimalFeedHintProvider implements HintProvider {
 
         if(!animal.isBreedingItem(hintContext.heldStack())){
             return;
+        }
+
+        boolean hasServer = ClientPlayNetworking.canSend(AnimalAgeRequestPayload.ID);
+        if (hasServer) {
+            AnimalAgeRequestSender.request(animal.getId());
+
+            var snapshotOpt = ClientAnimalAgeState.getLive(animal.getId());
+
+            if (snapshotOpt.isPresent()) {
+                var snapshot = snapshotOpt.get();
+
+                int age = snapshot.breedingAge();
+                int loveTicks = snapshot.loveTicks();
+
+                if (age < 0) {
+                    out.add(new HintResult(
+                            HintIcons.HEARTS,
+                            Text.translatable(
+                                    "hint.hover_hints.animal_grows_in",
+                                    HintTimeFormatter.formatTicks(-age)
+                            ).styled(style -> style.withColor(0x55FF55))
+                    ));
+                    return;
+                }
+
+                if (age > 0) {
+                    out.add(new HintResult(
+                            HintIcons.HEARTS,
+                            Text.translatable(
+                                    "hint.hover_hints.animal_breed_cooldown",
+                                    HintTimeFormatter.formatTicks(age)
+                            ).styled(style -> style.withColor(0xFFD966))
+                    ));
+                    return;
+                }
+
+                if (loveTicks > 0) {
+                    out.add(new HintResult(
+                            HintIcons.HEARTS,
+                            Text.translatable(
+                                    "hint.hover_hints.animal_love_time",
+                                    HintTimeFormatter.formatTicks(loveTicks)
+                            ).styled(style -> style.withColor(0xFF5555))
+                    ));
+                    return;
+                }
+
+                out.add(new HintResult(
+                        HintIcons.HEARTS,
+                        Text.translatable("hint.hover_hints.animal_can_breed")
+                                .styled(style -> style.withColor(0xFF5555))
+                ));
+                return;
+            }
         }
 
         if(animal.isBaby()){

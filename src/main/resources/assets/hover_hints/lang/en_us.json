@@ -21,8 +21,11 @@
   "hint.hover_hints.mob_loot_entry_short": "%s-%s, %s%%",
 
   "hint.hover_hints.animal_feed_baby": "Reduce growth time by 10%",
-  "hint.hover_hints.animal_can_breed": "Can feed to breed",
+  "hint.hover_hints.animal_can_breed": "Can breed",
   "hint.hover_hints.animal_can_breed.vanilla_suffix": " (5 min cooldown)",
+  "hint.hover_hints.animal_grows_in": "Grows in %s",
+  "hint.hover_hints.animal_breed_cooldown": "Breed cooldown: %s",
+  "hint.hover_hints.animal_love_time": "Love mode: %s",
 
   "hint.hover_hints.tame_chance": "Tame chance: %s%%",
   "hint.hover_hints.trust_chance": "Trust chance: %s%%",

@@ -36,5 +36,15 @@ public final class HoverHintsPayloads {
                 VillagerPoiResponsePayload.ID,
                 VillagerPoiResponsePayload.CODEC
         );
+
+        PayloadTypeRegistry.playC2S().register(
+                AnimalAgeRequestPayload.ID,
+                AnimalAgeRequestPayload.CODEC
+        );
+
+        PayloadTypeRegistry.playS2C().register(
+                AnimalAgeResponsePayload.ID,
+                AnimalAgeResponsePayload.CODEC
+        );
     }
 }

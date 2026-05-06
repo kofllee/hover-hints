@@ -9,7 +9,8 @@
     "loot.ItemEntryAccessor",
     "loot.SetCountLootFunctionAccessor",
     "loot.EnchantedCountIncreaseLootFunctionAccessor",
-    "archaeology.BrushableBlockEntityAccessor"
+    "archaeology.BrushableBlockEntityAccessor",
+    "animal.AnimalEntityAccessor"
   ],
   "client": [],
   "injectors": {
