@@ -4,10 +4,12 @@ import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HoverHintProviders;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class HoverHintsConfigScreen {
@@ -76,36 +78,36 @@ public final class HoverHintsConfigScreen {
                 )).setExpanded(true).build()
         );
 
-        List<AbstractConfigListEntry> providerEntries = HoverHintProviders.all().stream()
-                .map(provider -> (AbstractConfigListEntry) providerToggle(
-                        entryBuilder,
-                        config,
-                        provider.id(),
-                        Text.translatable("config.hover_hints.provider." + provider.id())
-                ))
-                .toList();
+        List<AbstractConfigListEntry<?>> providerEntries = new ArrayList<>();
+
+        for (HintProvider provider : HoverHintProviders.all()) {
+            providerEntries.add(providerToggle(entryBuilder, config, provider));
+        }
 
         settings.addEntry(
                 entryBuilder.startSubCategory(
                         Text.translatable("config.hover_hints.section.hints"),
-                        providerEntries
+                        (List) providerEntries
                 ).setExpanded(true).build()
         );
 
         return builder.build();
     }
 
-    private static me.shedaniel.clothconfig2.api.AbstractConfigListEntry<Boolean> providerToggle(
+    private static AbstractConfigListEntry<Boolean> providerToggle(
             ConfigEntryBuilder entryBuilder,
             HoverHintsConfig config,
-            String id,
-            Text name) {
-        ProviderConfig providerConfig = config.provider(id);
+            HintProvider provider
+    ) {
+        ProviderConfig providerConfig = config.provider(provider.id());
 
-        return entryBuilder.startBooleanToggle(name, providerConfig.enabled)
+        return entryBuilder.startBooleanToggle(
+                        provider.configName(),
+                        providerConfig.enabled
+                )
                 .setDefaultValue(true)
+                .setTooltip(provider.configDescription())
                 .setSaveConsumer(value -> providerConfig.enabled = value)
                 .build();
-
     }
 }
