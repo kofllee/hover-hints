@@ -4,7 +4,8 @@ import net.minecraft.text.Text;
 
 public enum HintActivationMode {
     HOLD_KEY("hold_key"),
-    ALWAYS("always");
+    ALWAYS("always"),
+    TOGGLE("toggle_key");
 
     private final String key;
 

@@ -1,6 +1,7 @@
 package net.kofllee.hoverhints.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.HoverHintProviders;
 import net.kofllee.hoverhints.client.hint.input.HoverHintKeybinds;
@@ -26,7 +27,10 @@ public class HoverHintsClient implements ClientModInitializer {
         AnimalAgeClientNetworking.register();
 
         HoverHintsConfigManager.load();
+
         HoverHintKeybinds.register();
+        ClientTickEvents.END_CLIENT_TICK.register(client -> HoverHintKeybinds.tick());
+
         HintHudRenderer.register();
 
         HoverHintProviders.register(new ComposterHintProvider());

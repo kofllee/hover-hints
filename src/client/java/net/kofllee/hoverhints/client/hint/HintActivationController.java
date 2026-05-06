@@ -10,9 +10,14 @@ public final class HintActivationController {
     public static boolean shouldShowHints() {
         HoverHintsConfig config = HoverHintsConfigManager.getConfig();
 
-        return switch (config.mode){
+        if (!config.enabled) {
+            return false;
+        }
+
+        return switch (config.mode) {
             case ALWAYS -> true;
-            case HOLD_KEY -> HoverHintKeybinds.isHintModeActive();
+            case HOLD_KEY -> HoverHintKeybinds.isHintModeHeld();
+            case TOGGLE -> HoverHintKeybinds.isHintModeToggled();
         };
     }
 }
