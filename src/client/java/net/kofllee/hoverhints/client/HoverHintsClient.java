@@ -2,6 +2,7 @@ package net.kofllee.hoverhints.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
+import net.kofllee.hoverhints.client.hint.HoverHintProviders;
 import net.kofllee.hoverhints.client.hint.input.HoverHintKeybinds;
 import net.kofllee.hoverhints.client.hint.render.HintHudRenderer;
 import net.kofllee.hoverhints.client.network.AnimalAgeClientNetworking;
@@ -10,6 +11,7 @@ import net.kofllee.hoverhints.client.network.MobLootClientNetworking;
 import net.kofllee.hoverhints.client.network.VillagerPoiClientNetworking;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import net.kofllee.hoverhints.client.hint.provider.*;
 
 public class HoverHintsClient implements ClientModInitializer {
 
@@ -27,5 +29,16 @@ public class HoverHintsClient implements ClientModInitializer {
         HoverHintKeybinds.register();
         HintHudRenderer.register();
 
+        HoverHintProviders.register(new ComposterHintProvider());
+        HoverHintProviders.register(new FuelHintProvider());
+        HoverHintProviders.register(new GrindStoneProvider());
+        HoverHintProviders.register(new BoneMealHintProvider());
+        HoverHintProviders.register(new TameableAnimalHintProvider());
+        HoverHintProviders.register(new AnimalFeedHintProvider());
+        HoverHintProviders.register(new RedstonePowerHintProvider());
+        HoverHintProviders.register(new MobLootHintProvider());
+        HoverHintProviders.register(new ArchaeologyLootHintProvider());
+        HoverHintProviders.register(new VillagerPoiHintProvider());
+        HoverHintProviders.register(new SilkTouchHintProvider());
     }
 }

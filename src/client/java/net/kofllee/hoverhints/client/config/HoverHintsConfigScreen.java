@@ -1,8 +1,10 @@
 package net.kofllee.hoverhints.client.config;
 
+import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import net.kofllee.hoverhints.client.hint.HoverHintProviders;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
@@ -74,20 +76,20 @@ public final class HoverHintsConfigScreen {
                 )).setExpanded(true).build()
         );
 
+        List<AbstractConfigListEntry> providerEntries = HoverHintProviders.all().stream()
+                .map(provider -> (AbstractConfigListEntry) providerToggle(
+                        entryBuilder,
+                        config,
+                        provider.id(),
+                        Text.translatable("config.hover_hints.provider." + provider.id())
+                ))
+                .toList();
+
         settings.addEntry(
-                entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.hints"), List.of(
-                        providerToggle(entryBuilder, config, "composter", Text.translatable("config.hover_hints.provider.composter")),
-                        providerToggle(entryBuilder, config, "fuel", Text.translatable("config.hover_hints.provider.fuel")),
-                        providerToggle(entryBuilder, config, "grindstone", Text.translatable("config.hover_hints.provider.grindstone")),
-                        providerToggle(entryBuilder, config, "bone_meal", Text.translatable("config.hover_hints.provider.bone_meal")),
-                        providerToggle(entryBuilder, config, "animal_feed", Text.translatable("config.hover_hints.provider.animal_feed")),
-                        providerToggle(entryBuilder, config, "tameable_animal", Text.translatable("config.hover_hints.provider.tameable_animal")),
-                        providerToggle(entryBuilder, config, "redstone_power", Text.translatable("config.hover_hints.provider.redstone_power")),
-                        providerToggle(entryBuilder, config, "mob_loot", Text.translatable("config.hover_hints.provider.mob_loot")),
-                        providerToggle(entryBuilder, config, "archaeology_loot", Text.translatable("config.hover_hints.provider.archaeology_loot")),
-                        providerToggle(entryBuilder, config, "villager_poi", Text.translatable("config.hover_hints.provider.villager_poi")),
-                        providerToggle(entryBuilder, config, "silk_touch", Text.translatable("config.hover_hints.provider.silk_touch"))
-                )).setExpanded(true).build()
+                entryBuilder.startSubCategory(
+                        Text.translatable("config.hover_hints.section.hints"),
+                        providerEntries
+                ).setExpanded(true).build()
         );
 
         return builder.build();
