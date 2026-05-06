@@ -46,19 +46,19 @@ Hover Hints can also show useful information for entities, such as taming chance
 
 Hover Hints works fully client-side for mechanics that are already known to the client. Some hints use server-only data, such as loot tables or villager POI ownership, and require Hover Hints to be installed on the server to show accurate results.
 
-| Hint | What it shows | Server required |
-|---|---|---|
-| Composting | Compost chance for the held item when looking at a composter | No |
-| Fuel Burn Time | Burn time for the held item when looking at a furnace, smoker, or blast furnace | No |
-| Grindstone XP | Estimated XP from removing enchantments with a grindstone | No |
-| Bone Meal | Growth effect, chance, stage increase, spreading, or item drop behavior | No |
-| Taming Chance | Taming or trust chance for tameable animals | No |
-| Redstone Power | Current redstone power level of the targeted block | No |
-| Silk Touch Requirement | Whether the targeted block needs Silk Touch to drop itself | No |
-| Animal Feeding | Breeding state, baby growth time, love mode timer, and breeding cooldown | Yes, for exact timers |
-| Mob Loot | Possible drops from the targeted mob | Yes |
-| Archaeology Loot | Possible loot from suspicious sand or suspicious gravel | Yes |
-| Villager POI | Whether a villager workstation, bed, or bell is occupied | Yes |
+| Hint | What it shows | Server installation required |
+|---|---|------------------------------|
+| Composting | Compost chance for the held item when looking at a composter | No                           |
+| Fuel Burn Time | Burn time for the held item when looking at a furnace, smoker, or blast furnace | No                           |
+| Grindstone XP | Estimated XP from removing enchantments with a grindstone | No                           |
+| Bone Meal | Growth effect, chance, stage increase, spreading, or item drop behavior | No                           |
+| Taming Chance | Taming or trust chance for tameable animals | No                           |
+| Redstone Power | Current redstone power level of the targeted block | No                           |
+| Silk Touch Requirement | Whether the targeted block needs Silk Touch to drop itself | No                           |
+| Animal Feeding | Breeding state, baby growth time, love mode timer, and breeding cooldown | Yes, for exact timers        |
+| Mob Loot | Possible drops from the targeted mob | Yes                          |
+| Archaeology Loot | Possible loot from suspicious sand or suspicious gravel | Yes                          |
+| Villager POI | Whether a villager workstation, bed, or bell is occupied | Yes                          |
 
 ## Configuration
 

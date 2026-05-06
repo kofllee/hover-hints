@@ -57,6 +57,7 @@ public final class HoverHintsConfigScreen {
                                         config.renderConfig.anchor
                                 )
                                 .setDefaultValue(HintAnchor.BELOW_CROSSHAIR)
+                                .setEnumNameProvider(HintAnchor::getDisplayName)
                                 .setSaveConsumer(value -> config.renderConfig.anchor = value)
                                 .build(),
 

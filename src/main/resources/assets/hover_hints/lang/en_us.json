@@ -1,4 +1,8 @@
 {
+  "modmenu.nameTranslation.hover_hints": "Hover Hints",
+  "modmenu.descriptionTranslation.hover_hints": "Shows small contextual hints for hidden vanilla Minecraft mechanics",
+  "modmenu.summaryTranslation.hover_hints": "Small contextual hints for hidden vanilla mechanics",
+
   "key.hoverhints.show_hints": "Show Hover Hints",
   "category.hoverhints": "Hover Hints",
 
@@ -34,10 +38,6 @@
   "hint.hover_hints.redstone_unpowered": "Unpowered",
   "hint.hover_hints.redstone_power": "Power: %s",
 
-  "hint.hover_hints.dispenser_uses_item": "Dispenser will use this item",
-  "hint.hover_hints.dispenser_drops_item": "Dispenser will drop this item",
-  "hint.hover_hints.dropper_drops_item": "Dropper only drops items",
-
   "hint.hover_hints.archaeology_loot_entry": "%s%%",
 
   "hint.hover_hints.villager_poi_occupied": "Occupied",
@@ -58,7 +58,18 @@
   "config.hover_hints.activation_mode.always": "Always",
   "config.hover_hints.activation_mode.toggle_key": "Toggle Key",
   "config.hover_hints.section.rendering": "Rendering",
-  "config.hover_hints.anchor": "Anchor",
+
+  "config.hover_hints.anchor": "Hint position",
+
+  "config.hover_hints.anchor.below_crosshair": "Below crosshair",
+  "config.hover_hints.anchor.above_crosshair": "Above crosshair",
+  "config.hover_hints.anchor.screen_top_left": "Top left",
+  "config.hover_hints.anchor.screen_top_center": "Top center",
+  "config.hover_hints.anchor.screen_top_right": "Top right",
+  "config.hover_hints.anchor.screen_center_left": "Center left",
+  "config.hover_hints.anchor.screen_center": "Center",
+  "config.hover_hints.anchor.screen_center_right": "Center right",
+
   "config.hover_hints.offset_x": "Offset X",
   "config.hover_hints.offset_y": "Offset Y",
   "config.hover_hints.section.hints": "Hints",
@@ -96,5 +107,5 @@
   "config.hover_hints.provider.silk_touch": "Silk Touch Requirement",
   "config.hover_hints.provider.silk_touch.desc": "Shows if Silk Touch is required when holding tools",
 
-  "config.hover_hints.server_only": " (server required)"
+  "config.hover_hints.server_only": " (server installation required)"
 }

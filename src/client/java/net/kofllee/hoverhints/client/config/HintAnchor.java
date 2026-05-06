@@ -1,5 +1,9 @@
 package net.kofllee.hoverhints.client.config;
 
+import net.minecraft.text.Text;
+
+import java.util.Locale;
+
 public enum HintAnchor{
     BELOW_CROSSHAIR(0, 4),
     ABOVE_CROSSHAIR(0, -4),
@@ -18,5 +22,9 @@ public enum HintAnchor{
     HintAnchor(int defaultOffsetX, int defaultOffsetY) {
         this.defaultOffsetX = defaultOffsetX;
         this.defaultOffsetY = defaultOffsetY;
+    }
+
+    public static Text getDisplayName(Enum anEnum) {
+        return Text.translatable("config.hover_hints.anchor." + anEnum.name().toLowerCase(Locale.ROOT));
     }
 }

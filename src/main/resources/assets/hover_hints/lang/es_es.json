@@ -1,0 +1,111 @@
+{
+  "modmenu.nameTranslation.hover_hints": "Hover Hints",
+  "modmenu.descriptionTranslation.hover_hints": "Muestra pequeñas pistas contextuales sobre mecánicas ocultas de Minecraft vanilla",
+  "modmenu.summaryTranslation.hover_hints": "Pequeñas pistas contextuales sobre mecánicas ocultas de Minecraft vanilla",
+
+  "key.hoverhints.show_hints": "Mostrar Hover Hints",
+  "category.hoverhints": "Hover Hints",
+
+  "hint.hover_hints.fuel_burn_time": "Tiempo de combustión: %s",
+  "hint.hover_hints.compost_chance": "Probabilidad de compostaje: %s%%",
+  "hint.hover_hints.grindstone_xp": "%s-%s EXP",
+
+  "hint.hover_hints.bone_meal_chance": "Crecimiento: %s%%",
+  "hint.hover_hints.bone_meal_stage_chance": "Crecimiento: %s%% (+%s fases)",
+  "hint.hover_hints.bone_meal_stages": "Crecimiento: +%s-%s fases",
+  "hint.hover_hints.bone_meal_stage_one_value": "Crecimiento: +%s fases",
+  "hint.hover_hints.bone_meal_blocks": "Crecimiento: +%s-%s bloques",
+  "hint.hover_hints.bone_meal_unbounded_blocks": "Crecimiento: %s+ bloques",
+  "hint.hover_hints.bone_meal_blocks_one_value": "Crecimiento: +%s bloques",
+  "hint.hover_hints.bone_meal_generic": "El polvo de hueso funciona aquí",
+  "hint.hover_hints.bone_meal_drops_item": "Suelta un objeto",
+  "hint.hover_hints.bone_meal_taller": "Crece más alto",
+  "hint.hover_hints.bone_meal_spread": "Se propaga cerca",
+
+  "hint.hover_hints.mob_loot_entry_short": "%s-%s, %s%%",
+
+  "hint.hover_hints.animal_feed_baby": "Reduce el tiempo de crecimiento un 10%",
+  "hint.hover_hints.animal_can_breed": "Puede reproducirse",
+  "hint.hover_hints.animal_can_breed.vanilla_suffix": " (recarga de 5 min)",
+  "hint.hover_hints.animal_grows_in": "Crece en %s",
+  "hint.hover_hints.animal_breed_cooldown": "Hasta reproducirse: %s",
+  "hint.hover_hints.animal_love_time": "Modo amor: %s",
+
+  "hint.hover_hints.tame_chance": "Domesticación: %s%%",
+  "hint.hover_hints.trust_chance": "Confianza: %s%%",
+  "hint.hover_hints.ride_to_tame": "Monta para domesticar",
+
+  "hint.hover_hints.redstone_unpowered": "Sin señal",
+  "hint.hover_hints.redstone_power": "Señal: %s",
+
+  "hint.hover_hints.archaeology_loot_entry": "%s%%",
+
+  "hint.hover_hints.villager_poi_occupied": "Ocupado",
+  "hint.hover_hints.villager_poi_free": "Libre",
+
+  "hint.hover_hints.silk_touch": "Necesita Toque de seda",
+
+  "hint.hover_hints.time.seconds": "%ss",
+  "hint.hover_hints.time.minutes": "%smin",
+  "hint.hover_hints.time.minutes_seconds": "%smin %ss",
+
+  "config.hover_hints.title": "Hover Hints",
+  "config.hover_hints.category.settings": "Ajustes",
+  "config.hover_hints.section.general": "General",
+  "config.hover_hints.enabled": "Activado",
+  "config.hover_hints.activation_mode": "Modo de activación",
+  "config.hover_hints.activation_mode.hold_key": "Mantener tecla",
+  "config.hover_hints.activation_mode.always": "Siempre",
+  "config.hover_hints.activation_mode.toggle_key": "Alternar con tecla",
+  "config.hover_hints.section.rendering": "Visualización",
+
+  "config.hover_hints.anchor": "Posición de la pista",
+
+  "config.hover_hints.anchor.below_crosshair": "Debajo de la mira",
+  "config.hover_hints.anchor.above_crosshair": "Encima de la mira",
+  "config.hover_hints.anchor.screen_top_left": "Arriba a la izquierda",
+  "config.hover_hints.anchor.screen_top_center": "Arriba en el centro",
+  "config.hover_hints.anchor.screen_top_right": "Arriba a la derecha",
+  "config.hover_hints.anchor.screen_center_left": "Centro a la izquierda",
+  "config.hover_hints.anchor.screen_center": "Centro",
+  "config.hover_hints.anchor.screen_center_right": "Centro a la derecha",
+
+  "config.hover_hints.offset_x": "Desplazamiento X",
+  "config.hover_hints.offset_y": "Desplazamiento Y",
+  "config.hover_hints.section.hints": "Pistas",
+
+  "config.hover_hints.provider.composter": "Compostador",
+  "config.hover_hints.provider.composter.desc": "Muestra la probabilidad de compostaje al sostener objetos compostables",
+
+  "config.hover_hints.provider.fuel": "Combustible",
+  "config.hover_hints.provider.fuel.desc": "Muestra el tiempo de combustión al sostener combustible y mirar hornos",
+
+  "config.hover_hints.provider.grindstone": "Afiladora",
+  "config.hover_hints.provider.grindstone.desc": "Muestra la experiencia obtenida al sostener objetos encantables",
+
+  "config.hover_hints.provider.bone_meal": "Polvo de hueso",
+  "config.hover_hints.provider.bone_meal.desc": "Muestra el efecto de crecimiento al sostener polvo de hueso y apuntar a plantas",
+
+  "config.hover_hints.provider.animal_feed": "Alimentación de animales",
+  "config.hover_hints.provider.animal_feed.desc": "Muestra el crecimiento y el estado de reproducción al sostener comida válida",
+
+  "config.hover_hints.provider.tameable_animal": "Domesticación",
+  "config.hover_hints.provider.tameable_animal.desc": "Muestra la probabilidad de domesticación al sostener objetos de domesticación",
+
+  "config.hover_hints.provider.redstone_power": "Señal de redstone",
+  "config.hover_hints.provider.redstone_power.desc": "Muestra la intensidad de la señal al sostener polvo de redstone o una antorcha de redstone",
+
+  "config.hover_hints.provider.mob_loot": "Botín de mobs",
+  "config.hover_hints.provider.mob_loot.desc": "Muestra las posibles gotas al apuntar a mobs con un arma",
+
+  "config.hover_hints.provider.archaeology_loot": "Arqueología",
+  "config.hover_hints.provider.archaeology_loot.desc": "Muestra el posible botín al sostener una brocha y apuntar a bloques sospechosos",
+
+  "config.hover_hints.provider.villager_poi": "Puntos de interés de aldeanos",
+  "config.hover_hints.provider.villager_poi.desc": "Muestra si un punto de interés de aldeano (puestos de trabajo, camas o campana) está reclamado",
+
+  "config.hover_hints.provider.silk_touch": "Toque de seda",
+  "config.hover_hints.provider.silk_touch.desc": "Muestra si se necesita Toque de seda al sostener herramientas",
+
+  "config.hover_hints.server_only": " (requiere instalación en el servidor)"
+}

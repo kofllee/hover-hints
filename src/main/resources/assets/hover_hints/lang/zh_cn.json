@@ -1,0 +1,111 @@
+{
+  "modmenu.nameTranslation.hover_hints": "Hover Hints",
+  "modmenu.descriptionTranslation.hover_hints": "显示原版 Minecraft 隐藏机制的小型上下文提示",
+  "modmenu.summaryTranslation.hover_hints": "原版隐藏机制的小型上下文提示",
+
+  "key.hoverhints.show_hints": "显示 Hover Hints",
+  "category.hoverhints": "Hover Hints",
+
+  "hint.hover_hints.fuel_burn_time": "燃烧时间：%s",
+  "hint.hover_hints.compost_chance": "堆肥概率：%s%%",
+  "hint.hover_hints.grindstone_xp": "%s-%s 经验",
+
+  "hint.hover_hints.bone_meal_chance": "生长概率：%s%%",
+  "hint.hover_hints.bone_meal_stage_chance": "生长概率：%s%%（+%s 阶段）",
+  "hint.hover_hints.bone_meal_stages": "生长：+%s-%s 阶段",
+  "hint.hover_hints.bone_meal_stage_one_value": "生长：+%s 阶段",
+  "hint.hover_hints.bone_meal_blocks": "生长：+%s-%s 格",
+  "hint.hover_hints.bone_meal_unbounded_blocks": "生长：%s+ 格",
+  "hint.hover_hints.bone_meal_blocks_one_value": "生长：+%s 格",
+  "hint.hover_hints.bone_meal_generic": "骨粉会生效",
+  "hint.hover_hints.bone_meal_drops_item": "掉落物品",
+  "hint.hover_hints.bone_meal_taller": "会长得更高",
+  "hint.hover_hints.bone_meal_spread": "会向附近扩散",
+
+  "hint.hover_hints.mob_loot_entry_short": "%s-%s，%s%%",
+
+  "hint.hover_hints.animal_feed_baby": "成长时间减少 10%",
+  "hint.hover_hints.animal_can_breed": "可以繁殖",
+  "hint.hover_hints.animal_can_breed.vanilla_suffix": "（5 分钟冷却）",
+  "hint.hover_hints.animal_grows_in": "%s 后长大",
+  "hint.hover_hints.animal_breed_cooldown": "繁殖冷却：%s",
+  "hint.hover_hints.animal_love_time": "求爱模式：%s",
+
+  "hint.hover_hints.tame_chance": "驯服概率：%s%%",
+  "hint.hover_hints.trust_chance": "信任概率：%s%%",
+  "hint.hover_hints.ride_to_tame": "骑上以驯服",
+
+  "hint.hover_hints.redstone_unpowered": "无信号",
+  "hint.hover_hints.redstone_power": "信号强度：%s",
+
+  "hint.hover_hints.archaeology_loot_entry": "%s%%",
+
+  "hint.hover_hints.villager_poi_occupied": "已占用",
+  "hint.hover_hints.villager_poi_free": "空闲",
+
+  "hint.hover_hints.silk_touch": "需要精准采集",
+
+  "hint.hover_hints.time.seconds": "%s秒",
+  "hint.hover_hints.time.minutes": "%s分",
+  "hint.hover_hints.time.minutes_seconds": "%s分 %s秒",
+
+  "config.hover_hints.title": "Hover Hints",
+  "config.hover_hints.category.settings": "设置",
+  "config.hover_hints.section.general": "常规",
+  "config.hover_hints.enabled": "已启用",
+  "config.hover_hints.activation_mode": "显示模式",
+  "config.hover_hints.activation_mode.hold_key": "按住按键",
+  "config.hover_hints.activation_mode.always": "始终显示",
+  "config.hover_hints.activation_mode.toggle_key": "按键切换",
+  "config.hover_hints.section.rendering": "显示",
+
+  "config.hover_hints.anchor": "提示位置",
+
+  "config.hover_hints.anchor.below_crosshair": "准星下方",
+  "config.hover_hints.anchor.above_crosshair": "准星上方",
+  "config.hover_hints.anchor.screen_top_left": "左上角",
+  "config.hover_hints.anchor.screen_top_center": "顶部居中",
+  "config.hover_hints.anchor.screen_top_right": "右上角",
+  "config.hover_hints.anchor.screen_center_left": "中央偏左",
+  "config.hover_hints.anchor.screen_center": "中央",
+  "config.hover_hints.anchor.screen_center_right": "中央偏右",
+
+  "config.hover_hints.offset_x": "X 偏移",
+  "config.hover_hints.offset_y": "Y 偏移",
+  "config.hover_hints.section.hints": "提示",
+
+  "config.hover_hints.provider.composter": "堆肥",
+  "config.hover_hints.provider.composter.desc": "手持可堆肥物品时显示堆肥概率",
+
+  "config.hover_hints.provider.fuel": "燃料燃烧时间",
+  "config.hover_hints.provider.fuel.desc": "手持燃料并看向熔炉时显示燃烧时间",
+
+  "config.hover_hints.provider.grindstone": "砂轮经验",
+  "config.hover_hints.provider.grindstone.desc": "手持可附魔物品时显示移除附魔获得的经验",
+
+  "config.hover_hints.provider.bone_meal": "骨粉效果",
+  "config.hover_hints.provider.bone_meal.desc": "手持骨粉并瞄准植物时显示生长效果",
+
+  "config.hover_hints.provider.animal_feed": "动物喂养",
+  "config.hover_hints.provider.animal_feed.desc": "手持合适食物时显示成长时间和繁殖状态",
+
+  "config.hover_hints.provider.tameable_animal": "驯服概率",
+  "config.hover_hints.provider.tameable_animal.desc": "手持驯服物品时显示驯服概率",
+
+  "config.hover_hints.provider.redstone_power": "红石信号",
+  "config.hover_hints.provider.redstone_power.desc": "手持红石粉或红石火把时显示信号强度",
+
+  "config.hover_hints.provider.mob_loot": "生物掉落",
+  "config.hover_hints.provider.mob_loot.desc": "手持武器瞄准生物时显示可能掉落的物品",
+
+  "config.hover_hints.provider.archaeology_loot": "考古掉落",
+  "config.hover_hints.provider.archaeology_loot.desc": "手持刷子并瞄准可疑方块时显示可能获得的战利品",
+
+  "config.hover_hints.provider.villager_poi": "村民兴趣点",
+  "config.hover_hints.provider.villager_poi.desc": "显示村民兴趣点（工作站点、床、钟）是否已被占用",
+
+  "config.hover_hints.provider.silk_touch": "精准采集需求",
+  "config.hover_hints.provider.silk_touch.desc": "手持工具时显示是否需要精准采集",
+
+  "config.hover_hints.server_only": "（需要安装在服务器上）"
+}

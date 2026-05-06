@@ -1,0 +1,111 @@
+{
+  "modmenu.nameTranslation.hover_hints": "Hover Hints",
+  "modmenu.descriptionTranslation.hover_hints": "Показывает небольшие подсказки для скрытых механик ванильного Minecraft",
+  "modmenu.summaryTranslation.hover_hints": "Небольшие подсказки для скрытых механик ванильного Minecraft",
+
+  "key.hoverhints.show_hints": "Показать Hover Hints",
+  "category.hoverhints": "Hover Hints",
+
+  "hint.hover_hints.fuel_burn_time": "Горит: %s",
+  "hint.hover_hints.compost_chance": "Шанс компоста: %s%%",
+  "hint.hover_hints.grindstone_xp": "%s-%s опыта",
+
+  "hint.hover_hints.bone_meal_chance": "Рост: %s%%",
+  "hint.hover_hints.bone_meal_stage_chance": "Рост: %s%% (+%s стадий)",
+  "hint.hover_hints.bone_meal_stages": "Рост: +%s-%s стадий",
+  "hint.hover_hints.bone_meal_stage_one_value": "Рост: +%s стадий",
+  "hint.hover_hints.bone_meal_blocks": "Рост: +%s-%s блоков",
+  "hint.hover_hints.bone_meal_unbounded_blocks": "Рост: %s+ блоков",
+  "hint.hover_hints.bone_meal_blocks_one_value": "Рост: +%s блоков",
+  "hint.hover_hints.bone_meal_generic": "Костная мука сработает",
+  "hint.hover_hints.bone_meal_drops_item": "Даёт предмет",
+  "hint.hover_hints.bone_meal_taller": "Вырастет выше",
+  "hint.hover_hints.bone_meal_spread": "Распространится рядом",
+
+  "hint.hover_hints.mob_loot_entry_short": "%s-%s, %s%%",
+
+  "hint.hover_hints.animal_feed_baby": "Рост быстрее на 10%",
+  "hint.hover_hints.animal_can_breed": "Можно размножить",
+  "hint.hover_hints.animal_can_breed.vanilla_suffix": " (перезарядка 5 мин)",
+  "hint.hover_hints.animal_grows_in": "Вырастет через %s",
+  "hint.hover_hints.animal_breed_cooldown": "До размножения: %s",
+  "hint.hover_hints.animal_love_time": "Готово к размножению: %s",
+
+  "hint.hover_hints.tame_chance": "Приручение: %s%%",
+  "hint.hover_hints.trust_chance": "Доверие: %s%%",
+  "hint.hover_hints.ride_to_tame": "Сядьте верхом для приручения",
+
+  "hint.hover_hints.redstone_unpowered": "Нет сигнала",
+  "hint.hover_hints.redstone_power": "Сигнал: %s",
+
+  "hint.hover_hints.archaeology_loot_entry": "%s%%",
+
+  "hint.hover_hints.villager_poi_occupied": "Занято",
+  "hint.hover_hints.villager_poi_free": "Свободно",
+
+  "hint.hover_hints.silk_touch": "Нужно Шёлковое касание",
+
+  "hint.hover_hints.time.seconds": "%sс",
+  "hint.hover_hints.time.minutes": "%sм",
+  "hint.hover_hints.time.minutes_seconds": "%sм %sс",
+
+  "config.hover_hints.title": "Hover Hints",
+  "config.hover_hints.category.settings": "Настройки",
+  "config.hover_hints.section.general": "Основное",
+  "config.hover_hints.enabled": "Включено",
+  "config.hover_hints.activation_mode": "Режим показа",
+  "config.hover_hints.activation_mode.hold_key": "По удержанию клавиши",
+  "config.hover_hints.activation_mode.always": "Всегда",
+  "config.hover_hints.activation_mode.toggle_key": "Переключение по клавише",
+  "config.hover_hints.section.rendering": "Отображение",
+
+  "config.hover_hints.anchor": "Позиция подсказки",
+
+  "config.hover_hints.anchor.below_crosshair": "Ниже прицела",
+  "config.hover_hints.anchor.above_crosshair": "Выше прицела",
+  "config.hover_hints.anchor.screen_top_left": "Верхний левый угол",
+  "config.hover_hints.anchor.screen_top_center": "Верхний центр",
+  "config.hover_hints.anchor.screen_top_right": "Верхний правый угол",
+  "config.hover_hints.anchor.screen_center_left": "Центр слева",
+  "config.hover_hints.anchor.screen_center": "Центр",
+  "config.hover_hints.anchor.screen_center_right": "Центр справа",
+
+  "config.hover_hints.offset_x": "Смещение X",
+  "config.hover_hints.offset_y": "Смещение Y",
+  "config.hover_hints.section.hints": "Подсказки",
+
+  "config.hover_hints.provider.composter": "Компостер",
+  "config.hover_hints.provider.composter.desc": "Показывает шанс компостирования для подходящих предметов",
+
+  "config.hover_hints.provider.fuel": "Топливо",
+  "config.hover_hints.provider.fuel.desc": "Показывает время горения топлива при взгляде на печь",
+
+  "config.hover_hints.provider.grindstone": "Точило",
+  "config.hover_hints.provider.grindstone.desc": "Показывает опыт за снятие чар",
+
+  "config.hover_hints.provider.bone_meal": "Костная мука",
+  "config.hover_hints.provider.bone_meal.desc": "Показывает эффект костной муки для растений",
+
+  "config.hover_hints.provider.animal_feed": "Кормление животных",
+  "config.hover_hints.provider.animal_feed.desc": "Показывает рост и размножение при удержании подходящей еды",
+
+  "config.hover_hints.provider.tameable_animal": "Приручение",
+  "config.hover_hints.provider.tameable_animal.desc": "Показывает шанс приручения при удержании подходящих предметов",
+
+  "config.hover_hints.provider.redstone_power": "Редстоун-сигнал",
+  "config.hover_hints.provider.redstone_power.desc": "Показывает силу сигнала при удержании редстоуна или редстоунового факела",
+
+  "config.hover_hints.provider.mob_loot": "Добыча с мобов",
+  "config.hover_hints.provider.mob_loot.desc": "Показывает возможную добычу при наведении на моба с оружием",
+
+  "config.hover_hints.provider.archaeology_loot": "Археология",
+  "config.hover_hints.provider.archaeology_loot.desc": "Показывает возможную добычу при наведении на подозрительный блок с кистью",
+
+  "config.hover_hints.provider.villager_poi": "Точки интереса жителей",
+  "config.hover_hints.provider.villager_poi.desc": "Показывает, занята ли кровать, рабочий блок или колокол",
+
+  "config.hover_hints.provider.silk_touch": "Шёлковое касание",
+  "config.hover_hints.provider.silk_touch.desc": "Показывает, нужно ли Шёлковое касание для блока",
+
+  "config.hover_hints.server_only": " (требуется установка на сервер)"
+}
