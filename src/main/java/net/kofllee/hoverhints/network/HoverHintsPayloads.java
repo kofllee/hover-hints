@@ -26,5 +26,15 @@ public final class HoverHintsPayloads {
                 ArchaeologyLootResponsePayload.ID,
                 ArchaeologyLootResponsePayload.CODEC
         );
+
+        PayloadTypeRegistry.playC2S().register(
+                VillagerPoiRequestPayload.ID,
+                VillagerPoiRequestPayload.CODEC
+        );
+
+        PayloadTypeRegistry.playS2C().register(
+                VillagerPoiResponsePayload.ID,
+                VillagerPoiResponsePayload.CODEC
+        );
     }
 }

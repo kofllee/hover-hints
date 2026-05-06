@@ -18,7 +18,8 @@ public final class HintManager {
             new AnimalFeedHintProvider(),
             new RedstonePowerHintProvider(),
             new MobLootHintProvider(),
-            new ArchaeologyLootHintProvider()
+            new ArchaeologyLootHintProvider(),
+            new VillagerPoiHintProvider()
     );
 
     public List<HintResult> resolve(HintContext hintContext) {

@@ -37,6 +37,9 @@
 
   "hint.hover_hints.archaeology_loot_entry": "%s%%",
 
+  "hint.hover_hints.villager_poi_occupied": "Occupied",
+  "hint.hover_hints.villager_poi_free": "Free",
+
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
@@ -61,5 +64,6 @@
   "config.hover_hints.provider.tameable_animal": "Tameable Animals",
   "config.hover_hints.provider.redstone_power": "Redstone Power",
   "config.hover_hints.provider.mob_loot": "Mob Loot",
-  "config.hover_hints.provider.archaeology_loot": "Archaeology Loot"
+  "config.hover_hints.provider.archaeology_loot": "Archaeology Loot",
+  "config.hover_hints.provider.villager_poi": "Villager POI"
 }
