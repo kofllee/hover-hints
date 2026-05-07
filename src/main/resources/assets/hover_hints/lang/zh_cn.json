@@ -3,8 +3,8 @@
   "modmenu.descriptionTranslation.hover_hints": "显示原版 Minecraft 隐藏机制的小型上下文提示",
   "modmenu.summaryTranslation.hover_hints": "原版隐藏机制的小型上下文提示",
 
-  "key.hoverhints.show_hints": "显示 Hover Hints",
-  "category.hoverhints": "Hover Hints",
+  "key.hover_hints.show_hints": "显示 Hover Hints",
+  "key.category.hover_hints.main": "Hover Hints",
 
   "hint.hover_hints.fuel_burn_time": "燃烧时间：%s",
   "hint.hover_hints.compost_chance": "堆肥概率：%s%%",

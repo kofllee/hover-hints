@@ -6,10 +6,15 @@ import net.kofllee.hoverhints.client.config.HoverHintsConfig;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public final class HoverHintKeybinds {
     public static KeyBinding SHOW_HINTS;
+
+    private static final KeyBinding.Category CATEGORY =
+            KeyBinding.Category.create(Identifier.of("hover_hints", "main"));
+
 
     private static boolean toggled;
 
@@ -17,10 +22,10 @@ public final class HoverHintKeybinds {
 
     public static void register() {
         SHOW_HINTS = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.hoverhints.show_hints",
+                "key.hover_hints.show_hints",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT_ALT,
-                "category.hoverhints"
+                CATEGORY
         ));
     }
 

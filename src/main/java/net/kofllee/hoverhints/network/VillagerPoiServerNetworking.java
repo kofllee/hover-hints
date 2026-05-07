@@ -16,14 +16,14 @@ public final class VillagerPoiServerNetworking {
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(
                 VillagerPoiRequestPayload.ID,
-                (payload, context) -> context.player().server.execute(() ->
+                (payload, context) -> context.server().execute(() ->
                         handle(context.player(), payload)
                 )
         );
     }
 
     private static void handle(ServerPlayerEntity player, VillagerPoiRequestPayload payload) {
-        ServerWorld world = player.getServerWorld();
+        ServerWorld world = player.getEntityWorld();
 
         BlockPos pos = normalizePoiPos(world, payload.pos());
 

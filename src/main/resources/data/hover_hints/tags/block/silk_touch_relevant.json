@@ -103,6 +103,13 @@
     "minecraft:sculk_shrieker",
     "minecraft:sculk_vein",
 
-    "minecraft:turtle_egg"
+    "minecraft:turtle_egg",
+
+    "minecraft:creaking_heart",
+
+    "minecraft:pale_hanging_moss",
+
+    "minecraft:short_dry_grass",
+    "minecraft:tall_dry_grass"
   ]
 }

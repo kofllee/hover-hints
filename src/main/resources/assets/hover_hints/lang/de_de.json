@@ -3,8 +3,8 @@
   "modmenu.descriptionTranslation.hover_hints": "Zeigt kleine kontextbezogene Hinweise zu versteckten Mechaniken im Vanilla-Minecraft",
   "modmenu.summaryTranslation.hover_hints": "Kleine kontextbezogene Hinweise zu versteckten Mechaniken im Vanilla-Minecraft",
 
-  "key.hoverhints.show_hints": "Hover Hints anzeigen",
-  "category.hoverhints": "Hover Hints",
+  "key.hover_hints.show_hints": "Hover Hints anzeigen",
+  "key.category.hover_hints.main": "Hover Hints",
 
   "hint.hover_hints.fuel_burn_time": "Brennt: %s",
   "hint.hover_hints.compost_chance": "Kompostchance: %s%%",

@@ -78,6 +78,26 @@ public final class BoneMealResolver {
             return Optional.of(BoneMealInfo.spread());
         }
 
+        if (block instanceof HangingMossBlock) {
+            return Optional.of(BoneMealInfo.blocks(1, 1));
+        }
+
+        if (block instanceof BushBlock || block instanceof FireflyBushBlock) {
+            return Optional.of(BoneMealInfo.spread());
+        }
+
+        if (block instanceof ShortDryGrassBlock) {
+            return Optional.of(BoneMealInfo.taller());
+        }
+
+        if (block instanceof TallDryGrassBlock) {
+            return Optional.of(BoneMealInfo.spread());
+        }
+
+        if (block instanceof LeafLitterBlock) {
+            return Optional.of(BoneMealInfo.stages(1, 1));
+        }
+
         return Optional.of(BoneMealInfo.generic());
     }
 }

@@ -8,7 +8,6 @@ import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
 import net.minecraft.loot.entry.LootPoolEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
 import net.minecraft.loot.function.LootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
@@ -24,7 +23,7 @@ public final class MobLootCalculator {
     private MobLootCalculator() {}
 
     public static List<MobLootEntry> calculate(ServerWorld world, MobLootKey key) {
-        LootTable table = world.getServer().getReloadableRegistries().getLootTable(key.entityType().getLootTableId());
+        LootTable table = world.getServer().getReloadableRegistries().getLootTable(key.entityType().getLootTableKey().get());
 
         List<MobLootEntry> entries = new ArrayList<>();
 
@@ -102,8 +101,8 @@ public final class MobLootCalculator {
 
                 LootNumberRange bonusRange = LootNumberProviderReader.readIntRange(countProvider);
 
-                int bonusMin = Math.round(bonusRange.min() * lootingLevel);
-                int bonusMax = Math.round(bonusRange.max() * lootingLevel);
+                int bonusMin = bonusRange.min() * lootingLevel;
+                int bonusMax = bonusRange.max() * lootingLevel;
 
                 min += bonusMin;
                 max += bonusMax;
@@ -115,10 +114,6 @@ public final class MobLootCalculator {
                 if (limit > 0) {
                     max = Math.min(max, limit);
                 }
-            }
-
-            if (function instanceof ApplyBonusLootFunction) {
-                continue;
             }
         }
 

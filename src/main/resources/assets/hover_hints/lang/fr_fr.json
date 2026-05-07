@@ -3,8 +3,8 @@
   "modmenu.descriptionTranslation.hover_hints": "Affiche de petites indications contextuelles sur les mécaniques cachées du Minecraft vanilla",
   "modmenu.summaryTranslation.hover_hints": "Petites indications contextuelles sur les mécaniques cachées du Minecraft vanilla",
 
-  "key.hoverhints.show_hints": "Afficher Hover Hints",
-  "category.hoverhints": "Hover Hints",
+  "key.hover_hints.show_hints": "Afficher Hover Hints",
+  "key.category.hover_hints.main": "Hover Hints",
 
   "hint.hover_hints.fuel_burn_time": "Combustion : %s",
   "hint.hover_hints.compost_chance": "Chance de compostage : %s%%",

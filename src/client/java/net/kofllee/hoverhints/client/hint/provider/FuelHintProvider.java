@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.hint.provider;
 
-import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.item.FuelRegistry;
 import net.kofllee.hoverhints.client.hint.*;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -39,9 +39,10 @@ public final class FuelHintProvider implements HintProvider {
             return;
         }
 
-        Integer burnTicks = FuelRegistry.INSTANCE.get(stack.getItem());
+        FuelRegistry fuelRegistry = hintContext.world().getFuelRegistry();
+        int burnTicks = fuelRegistry.getFuelTicks(stack);
 
-        if(burnTicks == null || burnTicks < 0) {
+        if(burnTicks <= 0) {
             return;
         }
 

@@ -12,14 +12,14 @@ public final class AnimalAgeServerNetworking {
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(
                 AnimalAgeRequestPayload.ID,
-                (payload, context) -> context.player().server.execute(() ->
+                (payload, context) -> context.server().execute(() ->
                         handle(context.player(), payload)
                 )
         );
     }
 
     private static void handle(ServerPlayerEntity player, AnimalAgeRequestPayload payload) {
-        Entity entity = player.getServerWorld().getEntityById(payload.entityId());
+        Entity entity = player.getEntityWorld().getEntityById(payload.entityId());
 
         if (!(entity instanceof AnimalEntity animal)) {
             return;

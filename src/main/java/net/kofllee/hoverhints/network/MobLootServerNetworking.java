@@ -20,14 +20,12 @@ public final class MobLootServerNetworking {
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(
                 MobLootRequestPayload.ID,
-                (payload, context) -> {
-                    context.player().server.execute(() -> handle(context.player(), payload));
-                }
+                (payload, context) -> context.server().execute(() -> handle(context.player(), payload))
         );
     }
 
     private static void handle(ServerPlayerEntity player, MobLootRequestPayload payload) {
-        Entity entity = player.getWorld().getEntityById(payload.entityId());
+        Entity entity = player.getEntityWorld().getEntityById(payload.entityId());
 
         if (!(entity instanceof LivingEntity)) {
             return;
@@ -44,7 +42,7 @@ public final class MobLootServerNetworking {
         List<MobLootEntry> entries = ServerMobLootCache.getOrCompute(
                 key,
                 () -> MobLootCalculator.calculate(
-                        player.getServerWorld(),
+                        player.getEntityWorld(),
                         new MobLootKey(
                                 entity.getType(),
                                 weaponItem,

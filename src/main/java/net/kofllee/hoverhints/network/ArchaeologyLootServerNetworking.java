@@ -18,9 +18,7 @@ public final class ArchaeologyLootServerNetworking {
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(
                 ArchaeologyLootRequestPayload.ID,
-                (payload, context) -> {
-                    context.player().server.execute(() -> handle(context.player(), payload));
-                }
+                (payload, context) -> context.server().execute(() -> handle(context.player(), payload))
         );
     }
 
@@ -31,20 +29,20 @@ public final class ArchaeologyLootServerNetworking {
             return;
         }
 
-        var state = player.getWorld().getBlockState(pos);
+        var state = player.getEntityWorld().getBlockState(pos);
 
         if (!state.isOf(Blocks.SUSPICIOUS_SAND) && !state.isOf(Blocks.SUSPICIOUS_GRAVEL)) {
             return;
         }
 
-        BlockEntity blockEntity = player.getWorld().getBlockEntity(pos);
+        BlockEntity blockEntity = player.getEntityWorld().getBlockEntity(pos);
 
         if (!(blockEntity instanceof BrushableBlockEntity brushable)) {
             return;
         }
 
         List<ArchaeologyLootEntry> entries =
-                ArchaeologyLootCalculator.calculate(player.getServerWorld(), brushable);
+                ArchaeologyLootCalculator.calculate(player.getEntityWorld(), brushable);
 
         ServerPlayNetworking.send(
                 player,

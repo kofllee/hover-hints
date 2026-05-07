@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.hint.render;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.kofllee.hoverhints.client.config.HintRenderConfig;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.HintActivationController;
@@ -8,9 +8,11 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintManager;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipBackgroundRenderer;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec2f;
 
 import java.util.List;
@@ -28,7 +30,10 @@ public final class HintHudRenderer {
     private HintHudRenderer(){}
 
     public static void register(){
-        HudRenderCallback.EVENT.register(HintHudRenderer::render);
+        HudElementRegistry.addLast(
+                Identifier.of("hover_hints", "hints"),
+                HintHudRenderer::render
+        );
     }
 
     private static void render(DrawContext drawContext, RenderTickCounter renderTickCounter) {
@@ -116,7 +121,7 @@ public final class HintHudRenderer {
         int contentX = (int) position.x + config.offsetX + TOOLTIP_PADDING;
         int contentY = (int) position.y + config.offsetY + TOOLTIP_PADDING;
 
-        drawContext.getMatrices().push();
+        drawContext.getMatrices().pushMatrix();
 
         TooltipBackgroundRenderer.render(
                 drawContext,
@@ -124,10 +129,8 @@ public final class HintHudRenderer {
                 contentY,
                 contentWidth,
                 contentHeight,
-                400
+                null
         );
-
-        drawContext.getMatrices().translate(0.0F, 0.0F, 400.0F);
 
         int y = contentY;
 
@@ -155,11 +158,12 @@ public final class HintHudRenderer {
                     drawContext.drawItem(result.iconStack(), x, iconY);
                 } else {
                     drawContext.drawTexture(
+                            RenderPipelines.GUI_TEXTURED,
                             result.iconTexture(),
                             x,
                             iconY,
-                            0,
-                            0,
+                            0.0F,
+                            0.0F,
                             iconWidth,
                             iconHeight,
                             iconWidth,
@@ -188,6 +192,6 @@ public final class HintHudRenderer {
             }
         }
 
-        drawContext.getMatrices().pop();
+        drawContext.getMatrices().popMatrix();
     }
 }

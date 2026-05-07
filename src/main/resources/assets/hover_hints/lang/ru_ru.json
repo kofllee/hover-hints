@@ -3,8 +3,8 @@
   "modmenu.descriptionTranslation.hover_hints": "Показывает небольшие подсказки для скрытых механик ванильного Minecraft",
   "modmenu.summaryTranslation.hover_hints": "Небольшие подсказки для скрытых механик ванильного Minecraft",
 
-  "key.hoverhints.show_hints": "Показать Hover Hints",
-  "category.hoverhints": "Hover Hints",
+  "key.hover_hints.show_hints": "Показать Hover Hints",
+  "key.category.hover_hints.main": "Hover Hints",
 
   "hint.hover_hints.fuel_burn_time": "Горит: %s",
   "hint.hover_hints.compost_chance": "Шанс компоста: %s%%",
