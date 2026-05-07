@@ -7,6 +7,10 @@ public final class HoverHintsModMenuIntegration implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        if (!HoverHintsConfigDependencies.hasClothConfig()) {
+            return null;
+        }
+
         return HoverHintsConfigScreen::create;
     }
 }

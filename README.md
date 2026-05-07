@@ -62,6 +62,6 @@ Hover Hints works fully client-side for mechanics that are already known to the 
 
 ## Configuration
 
-The config screen is available through ModMenu or with the `/hoverhints config` command.
+The config screen is available through ModMenu or the `/hoverhints config` command. Cloth Config is required.
 
 ![Config example](assets/readme/config.png)

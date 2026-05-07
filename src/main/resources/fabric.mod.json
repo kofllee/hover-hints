@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "icon": "assets/hover_hints/icon.png",
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "net.kofllee.hoverhints.HoverHints"
@@ -28,10 +28,10 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}",
-    "cloth-config": "*"
+    "minecraft": "${minecraft_version}"
   },
   "suggests": {
-    "modmenu": "*"
+    "modmenu": "*",
+    "cloth-config": "*"
   }
 }
