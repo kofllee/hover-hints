@@ -1,12 +1,10 @@
-# Hover Hints
-
 Hover Hints is a lightweight utility mod that shows small contextual hints for hidden vanilla Minecraft mechanics.
 
-It gives useful information at the moment you need it: when you are holding a relevant item, looking at a matching block or entity, and intentionally asking for a hint.
+It gives useful information exactly when you need it, while you are holding a relevant item, looking at a matching block or entity, and intentionally asking for a hint.
 
 ![Hover Hints preview](assets/readme/hover_hints_preview.gif)
 
-Hover Hints does not add new gameplay mechanics or change vanilla balance. It only reveals information that already exists in Minecraft, such as composting chances, fuel burn time, growth behavior, mob drops, taming chances, and other small details that are usually hidden from the player.
+Hover Hints does not add new gameplay mechanics or change vanilla balance. It only reveals information that already exists in Minecraft.
 
 ## How it works
 
@@ -14,31 +12,21 @@ By default, hints are shown while holding `Left Alt`.
 
 For example, if you hold a compostable item and look at a composter, Hover Hints shows the chance that the item will raise the compost level. If you hold fuel and look at a furnace, it shows how long that fuel will burn. If you hold bone meal and look at a plant, it shows what effect bone meal can have there.
 
-The goal is to keep the information small and readable. Hints are usually one line, use vanilla-style tooltip rendering, and only appear when the current item and target make the information useful.
-
 ## Examples
 
 ### Composting
-
-See the composting chance before using an item.
 
 ![Composting example](assets/readme/composting.gif)
 
 ### Fuel burn time
 
-Check how long an item will burn when looking at a furnace-like block.
-
 ![Fuel example](assets/readme/fuel.gif)
 
 ### Bone meal behavior
 
-See growth chances, stage changes, spreading behavior, or other vanilla bone meal effects depending on the targeted block.
-
 ![Bone meal example](assets/readme/bone_meal.gif)
 
 ### Entity hints
-
-Hover Hints can also show useful information for entities, such as taming chance, breeding state, baby growth time, and possible mob drops.
 
 ![Entity hints example](assets/readme/entity_hints.gif)
 

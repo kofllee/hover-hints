@@ -6,14 +6,20 @@ import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.loot.ClientMobLootCache;
 import net.kofllee.hoverhints.client.loot.MobLootRequestSender;
 import net.kofllee.hoverhints.loot.MobLootEntry;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 
 import java.util.List;
@@ -80,12 +86,21 @@ public class MobLootHintProvider implements HintProvider {
         }
     }
 
-    private boolean isAttackItem(ItemStack stack) {
-        Item item = stack.getItem();
 
-        return item instanceof SwordItem
-                || item instanceof AxeItem
-                || item instanceof TridentItem
-                || item instanceof MaceItem;
+    private boolean isAttackItem(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return false;
+        }
+
+        AttributeModifiersComponent modifiers =
+                stack.getOrDefault(
+                        DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                        AttributeModifiersComponent.DEFAULT
+                );
+
+        return modifiers.modifiers().stream().anyMatch(entry ->
+                entry.attribute().equals(EntityAttributes.GENERIC_ATTACK_DAMAGE)
+                        && entry.modifier().value() > 0
+        );
     }
 }
