@@ -6,6 +6,7 @@ import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.hint.util.AnimalHintItems;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.ZombieHorseEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
@@ -73,11 +74,20 @@ public class TameableAnimalHintProvider implements HintProvider {
             out.add(trustChance(100f));
         }
 
+        if (entity instanceof AbstractNautilusEntity nautilus) {
+            if (nautilus.isTamed() || !nautilus.isBreedingItem(hintContext.heldStack())) {
+                return;
+            }
+
+            out.add(tameChance(33.3f));
+        }
+
         if (entity instanceof HorseEntity ||
                 entity instanceof DonkeyEntity ||
                 entity instanceof MuleEntity ||
                 entity instanceof LlamaEntity ||
-                entity instanceof TraderLlamaEntity) {
+                entity instanceof TraderLlamaEntity ||
+                entity instanceof ZombieHorseEntity) {
             if(((AbstractHorseEntity) entity).isTame()){
                 return;
             }
