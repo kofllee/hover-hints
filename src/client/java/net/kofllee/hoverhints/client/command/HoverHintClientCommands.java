@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.command;
 
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigDependencies;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigScreen;
@@ -12,9 +12,9 @@ public final class HoverHintClientCommands {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            dispatcher.register(ClientCommandManager.literal("hoverhints")
-                    .then(ClientCommandManager.literal("config")
-                            .executes(context -> openConfigScreen())
+            dispatcher.register(ClientCommands.literal("hoverhints")
+                    .then(ClientCommands.literal("config")
+                            .executes(_ -> openConfigScreen())
                     )
             );
         });
@@ -25,9 +25,8 @@ public final class HoverHintClientCommands {
 
         if (!HoverHintsConfigDependencies.hasClothConfig()) {
             if (client.player != null) {
-                client.player.displayClientMessage(
-                        Component.nullToEmpty("Cloth Config is required to open Hover Hints settings."),
-                        false
+                client.gui.getChat().addClientSystemMessage(
+                        Component.literal("Cloth Config is required to open Hover Hints settings.")
                 );
             }
 

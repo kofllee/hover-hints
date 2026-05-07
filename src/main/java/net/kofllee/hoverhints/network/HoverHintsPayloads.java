@@ -4,45 +4,53 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public final class HoverHintsPayloads {
 
+    private static boolean registered = false;
+
     private HoverHintsPayloads() {}
 
     public static void register() {
-        PayloadTypeRegistry.playC2S().register(
+        if (registered) {
+            return;
+        }
+
+        registered = true;
+
+        PayloadTypeRegistry.serverboundPlay().register(
                 MobLootRequestPayload.ID,
                 MobLootRequestPayload.CODEC
         );
 
-        PayloadTypeRegistry.playS2C().register(
+        PayloadTypeRegistry.clientboundPlay().register(
                 MobLootResponsePayload.ID,
                 MobLootResponsePayload.CODEC
         );
 
-        PayloadTypeRegistry.playC2S().register(
+        PayloadTypeRegistry.serverboundPlay().register(
                 ArchaeologyLootRequestPayload.ID,
                 ArchaeologyLootRequestPayload.CODEC
         );
 
-        PayloadTypeRegistry.playS2C().register(
+        PayloadTypeRegistry.clientboundPlay().register(
                 ArchaeologyLootResponsePayload.ID,
                 ArchaeologyLootResponsePayload.CODEC
         );
 
-        PayloadTypeRegistry.playC2S().register(
+        PayloadTypeRegistry.serverboundPlay().register(
                 VillagerPoiRequestPayload.ID,
                 VillagerPoiRequestPayload.CODEC
         );
 
-        PayloadTypeRegistry.playS2C().register(
+        PayloadTypeRegistry.clientboundPlay().register(
                 VillagerPoiResponsePayload.ID,
                 VillagerPoiResponsePayload.CODEC
         );
 
-        PayloadTypeRegistry.playC2S().register(
+        PayloadTypeRegistry.serverboundPlay().register(
                 AnimalAgeRequestPayload.ID,
                 AnimalAgeRequestPayload.CODEC
         );
 
-        PayloadTypeRegistry.playS2C().register(
+        PayloadTypeRegistry.clientboundPlay().register(
                 AnimalAgeResponsePayload.ID,
                 AnimalAgeResponsePayload.CODEC
         );

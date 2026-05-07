@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.hint.input;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.kofllee.hoverhints.client.config.HintActivationMode;
 import net.kofllee.hoverhints.client.config.HoverHintsConfig;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
@@ -21,7 +21,7 @@ public final class HoverHintKeybinds {
     private HoverHintKeybinds() {}
 
     public static void register() {
-        SHOW_HINTS = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+        SHOW_HINTS = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.hover_hints.show_hints",
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT_ALT,

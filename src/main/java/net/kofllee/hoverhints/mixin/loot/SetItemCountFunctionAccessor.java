@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SetItemCountFunction.class)
 public interface SetItemCountFunctionAccessor {
 
-    @Accessor("value")
+    @Accessor("count")
     NumberProvider hoverHints$getValue();
 }

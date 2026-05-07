@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.FireflyBushBlock;
 import net.minecraft.world.level.block.FlowerBedBlock;
-import net.minecraft.world.level.block.FungusBlock;
+import net.minecraft.world.level.block.NetherFungusBlock;
 import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.HangingMossBlock;
 import net.minecraft.world.level.block.KelpBlock;
@@ -57,7 +57,7 @@ public final class BoneMealResolver {
             return Optional.of(BoneMealInfo.chance(45));
         }
 
-        if (block instanceof MushroomBlock || block instanceof FungusBlock) {
+        if (block instanceof MushroomBlock || block instanceof NetherFungusBlock) {
             return Optional.of(BoneMealInfo.chance(40));
         }
 

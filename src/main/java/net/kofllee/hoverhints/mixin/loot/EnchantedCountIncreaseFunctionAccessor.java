@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(EnchantedCountIncreaseFunction.class)
 public interface EnchantedCountIncreaseFunctionAccessor {
 
-    @Accessor("value")
+    @Accessor("count")
     NumberProvider hoverHints$getValue();
 
     @Accessor("limit")

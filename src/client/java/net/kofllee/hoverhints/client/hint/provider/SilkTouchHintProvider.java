@@ -43,8 +43,7 @@ public final class SilkTouchHintProvider implements HintProvider {
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
 
-        if (!state.getBlockHolder()
-                .is(HoverHintBlockTags.SILK_TOUCH_RELEVANT)) {
+        if (!state.is(HoverHintBlockTags.SILK_TOUCH_RELEVANT)) {
             return;
         }
 

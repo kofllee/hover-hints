@@ -9,7 +9,7 @@ import net.kofllee.hoverhints.client.hint.HintManager;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.resources.Identifier;
@@ -36,7 +36,7 @@ public final class HintHudRenderer {
         );
     }
 
-    private static void render(GuiGraphics drawContext, DeltaTracker renderTickCounter) {
+    private static void render(GuiGraphicsExtractor drawContext, DeltaTracker renderTickCounter) {
 
         Minecraft client = Minecraft.getInstance();
 
@@ -71,7 +71,7 @@ public final class HintHudRenderer {
         drawHints(drawContext, client, results);
     }
 
-    private static void drawHints(GuiGraphics drawContext, Minecraft client, List<HintResult> results) {
+    private static void drawHints(GuiGraphicsExtractor drawContext, Minecraft client, List<HintResult> results) {
         HintRenderConfig config = HoverHintsConfigManager.getConfig().renderConfig;
 
         int contentWidth = 0;
@@ -123,7 +123,7 @@ public final class HintHudRenderer {
 
         drawContext.pose().pushMatrix();
 
-        TooltipRenderUtil.renderTooltipBackground(
+        TooltipRenderUtil.extractTooltipBackground(
                 drawContext,
                 contentX,
                 contentY,
@@ -155,7 +155,7 @@ public final class HintHudRenderer {
                 int iconY = y + (lineHeight - iconHeight) / 2;
 
                 if (result.iconStack() != null) {
-                    drawContext.renderItem(result.iconStack(), x, iconY);
+                    drawContext.item(result.iconStack(), x, iconY);
                 } else {
                     drawContext.blit(
                             RenderPipelines.GUI_TEXTURED,
@@ -176,7 +176,7 @@ public final class HintHudRenderer {
 
             int textY = y + Math.round((lineHeight - textHeight) / 2f);
 
-            drawContext.drawString(
+            drawContext.text(
                     client.font,
                     result.text(),
                     textX,
