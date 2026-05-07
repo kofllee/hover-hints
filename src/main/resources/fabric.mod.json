@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "hover_hints",
-  "version": "${version}",
+  "version": "${version}+${minecraft_version}",
   "name": "Hover Hints",
   "description": "Shows small contextual hints for hidden vanilla Minecraft mechanics",
   "authors": ["apathee"],
