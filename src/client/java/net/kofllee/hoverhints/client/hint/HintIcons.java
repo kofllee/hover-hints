@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.hint;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public final class HintIcons {
     public static final Identifier XP_ORB = id("xp_orb");
@@ -11,6 +11,6 @@ public final class HintIcons {
     public static Identifier BONE_MEAL = id("bone_meal");
 
     private static Identifier id(String path) {
-        return Identifier.of("hover_hints", "textures/gui/icons/" + path + ".png");
+        return Identifier.fromNamespaceAndPath("hover_hints", "textures/gui/icons/" + path + ".png");
     }
 }

@@ -4,12 +4,12 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.registry.HoverHintBlockTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.List;
 
@@ -37,21 +37,21 @@ public final class SilkTouchHintProvider implements HintProvider {
             return;
         }
 
-        if(stack.get(DataComponentTypes.TOOL) == null) {
+        if(stack.get(DataComponents.TOOL) == null) {
             return;
         }
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
 
-        if (!state.getRegistryEntry()
-                .isIn(HoverHintBlockTags.SILK_TOUCH_RELEVANT)) {
+        if (!state.getBlockHolder()
+                .is(HoverHintBlockTags.SILK_TOUCH_RELEVANT)) {
             return;
         }
 
         out.add(new HintResult(
-                Items.DIAMOND_PICKAXE.getDefaultStack(),
-                Text.translatable("hint.hover_hints.silk_touch")
-                        .styled(s -> s.withColor(0x55FFFF))
+                Items.DIAMOND_PICKAXE.getDefaultInstance(),
+                Component.translatable("hint.hover_hints.silk_touch")
+                        .withStyle(s -> s.withColor(0x55FFFF))
         ));
     }
 }

@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.villager;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public final class ClientVillagerPoiState {
     private static BlockPos lastPos;

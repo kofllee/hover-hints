@@ -3,11 +3,11 @@ package net.kofllee.hoverhints.network;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.kofllee.hoverhints.archaeology.ArchaeologyLootCalculator;
 import net.kofllee.hoverhints.archaeology.ArchaeologyLootEntry;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BrushableBlockEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
 
 import java.util.List;
 
@@ -22,27 +22,27 @@ public final class ArchaeologyLootServerNetworking {
         );
     }
 
-    private static void handle(ServerPlayerEntity player, ArchaeologyLootRequestPayload payload) {
+    private static void handle(ServerPlayer player, ArchaeologyLootRequestPayload payload) {
         BlockPos pos = payload.pos();
 
-        if (player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) {
+        if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) {
             return;
         }
 
-        var state = player.getEntityWorld().getBlockState(pos);
+        var state = player.level().getBlockState(pos);
 
-        if (!state.isOf(Blocks.SUSPICIOUS_SAND) && !state.isOf(Blocks.SUSPICIOUS_GRAVEL)) {
+        if (!state.is(Blocks.SUSPICIOUS_SAND) && !state.is(Blocks.SUSPICIOUS_GRAVEL)) {
             return;
         }
 
-        BlockEntity blockEntity = player.getEntityWorld().getBlockEntity(pos);
+        BlockEntity blockEntity = player.level().getBlockEntity(pos);
 
         if (!(blockEntity instanceof BrushableBlockEntity brushable)) {
             return;
         }
 
         List<ArchaeologyLootEntry> entries =
-                ArchaeologyLootCalculator.calculate(player.getEntityWorld(), brushable);
+                ArchaeologyLootCalculator.calculate(player.level(), brushable);
 
         ServerPlayNetworking.send(
                 player,

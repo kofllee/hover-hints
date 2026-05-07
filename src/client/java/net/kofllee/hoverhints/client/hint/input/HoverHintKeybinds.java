@@ -4,16 +4,16 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.kofllee.hoverhints.client.config.HintActivationMode;
 import net.kofllee.hoverhints.client.config.HoverHintsConfig;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public final class HoverHintKeybinds {
-    public static KeyBinding SHOW_HINTS;
+    public static KeyMapping SHOW_HINTS;
 
-    private static final KeyBinding.Category CATEGORY =
-            KeyBinding.Category.create(Identifier.of("hover_hints", "main"));
+    private static final KeyMapping.Category CATEGORY =
+            KeyMapping.Category.register(Identifier.fromNamespaceAndPath("hover_hints", "main"));
 
 
     private static boolean toggled;
@@ -21,9 +21,9 @@ public final class HoverHintKeybinds {
     private HoverHintKeybinds() {}
 
     public static void register() {
-        SHOW_HINTS = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        SHOW_HINTS = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.hover_hints.show_hints",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT_ALT,
                 CATEGORY
         ));
@@ -37,13 +37,13 @@ public final class HoverHintKeybinds {
         HoverHintsConfig config = HoverHintsConfigManager.getConfig();
         if(!config.enabled || !config.mode.equals(HintActivationMode.TOGGLE)) return;
 
-        while (SHOW_HINTS.wasPressed()) {
+        while (SHOW_HINTS.consumeClick()) {
             toggled = !toggled;
         }
     }
 
     public static boolean isHintModeHeld() {
-        return SHOW_HINTS != null && SHOW_HINTS.isPressed();
+        return SHOW_HINTS != null && SHOW_HINTS.isDown();
     }
 
     public static boolean isHintModeToggled() {

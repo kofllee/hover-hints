@@ -1,21 +1,22 @@
 package net.kofllee.hoverhints.network;
 
 import net.kofllee.hoverhints.HoverHints;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
+import net.minecraft.resources.Identifier;
 
 public record AnimalAgeResponsePayload(
         int entityId,
         int breedingAge,
         int loveTicks
-) implements CustomPayload {
-    public static final Id<AnimalAgeResponsePayload> ID =
-            new Id<>(Identifier.of(HoverHints.MOD_ID, "animal_age_response"));
+) implements CustomPacketPayload {
+    public static final Type<AnimalAgeResponsePayload> ID =
+            new Type<>(Identifier.fromNamespaceAndPath(HoverHints.MOD_ID, "animal_age_response"));
 
-    public static final PacketCodec<PacketByteBuf, AnimalAgeResponsePayload> CODEC =
-            PacketCodec.of(
+    public static final StreamCodec<FriendlyByteBuf, AnimalAgeResponsePayload> CODEC =
+            StreamCodec.ofMember(
                     (payload, buf) -> {
                         buf.writeInt(payload.entityId());
                         buf.writeInt(payload.breedingAge());
@@ -29,7 +30,7 @@ public record AnimalAgeResponsePayload(
             );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

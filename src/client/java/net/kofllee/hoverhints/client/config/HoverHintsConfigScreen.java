@@ -6,8 +6,8 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HoverHintProviders;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +19,18 @@ public final class HoverHintsConfigScreen {
 
         ConfigBuilder builder =  ConfigBuilder.create()
                 .setParentScreen(parentScreen)
-                .setTitle(Text.translatable("config.hover_hints.title"));
+                .setTitle(Component.translatable("config.hover_hints.title"));
 
         builder.setSavingRunnable(HoverHintsConfigManager::save);
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
-        ConfigCategory settings = builder.getOrCreateCategory(Text.translatable("config.hover_hints.category.settings"));
+        ConfigCategory settings = builder.getOrCreateCategory(Component.translatable("config.hover_hints.category.settings"));
 
         settings.addEntry(
-                entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.general"), List.of(
+                entryBuilder.startSubCategory(Component.translatable("config.hover_hints.section.general"), List.of(
                         entryBuilder.startBooleanToggle(
-                                        Text.translatable("config.hover_hints.enabled"),
+                                        Component.translatable("config.hover_hints.enabled"),
                                         config.enabled
                                 )
                                 .setDefaultValue(true)
@@ -38,7 +38,7 @@ public final class HoverHintsConfigScreen {
                                 .build(),
 
                         entryBuilder.startEnumSelector(
-                                        Text.translatable("config.hover_hints.activation_mode"),
+                                        Component.translatable("config.hover_hints.activation_mode"),
                                         HintActivationMode.class,
                                         config.mode
                                 )
@@ -50,9 +50,9 @@ public final class HoverHintsConfigScreen {
         );
 
         settings.addEntry(
-                entryBuilder.startSubCategory(Text.translatable("config.hover_hints.section.rendering"), List.of(
+                entryBuilder.startSubCategory(Component.translatable("config.hover_hints.section.rendering"), List.of(
                         entryBuilder.startEnumSelector(
-                                        Text.translatable("config.hover_hints.anchor"),
+                                        Component.translatable("config.hover_hints.anchor"),
                                         HintAnchor.class,
                                         config.renderConfig.anchor
                                 )
@@ -62,7 +62,7 @@ public final class HoverHintsConfigScreen {
                                 .build(),
 
                         entryBuilder.startIntField(
-                                        Text.translatable("config.hover_hints.offset_x"),
+                                        Component.translatable("config.hover_hints.offset_x"),
                                         config.renderConfig.offsetX
                                 )
                                 .setDefaultValue(0)
@@ -70,7 +70,7 @@ public final class HoverHintsConfigScreen {
                                 .build(),
 
                         entryBuilder.startIntField(
-                                        Text.translatable("config.hover_hints.offset_y"),
+                                        Component.translatable("config.hover_hints.offset_y"),
                                         config.renderConfig.offsetY
                                 )
                                 .setDefaultValue(0)
@@ -87,7 +87,7 @@ public final class HoverHintsConfigScreen {
 
         settings.addEntry(
                 entryBuilder.startSubCategory(
-                        Text.translatable("config.hover_hints.section.hints"),
+                        Component.translatable("config.hover_hints.section.hints"),
                         providerEntries
                 ).setExpanded(true).build()
         );
@@ -102,10 +102,10 @@ public final class HoverHintsConfigScreen {
     ) {
         ProviderConfig providerConfig = config.provider(provider.id());
 
-        Text name = provider.configName();
+        Component name = provider.configName();
 
         if (provider.requiresServer()) {
-            name = name.copy().append(Text.translatable("config.hover_hints.server_only"));
+            name = name.copy().append(Component.translatable("config.hover_hints.server_only"));
         }
 
         return entryBuilder.startBooleanToggle(

@@ -4,8 +4,8 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigDependencies;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 public final class HoverHintClientCommands {
     private HoverHintClientCommands() {}
@@ -21,12 +21,12 @@ public final class HoverHintClientCommands {
     }
 
     private static int openConfigScreen() {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
 
         if (!HoverHintsConfigDependencies.hasClothConfig()) {
             if (client.player != null) {
-                client.player.sendMessage(
-                        Text.of("Cloth Config is required to open Hover Hints settings."),
+                client.player.displayClientMessage(
+                        Component.nullToEmpty("Cloth Config is required to open Hover Hints settings."),
                         false
                 );
             }
@@ -34,7 +34,7 @@ public final class HoverHintClientCommands {
             return 0;
         }
 
-        client.send(() -> client.setScreen(
+        client.schedule(() -> client.setScreen(
                 HoverHintsConfigScreen.create(null)
         ));
 

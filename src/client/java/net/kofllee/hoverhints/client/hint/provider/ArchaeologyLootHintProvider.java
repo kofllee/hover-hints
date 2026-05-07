@@ -6,12 +6,12 @@ import net.kofllee.hoverhints.client.archaeology.ClientArchaeologyLootCache;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.core.BlockPos;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public final class ArchaeologyLootHintProvider implements HintProvider {
             return;
         }
 
-        if (!hintContext.heldStack().isOf(Items.BRUSH)) {
+        if (!hintContext.heldStack().is(Items.BRUSH)) {
             return;
         }
 
@@ -41,7 +41,7 @@ public final class ArchaeologyLootHintProvider implements HintProvider {
 
         var state = hintContext.world().getBlockState(pos);
 
-        if (!state.isOf(Blocks.SUSPICIOUS_SAND) && !state.isOf(Blocks.SUSPICIOUS_GRAVEL)) {
+        if (!state.is(Blocks.SUSPICIOUS_SAND) && !state.is(Blocks.SUSPICIOUS_GRAVEL)) {
             return;
         }
 
@@ -57,10 +57,10 @@ public final class ArchaeologyLootHintProvider implements HintProvider {
         for (ArchaeologyLootEntry entry : entries) {
             out.add(new HintResult(
                     new ItemStack(entry.item()),
-                    Text.translatable(
+                    Component.translatable(
                             "hint.hover_hints.archaeology_loot_entry",
                             entry.chancePercent()
-                    ).styled(style -> style.withColor(0xD6B36A))
+                    ).withStyle(style -> style.withColor(0xD6B36A))
             ));
         }
     }

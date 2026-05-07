@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.config;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public enum HintActivationMode {
     HOLD_KEY("hold_key"),
@@ -13,7 +13,7 @@ public enum HintActivationMode {
         this.key = key;
     }
 
-    public Text asText() {
-        return Text.translatable("config.hover_hints.activation_mode." + this.key);
+    public Component asText() {
+        return Component.translatable("config.hover_hints.activation_mode." + this.key);
     }
 }

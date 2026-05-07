@@ -1,18 +1,18 @@
 package net.kofllee.hoverhints.archaeology;
 
 import net.kofllee.hoverhints.mixin.archaeology.BrushableBlockEntityAccessor;
-import net.kofllee.hoverhints.mixin.loot.ItemEntryAccessor;
-import net.kofllee.hoverhints.mixin.loot.LeafEntryAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootItemAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootPoolSingletonContainerAccessor;
 import net.kofllee.hoverhints.mixin.loot.LootPoolAccessor;
 import net.kofllee.hoverhints.mixin.loot.LootTableAccessor;
-import net.minecraft.block.entity.BrushableBlockEntity;
-import net.minecraft.item.Item;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LeafEntry;
-import net.minecraft.loot.entry.LootPoolEntry;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,7 +22,7 @@ public final class ArchaeologyLootCalculator {
 
     private ArchaeologyLootCalculator() {}
 
-    public static List<ArchaeologyLootEntry> calculate(ServerWorld world, BrushableBlockEntity blockEntity) {
+    public static List<ArchaeologyLootEntry> calculate(ServerLevel world, BrushableBlockEntity blockEntity) {
         var lootTableKey = ((BrushableBlockEntityAccessor) blockEntity).hoverHints$getLootTable();
 
         if (lootTableKey == null) {
@@ -30,7 +30,7 @@ public final class ArchaeologyLootCalculator {
         }
 
         LootTable table = world.getServer()
-                .getReloadableRegistries()
+                .reloadableRegistries()
                 .getLootTable(lootTableKey);
 
         List<ArchaeologyLootEntry> entries = new ArrayList<>();
@@ -45,7 +45,7 @@ public final class ArchaeologyLootCalculator {
     }
 
     private static void readPool(LootPool pool, List<ArchaeologyLootEntry> out) {
-        List<LootPoolEntry> poolEntries =
+        List<LootPoolEntryContainer> poolEntries =
                 ((LootPoolAccessor) pool).hoverHints$getEntries();
 
         int totalWeight = getTotalWeight(poolEntries);
@@ -54,18 +54,18 @@ public final class ArchaeologyLootCalculator {
             return;
         }
 
-        for (LootPoolEntry poolEntry : poolEntries) {
-            if (!(poolEntry instanceof ItemEntry itemEntry)) {
+        for (LootPoolEntryContainer poolEntry : poolEntries) {
+            if (!(poolEntry instanceof LootItem itemEntry)) {
                 continue;
             }
 
-            int weight = ((LeafEntryAccessor) itemEntry).hoverHints$getWeight();
+            int weight = ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getWeight();
 
             if (weight <= 0) {
                 continue;
             }
 
-            Item item = ((ItemEntryAccessor) itemEntry).hoverHints$getItem().value();
+            Item item = ((LootItemAccessor) itemEntry).hoverHints$getItem().value();
 
             float chancePercent = ((float) weight / (float) totalWeight) * 100.0f;
             chancePercent = Math.round(chancePercent * 10.0f) / 10.0f;
@@ -74,12 +74,12 @@ public final class ArchaeologyLootCalculator {
         }
     }
 
-    private static int getTotalWeight(List<LootPoolEntry> entries) {
+    private static int getTotalWeight(List<LootPoolEntryContainer> entries) {
         int total = 0;
 
-        for (LootPoolEntry entry : entries) {
-            if (entry instanceof LeafEntry) {
-                total += ((LeafEntryAccessor) entry).hoverHints$getWeight();
+        for (LootPoolEntryContainer entry : entries) {
+            if (entry instanceof LootPoolSingletonContainer) {
+                total += ((LootPoolSingletonContainerAccessor) entry).hoverHints$getWeight();
             }
         }
 

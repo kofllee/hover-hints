@@ -1,8 +1,8 @@
 package net.kofllee.hoverhints.loot;
 
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.condition.RandomChanceWithEnchantedBonusLootCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ public final class LootConditionReader {
 
     private LootConditionReader(){}
 
-    public static LootChance readChance(List<LootCondition> conditions, int lootingLevel){
+    public static LootChance readChance(List<LootItemCondition> conditions, int lootingLevel){
         float chance = 1.0f;
 
-        for (LootCondition condition : conditions) {
+        for (LootItemCondition condition : conditions) {
             LootChance conditionChance = readSingleChance(condition, lootingLevel);
 
             if(!conditionChance.known()){
@@ -26,8 +26,8 @@ public final class LootConditionReader {
         return LootChance.known(chance);
     }
 
-    private static LootChance readSingleChance(LootCondition condition, int lootingLevel){
-        if(condition instanceof RandomChanceLootCondition randomChance){
+    private static LootChance readSingleChance(LootItemCondition condition, int lootingLevel){
+        if(condition instanceof LootItemRandomChanceCondition randomChance){
             Float value = LootNumberProviderReader.readConstantFLoat(randomChance.chance());
 
             if(value == null){
@@ -37,8 +37,8 @@ public final class LootConditionReader {
             return LootChance.known(value);
         }
 
-        if(condition instanceof RandomChanceWithEnchantedBonusLootCondition enchantedChance){
-            float chance = lootingLevel > 0 ? enchantedChance.enchantedChance().getValue(lootingLevel) : enchantedChance.unenchantedChance();
+        if(condition instanceof LootItemRandomChanceWithEnchantedBonusCondition enchantedChance){
+            float chance = lootingLevel > 0 ? enchantedChance.enchantedChance().calculate(lootingLevel) : enchantedChance.unenchantedChance();
 
             return LootChance.known(chance);
         }

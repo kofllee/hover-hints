@@ -5,12 +5,12 @@
   "mixins": [
     "loot.LootTableAccessor",
     "loot.LootPoolAccessor",
-    "loot.LeafEntryAccessor",
-    "loot.ItemEntryAccessor",
-    "loot.SetCountLootFunctionAccessor",
-    "loot.EnchantedCountIncreaseLootFunctionAccessor",
+    "loot.LootPoolSingletonContainerAccessor",
+    "loot.LootItemAccessor",
+    "loot.SetItemCountFunctionAccessor",
+    "loot.EnchantedCountIncreaseFunctionAccessor",
     "archaeology.BrushableBlockEntityAccessor",
-    "animal.AnimalEntityAccessor"
+    "animal.AnimalAccessor"
   ],
   "client": [],
   "injectors": {

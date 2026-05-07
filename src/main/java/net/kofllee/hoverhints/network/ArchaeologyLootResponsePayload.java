@@ -1,13 +1,14 @@
 package net.kofllee.hoverhints.network;
 
 import net.kofllee.hoverhints.archaeology.ArchaeologyLootEntry;
-import net.minecraft.item.Item;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
+import net.minecraft.world.item.Item;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +16,19 @@ import java.util.List;
 public record ArchaeologyLootResponsePayload(
         BlockPos pos,
         List<ArchaeologyLootEntry> entries
-) implements CustomPayload {
+) implements CustomPacketPayload {
 
-    public static final CustomPayload.Id<ArchaeologyLootResponsePayload> ID =
-            new CustomPayload.Id<>(Identifier.of("hover_hints", "archaeology_loot_response"));
+    public static final CustomPacketPayload.Type<ArchaeologyLootResponsePayload> ID =
+            new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath("hover_hints", "archaeology_loot_response"));
 
-    public static final PacketCodec<PacketByteBuf, ArchaeologyLootResponsePayload> CODEC =
-            PacketCodec.of(
+    public static final StreamCodec<FriendlyByteBuf, ArchaeologyLootResponsePayload> CODEC =
+            StreamCodec.ofMember(
                     (payload, buf) -> {
                         buf.writeBlockPos(payload.pos());
                         buf.writeVarInt(payload.entries().size());
 
                         for (ArchaeologyLootEntry entry : payload.entries()) {
-                            buf.writeIdentifier(Registries.ITEM.getId(entry.item()));
+                            buf.writeIdentifier(BuiltInRegistries.ITEM.getKey(entry.item()));
                             buf.writeFloat(entry.chancePercent());
                         }
                     },
@@ -39,7 +40,7 @@ public record ArchaeologyLootResponsePayload(
 
                         for (int i = 0; i < size; i++) {
                             Identifier itemId = buf.readIdentifier();
-                            Item item = Registries.ITEM.get(itemId);
+                            Item item = BuiltInRegistries.ITEM.getValue(itemId);
                             float chance = buf.readFloat();
 
                             entries.add(new ArchaeologyLootEntry(item, chance));
@@ -50,7 +51,7 @@ public record ArchaeologyLootResponsePayload(
             );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

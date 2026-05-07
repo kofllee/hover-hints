@@ -5,11 +5,11 @@ import net.kofllee.hoverhints.loot.MobLootCalculator;
 import net.kofllee.hoverhints.loot.MobLootEntry;
 import net.kofllee.hoverhints.loot.MobLootKey;
 import net.kofllee.hoverhints.loot.ServerMobLootCache;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 
@@ -24,14 +24,14 @@ public final class MobLootServerNetworking {
         );
     }
 
-    private static void handle(ServerPlayerEntity player, MobLootRequestPayload payload) {
-        Entity entity = player.getEntityWorld().getEntityById(payload.entityId());
+    private static void handle(ServerPlayer player, MobLootRequestPayload payload) {
+        Entity entity = player.level().getEntity(payload.entityId());
 
         if (!(entity instanceof LivingEntity)) {
             return;
         }
 
-        Item weaponItem = Registries.ITEM.get(payload.weaponItemId());
+        Item weaponItem = BuiltInRegistries.ITEM.getValue(payload.weaponItemId());
 
         MobLootKey key = new MobLootKey(
                 entity.getType(),
@@ -42,7 +42,7 @@ public final class MobLootServerNetworking {
         List<MobLootEntry> entries = ServerMobLootCache.getOrCompute(
                 key,
                 () -> MobLootCalculator.calculate(
-                        player.getEntityWorld(),
+                        player.level(),
                         new MobLootKey(
                                 entity.getType(),
                                 weaponItem,

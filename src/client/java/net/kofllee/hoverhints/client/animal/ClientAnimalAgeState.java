@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.animal;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 import java.util.Optional;
 
@@ -13,22 +13,22 @@ public final class ClientAnimalAgeState {
     private ClientAnimalAgeState() {}
 
     public static void set(int id, int age, int love) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
 
         entityId = id;
         breedingAge = age;
         loveTicks = love;
-        receivedTick = client.world == null ? -1 : client.world.getTime();
+        receivedTick = client.level == null ? -1 : client.level.getGameTime();
     }
 
     public static Optional<AnimalAgeSnapshot> getLive(int id) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
 
-        if (client.world == null || entityId != id || receivedTick < 0) {
+        if (client.level == null || entityId != id || receivedTick < 0) {
             return Optional.empty();
         }
 
-        long passed = client.world.getTime() - receivedTick;
+        long passed = client.level.getGameTime() - receivedTick;
 
         int liveBreedingAge = breedingAge;
 

@@ -1,12 +1,13 @@
 package net.kofllee.hoverhints.network;
 
 import net.kofllee.hoverhints.loot.MobLootEntry;
-import net.minecraft.item.Item;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
+import net.minecraft.world.item.Item;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +15,19 @@ import java.util.List;
 public record MobLootResponsePayload(
         int entityId,
         List<MobLootEntry> entries
-) implements CustomPayload {
+) implements CustomPacketPayload {
 
-    public static final CustomPayload.Id<MobLootResponsePayload> ID =
-            new CustomPayload.Id<>(Identifier.of("hover_hints", "mob_loot_response"));
+    public static final CustomPacketPayload.Type<MobLootResponsePayload> ID =
+            new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath("hover_hints", "mob_loot_response"));
 
-    public static final PacketCodec<PacketByteBuf, MobLootResponsePayload> CODEC =
-            PacketCodec.of(
+    public static final StreamCodec<FriendlyByteBuf, MobLootResponsePayload> CODEC =
+            StreamCodec.ofMember(
                     (payload, buf) -> {
                         buf.writeVarInt(payload.entityId());
                         buf.writeVarInt(payload.entries().size());
 
                         for (MobLootEntry entry : payload.entries()) {
-                            buf.writeIdentifier(Registries.ITEM.getId(entry.item()));
+                            buf.writeIdentifier(BuiltInRegistries.ITEM.getKey(entry.item()));
                             buf.writeVarInt(entry.minCount());
                             buf.writeVarInt(entry.maxCount());
                             buf.writeFloat(entry.chancePercent());
@@ -40,7 +41,7 @@ public record MobLootResponsePayload(
 
                         for (int i = 0; i < size; i++) {
                             Identifier itemId = buf.readIdentifier();
-                            Item item = Registries.ITEM.get(itemId);
+                            Item item = BuiltInRegistries.ITEM.getValue(itemId);
 
                             int min = buf.readVarInt();
                             int max = buf.readVarInt();
@@ -54,7 +55,7 @@ public record MobLootResponsePayload(
             );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

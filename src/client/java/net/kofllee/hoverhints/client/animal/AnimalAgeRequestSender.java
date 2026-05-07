@@ -2,7 +2,7 @@ package net.kofllee.hoverhints.client.animal;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.kofllee.hoverhints.network.AnimalAgeRequestPayload;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public final class AnimalAgeRequestSender {
     private static int lastEntityId = -1;
@@ -11,9 +11,9 @@ public final class AnimalAgeRequestSender {
     private AnimalAgeRequestSender() {}
 
     public static void request(int entityId) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
 
-        if (client.player == null || client.world == null) {
+        if (client.player == null || client.level == null) {
             return;
         }
 
@@ -21,7 +21,7 @@ public final class AnimalAgeRequestSender {
             return;
         }
 
-        long tick = client.world.getTime();
+        long tick = client.level.getGameTime();
 
         if (lastEntityId == entityId && tick - lastRequestTick < 10) {
             return;

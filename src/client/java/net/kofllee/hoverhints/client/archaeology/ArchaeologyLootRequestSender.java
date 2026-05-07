@@ -1,8 +1,8 @@
-    package net.kofllee.hoverhints.client.archaeology;
+package net.kofllee.hoverhints.client.archaeology;
 
     import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
     import net.kofllee.hoverhints.network.ArchaeologyLootRequestPayload;
-    import net.minecraft.util.math.BlockPos;
+    import net.minecraft.core.BlockPos;
 
     import java.util.HashSet;
     import java.util.Set;
@@ -14,7 +14,7 @@
         private ArchaeologyLootRequestSender() {}
 
         public static void request(BlockPos pos) {
-            BlockPos key = pos.toImmutable();
+            BlockPos key = pos.immutable();
 
             if (!REQUESTED.add(key)) {
                 return;

@@ -6,18 +6,19 @@ import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.loot.ClientMobLootCache;
 import net.kofllee.hoverhints.client.loot.MobLootRequestSender;
 import net.kofllee.hoverhints.loot.MobLootEntry;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.*;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.*;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.EntityHitResult;
 
 import java.util.List;
 
@@ -49,13 +50,13 @@ public class MobLootHintProvider implements HintProvider {
         }
 
         int entityId = living.getId();
-        RegistryEntry<Enchantment> lootingEntry =
+        Holder<Enchantment> lootingEntry =
                 hintContext.player()
-                        .getRegistryManager()
-                        .getOrThrow(RegistryKeys.ENCHANTMENT)
+                        .registryAccess()
+                        .lookupOrThrow(Registries.ENCHANTMENT)
                         .getOrThrow(Enchantments.LOOTING);
 
-        int lootingLevel = EnchantmentHelper.getLevel(
+        int lootingLevel = EnchantmentHelper.getItemEnchantmentLevel(
                 lootingEntry,
                 weaponStack
         );
@@ -73,12 +74,12 @@ public class MobLootHintProvider implements HintProvider {
 
             out.add(new HintResult(
                     new ItemStack(entry.item()),
-                    Text.translatable(
+                    Component.translatable(
                             "hint.hover_hints.mob_loot_entry_short",
                             min,
                             max,
                             entry.chancePercent()
-                    ).styled(style -> style.withColor(0xFFD966))
+                    ).withStyle(style -> style.withColor(0xFFD966))
             ));
         }
     }
@@ -89,15 +90,15 @@ public class MobLootHintProvider implements HintProvider {
             return false;
         }
 
-        AttributeModifiersComponent modifiers =
+        ItemAttributeModifiers modifiers =
                 stack.getOrDefault(
-                        DataComponentTypes.ATTRIBUTE_MODIFIERS,
-                        AttributeModifiersComponent.DEFAULT
+                        DataComponents.ATTRIBUTE_MODIFIERS,
+                        ItemAttributeModifiers.EMPTY
                 );
 
         return modifiers.modifiers().stream().anyMatch(entry ->
-                entry.attribute().equals(EntityAttributes.ATTACK_DAMAGE)
-                        && entry.modifier().value() > 0
+                entry.attribute().equals(Attributes.ATTACK_DAMAGE)
+                        && entry.modifier().amount() > 0
         );
     }
 }

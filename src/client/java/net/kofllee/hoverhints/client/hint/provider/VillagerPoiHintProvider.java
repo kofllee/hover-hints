@@ -5,14 +5,14 @@ import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.villager.ClientVillagerPoiState;
 import net.kofllee.hoverhints.client.villager.VillagerPoiRequestSender;
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.world.poi.PointOfInterestType;
-import net.minecraft.world.poi.PointOfInterestTypes;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +30,7 @@ public class VillagerPoiHintProvider implements HintProvider {
 
     @Override
     public void getHint(HintContext hintContext, List<HintResult> out) {
-        if (!hintContext.heldStack().isOf(Items.EMERALD)) {
+        if (!hintContext.heldStack().is(Items.EMERALD)) {
             return;
         }
 
@@ -53,23 +53,23 @@ public class VillagerPoiHintProvider implements HintProvider {
         }
 
         out.add(new HintResult(
-                Items.EMERALD.getDefaultStack(),
-                Text.translatable(
+                Items.EMERALD.getDefaultInstance(),
+                Component.translatable(
                         occupied
                                 ? "hint.hover_hints.villager_poi_occupied"
                                 : "hint.hover_hints.villager_poi_free"
-                ).styled(style -> style.withColor(occupied ? 0xFFAA00 : 0x55FF55))
+                ).withStyle(style -> style.withColor(occupied ? 0xFFAA00 : 0x55FF55))
         ));
     }
 
     private static boolean isVillagerPoi(BlockState state) {
-        Optional<RegistryEntry<PointOfInterestType>> poi =
-                PointOfInterestTypes.getTypeForState(state);
+        Optional<Holder<PoiType>> poi =
+                PoiTypes.forState(state);
 
         if (poi.isEmpty()) {
             return false;
         }
 
-        return poi.get().value().ticketCount() > 0;
+        return poi.get().value().maxTickets() > 0;
     }
 }

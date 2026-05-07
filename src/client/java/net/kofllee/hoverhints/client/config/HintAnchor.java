@@ -1,6 +1,6 @@
 package net.kofllee.hoverhints.client.config;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 import java.util.Locale;
 
@@ -24,7 +24,7 @@ public enum HintAnchor{
         this.defaultOffsetY = defaultOffsetY;
     }
 
-    public static Text getDisplayName(Enum anEnum) {
-        return Text.translatable("config.hover_hints.anchor." + anEnum.name().toLowerCase(Locale.ROOT));
+    public static Component getDisplayName(Enum anEnum) {
+        return Component.translatable("config.hover_hints.anchor." + anEnum.name().toLowerCase(Locale.ROOT));
     }
 }

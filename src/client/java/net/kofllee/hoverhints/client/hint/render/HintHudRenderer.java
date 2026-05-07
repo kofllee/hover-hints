@@ -7,13 +7,13 @@ import net.kofllee.hoverhints.client.hint.HintActivationController;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintManager;
 import net.kofllee.hoverhints.client.hint.HintResult;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.tooltip.TooltipBackgroundRenderer;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec2f;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.Vec2;
 
 import java.util.List;
 
@@ -31,24 +31,24 @@ public final class HintHudRenderer {
 
     public static void register(){
         HudElementRegistry.addLast(
-                Identifier.of("hover_hints", "hints"),
+                Identifier.fromNamespaceAndPath("hover_hints", "hints"),
                 HintHudRenderer::render
         );
     }
 
-    private static void render(DrawContext drawContext, RenderTickCounter renderTickCounter) {
+    private static void render(GuiGraphics drawContext, DeltaTracker renderTickCounter) {
 
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
 
-        if(client.player == null || client.world == null) {
+        if(client.player == null || client.level == null) {
             return;
         }
 
-        if(client.currentScreen != null) {
+        if(client.screen != null) {
             return;
         }
 
-        if(client.crosshairTarget == null) {
+        if(client.hitResult == null) {
             return;
         }
 
@@ -59,9 +59,9 @@ public final class HintHudRenderer {
         HintContext hintContext = new HintContext(
                 client,
                 client.player,
-                client.world,
-                client.crosshairTarget,
-                client.player.getMainHandStack());
+                client.level,
+                client.hitResult,
+                client.player.getMainHandItem());
         List<HintResult> results = HINT_MANAGER.resolve(hintContext);
 
         if(results.isEmpty()) {
@@ -71,7 +71,7 @@ public final class HintHudRenderer {
         drawHints(drawContext, client, results);
     }
 
-    private static void drawHints(DrawContext drawContext, MinecraftClient client, List<HintResult> results) {
+    private static void drawHints(GuiGraphics drawContext, Minecraft client, List<HintResult> results) {
         HintRenderConfig config = HoverHintsConfigManager.getConfig().renderConfig;
 
         int contentWidth = 0;
@@ -80,13 +80,13 @@ public final class HintHudRenderer {
         for(int i = 0; i < results.size(); i++) {
             HintResult result = results.get(i);
 
-            int textWidth = client.textRenderer.getWidth(result.text());
-            int textHeight = client.textRenderer.fontHeight;
+            int textWidth = client.font.width(result.text());
+            int textHeight = client.font.lineHeight;
 
             boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
 
-            Vec2f iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2f.ZERO;
-            iconSize = result.iconStack() != null ? new Vec2f(16, 16) : iconSize;
+            Vec2 iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2.ZERO;
+            iconSize = result.iconStack() != null ? new Vec2(16, 16) : iconSize;
 
             int iconWidth = (int) iconSize.x;
             int iconHeight= (int) iconSize.y;
@@ -106,10 +106,10 @@ public final class HintHudRenderer {
         int hintWidth = contentWidth + TOOLTIP_PADDING * 2;
         int hintHeight = contentHeight + TOOLTIP_PADDING * 2;
 
-        int screenWidth = client.getWindow().getScaledWidth();
-        int screenHeight = client.getWindow().getScaledHeight();
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
 
-        Vec2f position = HintAnchorResolver.resolveAnchor(
+        Vec2 position = HintAnchorResolver.resolveAnchor(
                 config.anchor,
                 client,
                 screenWidth,
@@ -121,9 +121,9 @@ public final class HintHudRenderer {
         int contentX = (int) position.x + config.offsetX + TOOLTIP_PADDING;
         int contentY = (int) position.y + config.offsetY + TOOLTIP_PADDING;
 
-        drawContext.getMatrices().pushMatrix();
+        drawContext.pose().pushMatrix();
 
-        TooltipBackgroundRenderer.render(
+        TooltipRenderUtil.renderTooltipBackground(
                 drawContext,
                 contentX,
                 contentY,
@@ -137,12 +137,12 @@ public final class HintHudRenderer {
         for(int i = 0; i < results.size(); i++) {
             HintResult result = results.get(i);
 
-            int textHeight = client.textRenderer.fontHeight;
+            int textHeight = client.font.lineHeight;
 
             boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
 
-            Vec2f iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2f.ZERO;
-            iconSize = result.iconStack() != null ? new Vec2f(16, 16) : iconSize;
+            Vec2 iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2.ZERO;
+            iconSize = result.iconStack() != null ? new Vec2(16, 16) : iconSize;
 
             int iconWidth = (int) iconSize.x;
             int iconHeight= (int) iconSize.y;
@@ -155,9 +155,9 @@ public final class HintHudRenderer {
                 int iconY = y + (lineHeight - iconHeight) / 2;
 
                 if (result.iconStack() != null) {
-                    drawContext.drawItem(result.iconStack(), x, iconY);
+                    drawContext.renderItem(result.iconStack(), x, iconY);
                 } else {
-                    drawContext.drawTexture(
+                    drawContext.blit(
                             RenderPipelines.GUI_TEXTURED,
                             result.iconTexture(),
                             x,
@@ -176,8 +176,8 @@ public final class HintHudRenderer {
 
             int textY = y + Math.round((lineHeight - textHeight) / 2f);
 
-            drawContext.drawText(
-                    client.textRenderer,
+            drawContext.drawString(
+                    client.font,
                     result.text(),
                     textX,
                     textY,
@@ -192,6 +192,6 @@ public final class HintHudRenderer {
             }
         }
 
-        drawContext.getMatrices().popMatrix();
+        drawContext.pose().popMatrix();
     }
 }

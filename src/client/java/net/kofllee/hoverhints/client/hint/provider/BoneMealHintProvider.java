@@ -6,13 +6,13 @@ import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.hint.util.BoneMealInfo;
 import net.kofllee.hoverhints.client.hint.util.BoneMealResolver;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.core.Direction;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,23 +34,23 @@ public class BoneMealHintProvider implements HintProvider {
             return;
         }
 
-        if (!hintContext.heldStack().isOf(Items.BONE_MEAL)) {
+        if (!hintContext.heldStack().is(Items.BONE_MEAL)) {
             return;
         }
 
         BlockState state = hintContext.world().getBlockState(blockHitResult.getBlockPos());
-        BlockState stateAbove = hintContext.world().getBlockState(blockHitResult.getBlockPos().up());
+        BlockState stateAbove = hintContext.world().getBlockState(blockHitResult.getBlockPos().above());
 
-        if(stateAbove.isOf(Blocks.WATER) && stateAbove.getFluidState().isStill() && state.isSideSolidFullSquare(hintContext.world(), blockHitResult.getBlockPos(), Direction.UP)) {
-            out.add(new HintResult(HintIcons.GROWTH, Text.translatable("hint.hover_hints.bone_meal_generic").styled(style -> style.withColor(0x55FF55))));
+        if(stateAbove.is(Blocks.WATER) && stateAbove.getFluidState().isSource() && state.isFaceSturdy(hintContext.world(), blockHitResult.getBlockPos(), Direction.UP)) {
+            out.add(new HintResult(HintIcons.GROWTH, Component.translatable("hint.hover_hints.bone_meal_generic").withStyle(style -> style.withColor(0x55FF55))));
             return;
         }
 
-        if (!(state.getBlock() instanceof Fertilizable fertilizable)) {
+        if (!(state.getBlock() instanceof BonemealableBlock fertilizable)) {
             return;
         }
 
-        if(!fertilizable.isFertilizable(hintContext.world(), blockHitResult.getBlockPos(), state)) {
+        if(!fertilizable.isValidBonemealTarget(hintContext.world(), blockHitResult.getBlockPos(), state)) {
             return;
         }
 
@@ -60,56 +60,56 @@ public class BoneMealHintProvider implements HintProvider {
             return;
         }
 
-        Text text = toText(info.get());
+        Component text = toText(info.get());
 
-        out.add(new HintResult(HintIcons.GROWTH, text.copy().styled(style -> style.withColor(0x55FF55))));
+        out.add(new HintResult(HintIcons.GROWTH, text.copy().withStyle(style -> style.withColor(0x55FF55))));
     }
 
-    private Text toText(BoneMealInfo info) {
+    private Component toText(BoneMealInfo info) {
         return switch (info.type()) {
-            case GENERIC -> Text.translatable(
+            case GENERIC -> Component.translatable(
                     "hint.hover_hints.bone_meal_generic",
                     info.min(), info.max(), info.chance()
             );
             case STAGES -> info.min() == info.max()
-                    ? Text.translatable(
+                    ? Component.translatable(
                     "hint.hover_hints.bone_meal_stage_one_value",
                     info.min())
-                    : Text.translatable(
+                    : Component.translatable(
                     "hint.hover_hints.bone_meal_stages",
                     info.min(), info.max()
             );
 
             case BLOCKS -> info.min() == info.max()
-                    ? Text.translatable(
+                    ? Component.translatable(
                     "hint.hover_hints.bone_meal_blocks_one_value",
                     info.min())
-                    : Text.translatable(
+                    : Component.translatable(
                     "hint.hover_hints.bone_meal_blocks",
                     info.min(), info.max()
             );
 
-            case UNBOUNDED_BLOCKS -> Text.translatable(
+            case UNBOUNDED_BLOCKS -> Component.translatable(
                     "hint.hover_hints.bone_meal_unbounded_blocks",
                     info.min()
             );
 
-            case CHANCE -> Text.translatable(
+            case CHANCE -> Component.translatable(
                     "hint.hover_hints.bone_meal_chance",
                     info.chance()
             );
 
-            case CHANCE_STAGE -> Text.translatable(
+            case CHANCE_STAGE -> Component.translatable(
                     "hint.hover_hints.bone_meal_stage_chance",
                     info.chance(),
                     info.min()
             );
 
-            case DROPS_ITEM -> Text.translatable("hint.hover_hints.bone_meal_drops_item");
+            case DROPS_ITEM -> Component.translatable("hint.hover_hints.bone_meal_drops_item");
 
-            case TALLER -> Text.translatable("hint.hover_hints.bone_meal_taller");
+            case TALLER -> Component.translatable("hint.hover_hints.bone_meal_taller");
 
-            case SPREAD -> Text.translatable("hint.hover_hints.bone_meal_spread");
+            case SPREAD -> Component.translatable("hint.hover_hints.bone_meal_spread");
         };
     }
 }

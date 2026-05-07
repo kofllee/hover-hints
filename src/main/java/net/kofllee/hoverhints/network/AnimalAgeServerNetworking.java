@@ -1,10 +1,10 @@
 package net.kofllee.hoverhints.network;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.kofllee.hoverhints.mixin.animal.AnimalEntityAccessor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.kofllee.hoverhints.mixin.animal.AnimalAccessor;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.server.level.ServerPlayer;
 
 public final class AnimalAgeServerNetworking {
     private AnimalAgeServerNetworking() {}
@@ -18,10 +18,10 @@ public final class AnimalAgeServerNetworking {
         );
     }
 
-    private static void handle(ServerPlayerEntity player, AnimalAgeRequestPayload payload) {
-        Entity entity = player.getEntityWorld().getEntityById(payload.entityId());
+    private static void handle(ServerPlayer player, AnimalAgeRequestPayload payload) {
+        Entity entity = player.level().getEntity(payload.entityId());
 
-        if (!(entity instanceof AnimalEntity animal)) {
+        if (!(entity instanceof Animal animal)) {
             return;
         }
 
@@ -29,8 +29,8 @@ public final class AnimalAgeServerNetworking {
                 player,
                 new AnimalAgeResponsePayload(
                         payload.entityId(),
-                        animal.getBreedingAge(),
-                        ((AnimalEntityAccessor) animal).hoverHints$getLoveTicks()
+                        animal.getAge(),
+                        ((AnimalAccessor) animal).hoverHints$getInLove()
                 )
         );
     }

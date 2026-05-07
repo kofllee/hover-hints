@@ -5,12 +5,20 @@ import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.hint.util.AnimalHintItems;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.ZombieHorseEntity;
-import net.minecraft.entity.passive.*;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.equine.*;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.TraderLlama;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.animal.feline.Ocelot;
+import net.minecraft.world.entity.animal.fox.Fox;
+import net.minecraft.world.entity.animal.nautilus.AbstractNautilus;
+import net.minecraft.world.entity.animal.parrot.Parrot;
+import net.minecraft.world.entity.animal.wolf.Wolf;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.EntityHitResult;
 
 import java.util.List;
 
@@ -34,68 +42,68 @@ public class TameableAnimalHintProvider implements HintProvider {
 
         Entity entity = entityHitResult.getEntity();
 
-        if (entity instanceof WolfEntity wolf) {
-            if (wolf.isTamed() || !hintContext.heldStack().isOf(Items.BONE)) {
+        if (entity instanceof Wolf wolf) {
+            if (wolf.isTame() || !hintContext.heldStack().is(Items.BONE)) {
                 return;
             }
 
             out.add(tameChance(33.3f));
         }
 
-        if (entity instanceof CatEntity cat) {
-            if (cat.isTamed() || !cat.isBreedingItem(hintContext.heldStack())) {
+        if (entity instanceof Cat cat) {
+            if (cat.isTame() || !cat.isFood(hintContext.heldStack())) {
                 return;
             }
 
             out.add(tameChance(33.3f));
         }
 
-        if (entity instanceof ParrotEntity parrot) {
-            if (parrot.isTamed() || !AnimalHintItems.isParrotTamingItem(hintContext.heldStack())) {
+        if (entity instanceof Parrot parrot) {
+            if (parrot.isTame() || !AnimalHintItems.isParrotTamingItem(hintContext.heldStack())) {
                 return;
             }
 
             out.add(tameChance(10f));
         }
 
-        if (entity instanceof OcelotEntity ocelot) {
-            if (!ocelot.isBreedingItem(hintContext.heldStack())) {
+        if (entity instanceof Ocelot ocelot) {
+            if (!ocelot.isFood(hintContext.heldStack())) {
                 return;
             }
 
             out.add(trustChance(33.3f));
         }
 
-        if (entity instanceof FoxEntity fox) {
-            if (!fox.isBreedingItem(hintContext.heldStack())) {
+        if (entity instanceof Fox fox) {
+            if (!fox.isFood(hintContext.heldStack())) {
                 return;
             }
 
             out.add(trustChance(100f));
         }
 
-        if (entity instanceof AbstractNautilusEntity nautilus) {
-            if (nautilus.isTamed() || !nautilus.isBreedingItem(hintContext.heldStack())) {
+        if (entity instanceof AbstractNautilus nautilus) {
+            if (nautilus.isTame() || !nautilus.isFood(hintContext.heldStack())) {
                 return;
             }
 
             out.add(tameChance(33.3f));
         }
 
-        if (entity instanceof HorseEntity ||
-                entity instanceof DonkeyEntity ||
-                entity instanceof MuleEntity ||
-                entity instanceof LlamaEntity ||
-                entity instanceof TraderLlamaEntity ||
-                entity instanceof ZombieHorseEntity) {
-            if(((AbstractHorseEntity) entity).isTame()){
+        if (entity instanceof Horse ||
+                entity instanceof Donkey ||
+                entity instanceof Mule ||
+                entity instanceof Llama ||
+                entity instanceof TraderLlama ||
+                entity instanceof ZombieHorse) {
+            if(((AbstractHorse) entity).isTamed()){
                 return;
             }
 
             out.add(new HintResult(
                     HintIcons.HEARTS,
-                    Text.translatable("hint.hover_hints.ride_to_tame")
-                            .styled(style -> style.withColor(0xFF5555))
+                    Component.translatable("hint.hover_hints.ride_to_tame")
+                            .withStyle(style -> style.withColor(0xFF5555))
             ));
         }
     }
@@ -103,16 +111,16 @@ public class TameableAnimalHintProvider implements HintProvider {
     private HintResult tameChance(float percent) {
         return new HintResult(
                 HintIcons.HEARTS,
-                Text.translatable("hint.hover_hints.tame_chance", percent)
-                        .styled(style -> style.withColor(0xFF5555))
+                Component.translatable("hint.hover_hints.tame_chance", percent)
+                        .withStyle(style -> style.withColor(0xFF5555))
         );
     }
 
     private HintResult trustChance(float percent) {
         return new HintResult(
                 HintIcons.HEARTS,
-                Text.translatable("hint.hover_hints.trust_chance", percent)
-                        .styled(style -> style.withColor(0xFF5555))
+                Component.translatable("hint.hover_hints.trust_chance", percent)
+                        .withStyle(style -> style.withColor(0xFF5555))
         );
     }
 }

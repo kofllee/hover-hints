@@ -1,7 +1,7 @@
 package net.kofllee.hoverhints.client.archaeology;
 
 import net.kofllee.hoverhints.archaeology.ArchaeologyLootEntry;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ public final class ClientArchaeologyLootCache {
     private ClientArchaeologyLootCache() {}
 
     public static void put(BlockPos pos, List<ArchaeologyLootEntry> entries) {
-        CACHE.put(pos.toImmutable(), entries);
+        CACHE.put(pos.immutable(), entries);
     }
 
     public static List<ArchaeologyLootEntry> get(BlockPos pos) {

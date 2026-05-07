@@ -4,11 +4,11 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public final class ComposterHintProvider implements HintProvider {
             return;
         }
 
-        Float chance = ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.get(stack.getItem());
+        Float chance = ComposterBlock.COMPOSTABLES.get(stack.getItem());
 
         if(chance == null) {
             return;
@@ -49,7 +49,7 @@ public final class ComposterHintProvider implements HintProvider {
 
         int percent = Math.round(chance * 100);
 
-        out.add(new HintResult(HintIcons.BONE_MEAL, Text.translatable("hint.hover_hints.compost_chance", percent).styled(style -> style.withColor(getColor(percent)))));
+        out.add(new HintResult(HintIcons.BONE_MEAL, Component.translatable("hint.hover_hints.compost_chance", percent).withStyle(style -> style.withColor(getColor(percent)))));
     }
 
     private int getColor(int percent) {

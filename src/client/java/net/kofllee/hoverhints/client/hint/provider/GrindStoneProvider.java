@@ -5,16 +5,16 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GrindstoneBlock;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.EnchantmentTags;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.GrindstoneBlock;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Holder;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class GrindStoneProvider implements HintProvider {
 
         ItemStack stack = hintContext.heldStack();
 
-        if(stack.isEmpty() || !stack.hasEnchantments()) {
+        if(stack.isEmpty() || !stack.isEnchanted()) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class GrindStoneProvider implements HintProvider {
             return;
         }
 
-        out.add(new HintResult(HintIcons.XP_ORB, Text.translatable("hint.hover_hints.grindstone_xp", range.min, range.max).styled(style -> style.withColor(0x4ea14c))));
+        out.add(new HintResult(HintIcons.XP_ORB, Component.translatable("hint.hover_hints.grindstone_xp", range.min, range.max).withStyle(style -> style.withColor(0x4ea14c))));
 
     }
 
@@ -72,14 +72,14 @@ public class GrindStoneProvider implements HintProvider {
         private static int getRawExperience(ItemStack stack) {
             int total = 0;
 
-            ItemEnchantmentsComponent enchantments = EnchantmentHelper.getEnchantments(stack);
+            ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(stack);
 
-            for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : enchantments.getEnchantmentEntries()) {
-                RegistryEntry<Enchantment> enchantment = entry.getKey();
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+                Holder<Enchantment> enchantment = entry.getKey();
                 int level = entry.getIntValue();
 
-                if (!enchantment.isIn(EnchantmentTags.CURSE)) {
-                    total += enchantment.value().getMinPower(level);
+                if (!enchantment.is(EnchantmentTags.CURSE)) {
+                    total += enchantment.value().getMinCost(level);
                 }
             }
 

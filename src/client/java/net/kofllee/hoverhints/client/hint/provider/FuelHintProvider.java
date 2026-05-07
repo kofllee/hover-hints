@@ -1,12 +1,12 @@
 package net.kofllee.hoverhints.client.hint.provider;
 
-import net.minecraft.item.FuelRegistry;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.kofllee.hoverhints.client.hint.*;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.List;
 
@@ -39,13 +39,13 @@ public final class FuelHintProvider implements HintProvider {
             return;
         }
 
-        FuelRegistry fuelRegistry = hintContext.world().getFuelRegistry();
-        int burnTicks = fuelRegistry.getFuelTicks(stack);
+        FuelValues fuelRegistry = hintContext.world().fuelValues();
+        int burnTicks = fuelRegistry.burnDuration(stack);
 
         if(burnTicks <= 0) {
             return;
         }
 
-        out.add(new HintResult(HintIcons.FIRE, Text.translatable("hint.hover_hints.fuel_burn_time", HintTimeFormatter.formatTicks(burnTicks)).styled(style -> style.withColor(0xd84c45))));
+        out.add(new HintResult(HintIcons.FIRE, Component.translatable("hint.hover_hints.fuel_burn_time", HintTimeFormatter.formatTicks(burnTicks)).withStyle(style -> style.withColor(0xd84c45))));
     }
 }

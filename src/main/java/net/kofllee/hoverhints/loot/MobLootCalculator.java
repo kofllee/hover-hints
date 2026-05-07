@@ -1,18 +1,24 @@
 package net.kofllee.hoverhints.loot;
 
 import net.kofllee.hoverhints.mixin.loot.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LeafEntry;
-import net.minecraft.loot.entry.LootPoolEntry;
-import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
-import net.minecraft.loot.function.LootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.LootNumberProvider;
-import net.minecraft.server.world.ServerWorld;
+import net.kofllee.hoverhints.mixin.loot.EnchantedCountIncreaseFunctionAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootItemAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootPoolAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootPoolSingletonContainerAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootTableAccessor;
+import net.kofllee.hoverhints.mixin.loot.SetItemCountFunctionAccessor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,8 +28,8 @@ public final class MobLootCalculator {
 
     private MobLootCalculator() {}
 
-    public static List<MobLootEntry> calculate(ServerWorld world, MobLootKey key) {
-        LootTable table = world.getServer().getReloadableRegistries().getLootTable(key.entityType().getLootTableKey().get());
+    public static List<MobLootEntry> calculate(ServerLevel world, MobLootKey key) {
+        LootTable table = world.getServer().reloadableRegistries().getLootTable(key.entityType().getDefaultLootTable().get());
 
         List<MobLootEntry> entries = new ArrayList<>();
 
@@ -37,8 +43,8 @@ public final class MobLootCalculator {
     private static void readPool(LootPool pool, int lootingLevel, List<MobLootEntry> out) {
         LootPoolAccessor accessor = (LootPoolAccessor) pool;
 
-        List<LootPoolEntry> poolEntries = accessor.hoverHints$getEntries();
-        List<LootCondition> poolConditions = accessor.hoverHints$getConditions();
+        List<LootPoolEntryContainer> poolEntries = accessor.hoverHints$getEntries();
+        List<LootItemCondition> poolConditions = accessor.hoverHints$getConditions();
 
         int totalWeight = getTotalWeight(poolEntries);
 
@@ -48,8 +54,8 @@ public final class MobLootCalculator {
 
         LootChance poolChance = LootConditionReader.readChance(poolConditions, lootingLevel);
         
-        for(LootPoolEntry poolEntry : poolEntries){
-            if(!(poolEntry instanceof ItemEntry itemEntry)){
+        for(LootPoolEntryContainer poolEntry : poolEntries){
+            if(!(poolEntry instanceof LootItem itemEntry)){
                 continue;
             }
 
@@ -57,8 +63,8 @@ public final class MobLootCalculator {
         }
     }
 
-    private static void readItemEntry(ItemEntry itemEntry, LootChance poolChance, int totalWeight, int lootingLevel, List<MobLootEntry> out) {
-        int weight = ((LeafEntryAccessor) itemEntry).hoverHints$getWeight();
+    private static void readItemEntry(LootItem itemEntry, LootChance poolChance, int totalWeight, int lootingLevel, List<MobLootEntry> out) {
+        int weight = ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getWeight();
         if(weight <= 0){
             return;
         }
@@ -68,12 +74,12 @@ public final class MobLootCalculator {
 
         LootNumberRange countRange = readCountRange(itemEntry);
 
-        List<LootFunction> functions =
-                ((LeafEntryAccessor) itemEntry).hoverHints$getFunctions();
+        List<LootItemFunction> functions =
+                ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getFunctions();
 
         countRange = applyLooting(countRange, functions, lootingLevel);
 
-        ItemStack stack = new ItemStack(((ItemEntryAccessor) itemEntry).hoverHints$getItem().value());
+        ItemStack stack = new ItemStack(((LootItemAccessor) itemEntry).hoverHints$getItem().value());
 
         float chancePercent = Math.round(finalChance * 1000.0f) / 10.0f;
 
@@ -82,7 +88,7 @@ public final class MobLootCalculator {
 
     private static LootNumberRange applyLooting(
             LootNumberRange baseRange,
-            List<LootFunction> functions,
+            List<LootItemFunction> functions,
             int lootingLevel
     ) {
         if (lootingLevel <= 0) {
@@ -92,12 +98,12 @@ public final class MobLootCalculator {
         int min = baseRange.min();
         int max = baseRange.max();
 
-        for (LootFunction function : functions) {
+        for (LootItemFunction function : functions) {
 
-            if (function instanceof EnchantedCountIncreaseLootFunction enchantedCount) {
-                LootNumberProvider countProvider =
-                        ((EnchantedCountIncreaseLootFunctionAccessor) enchantedCount)
-                                .hoverHints$getCount();
+            if (function instanceof EnchantedCountIncreaseFunction enchantedCount) {
+                NumberProvider countProvider =
+                        ((EnchantedCountIncreaseFunctionAccessor) enchantedCount)
+                                .hoverHints$getValue();
 
                 LootNumberRange bonusRange = LootNumberProviderReader.readIntRange(countProvider);
 
@@ -108,7 +114,7 @@ public final class MobLootCalculator {
                 max += bonusMax;
 
                 int limit =
-                        ((EnchantedCountIncreaseLootFunctionAccessor) enchantedCount)
+                        ((EnchantedCountIncreaseFunctionAccessor) enchantedCount)
                                 .hoverHints$getLimit();
 
                 if (limit > 0) {
@@ -120,22 +126,22 @@ public final class MobLootCalculator {
         return new LootNumberRange(min, max);
     }
 
-    private static LootNumberRange readCountRange(ItemEntry itemEntry) {
-        for(LootFunction function : ((LeafEntryAccessor) itemEntry).hoverHints$getFunctions()){
-            if(function instanceof SetCountLootFunction setCount){
-                return LootNumberProviderReader.readIntRange(((SetCountLootFunctionAccessor)setCount).hoverHints$getCountRange());
+    private static LootNumberRange readCountRange(LootItem itemEntry) {
+        for(LootItemFunction function : ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getFunctions()){
+            if(function instanceof SetItemCountFunction setCount){
+                return LootNumberProviderReader.readIntRange(((SetItemCountFunctionAccessor)setCount).hoverHints$getValue());
             }
         }
 
         return LootNumberRange.one();
     }
 
-    private static int getTotalWeight(List<LootPoolEntry> entries) {
+    private static int getTotalWeight(List<LootPoolEntryContainer> entries) {
         int total = 0;
 
-        for(LootPoolEntry poolEntry : entries){
-            if(poolEntry instanceof LeafEntry) {
-                total += ((LeafEntryAccessor) poolEntry).hoverHints$getWeight();
+        for(LootPoolEntryContainer poolEntry : entries){
+            if(poolEntry instanceof LootPoolSingletonContainer) {
+                total += ((LootPoolSingletonContainerAccessor) poolEntry).hoverHints$getWeight();
             }
         }
 

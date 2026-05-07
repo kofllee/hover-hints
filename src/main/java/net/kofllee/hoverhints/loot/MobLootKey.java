@@ -1,7 +1,7 @@
 package net.kofllee.hoverhints.loot;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 
 public record MobLootKey (
         EntityType<?> entityType,
