@@ -44,4 +44,11 @@ public final class ClientAnimalAgeState {
     }
 
     public record AnimalAgeSnapshot(int breedingAge, int loveTicks) {}
+
+    public static void clear() {
+        entityId = -1;
+        breedingAge = 0;
+        loveTicks = 0;
+        receivedTick = -1;
+    }
 }

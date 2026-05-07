@@ -1,6 +1,5 @@
 package net.kofllee.hoverhints.client.hint.provider;
 
-import net.kofllee.hoverhints.client.HoverHintsClient;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
@@ -56,12 +55,6 @@ public class MobLootHintProvider implements HintProvider {
         int lootingLevel = EnchantmentHelper.getLevel(
                 lootingEntry,
                 weaponStack
-        );
-
-        HoverHintsClient.LOGGER.info("Requesting mob loot info for entity id {} with weapon {} and looting level {}",
-                entityId,
-                weaponStack.getItem().getName().getString(),
-                lootingLevel
         );
 
         MobLootRequestSender.request(entityId, weaponStack, lootingLevel);

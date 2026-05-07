@@ -20,4 +20,9 @@ public final class ClientVillagerPoiState {
 
         return lastOccupied;
     }
+
+    public static void clear() {
+        lastPos = null;
+        lastOccupied = null;
+    }
 }

@@ -79,7 +79,7 @@ public final class HoverHintsConfigScreen {
                 )).setExpanded(true).build()
         );
 
-        List<AbstractConfigListEntry<?>> providerEntries = new ArrayList<>();
+        List<AbstractConfigListEntry> providerEntries = new ArrayList<>();
 
         for (HintProvider provider : HoverHintProviders.all()) {
             providerEntries.add(providerToggle(entryBuilder, config, provider));
@@ -88,7 +88,7 @@ public final class HoverHintsConfigScreen {
         settings.addEntry(
                 entryBuilder.startSubCategory(
                         Text.translatable("config.hover_hints.section.hints"),
-                        (List) providerEntries
+                        providerEntries
                 ).setExpanded(true).build()
         );
 
