@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.kofllee.hoverhints.client.animal.ClientAnimalAgeState;
 import net.kofllee.hoverhints.client.archaeology.ClientArchaeologyLootCache;
+import net.kofllee.hoverhints.client.archaeology.ClientArchaeologyState;
 import net.kofllee.hoverhints.client.command.HoverHintClientCommands;
 import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.kofllee.hoverhints.client.hint.HoverHintProviders;
@@ -56,7 +57,7 @@ public class HoverHintsClient implements ClientModInitializer {
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             ClientAnimalAgeState.clear();
             ClientMobLootCache.clear();
-            ClientArchaeologyLootCache.clear();
+            ClientArchaeologyState.clear();
             ClientVillagerPoiState.clear();
         });
     }
