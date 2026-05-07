@@ -2,7 +2,7 @@ Hover Hints is a lightweight utility mod that shows small contextual hints for h
 
 It gives useful information exactly when you need it, while you are holding a relevant item, looking at a matching block or entity, and intentionally asking for a hint.
 
-![Hover Hints preview](assets/readme/hover_hints_preview.gif)
+![Hover Hints preview](https://cdn.modrinth.com/data/cached_images/2d93e8366e1c5e1298085245cf857c5385bbedbd.gif)
 
 Hover Hints does not add new gameplay mechanics or change vanilla balance. It only reveals information that already exists in Minecraft.
 
@@ -15,20 +15,16 @@ For example, if you hold a compostable item and look at a composter, Hover Hints
 ## Examples
 
 ### Composting
-
-![Composting example](assets/readme/composting.gif)
+![Composting Example](https://cdn.modrinth.com/data/cached_images/b4b9089e0bdd90023f361e5869bef0768028a0ca.png)
 
 ### Fuel burn time
-
-![Fuel example](assets/readme/fuel.gif)
+![Fuel Example](https://cdn.modrinth.com/data/cached_images/c25f635f5cd8b7d01e0eb21c0ae5d9b534341c53.png)
 
 ### Bone meal behavior
-
-![Bone meal example](assets/readme/bone_meal.gif)
+![Bone Meal Example](https://cdn.modrinth.com/data/cached_images/120dfcc02317809e33ea1ea98560f212aa32e9d1.png)
 
 ### Entity hints
-
-![Entity hints example](assets/readme/entity_hints.gif)
+![Entity Hints Example](https://cdn.modrinth.com/data/cached_images/95578fb26f43f636d4d9ce025b2de98d2b6013a5.png)
 
 ## Available hints
 
@@ -52,4 +48,4 @@ Hover Hints works fully client-side for mechanics that are already known to the 
 
 The config screen is available through ModMenu or the `/hoverhints config` command. Cloth Config is required.
 
-![Config example](assets/readme/config.png)
+![Config Menu](https://cdn.modrinth.com/data/cached_images/85c3a4b03176bec671c22e3d0d4ca2a8f7ecb0bb.png)
