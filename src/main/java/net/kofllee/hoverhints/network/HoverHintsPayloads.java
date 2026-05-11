@@ -3,10 +3,17 @@ package net.kofllee.hoverhints.network;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public final class HoverHintsPayloads {
+    private static boolean registered = false;
 
     private HoverHintsPayloads() {}
 
     public static void register() {
+        if (registered) {
+            return;
+        }
+
+        registered = true;
+
         PayloadTypeRegistry.playC2S().register(
                 MobLootRequestPayload.ID,
                 MobLootRequestPayload.CODEC
