@@ -6,6 +6,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 
 public final class HoverHintsConfigManager {
@@ -32,14 +33,39 @@ public final class HoverHintsConfigManager {
         try{
             config = GSON.fromJson(Files.readString(CONFIG_PATH), HoverHintsConfig.class);
 
-            if(config ==  null){
-                config = new HoverHintsConfig();
-            }
-
+            validateConfig();
             save();
+
         } catch(IOException e) {
             config = new HoverHintsConfig();
+            save();
         }
+    }
+
+    private static void validateConfig() {
+        if (config == null) {
+            config = new HoverHintsConfig();
+        }
+
+        if (config.mode == null) {
+            config.mode = HintActivationMode.HOLD_KEY;
+        }
+
+        if (config.renderConfig == null) {
+            config.renderConfig = new HintRenderConfig();
+        }
+
+        if (config.renderConfig.anchor == null) {
+            config.renderConfig.anchor = HintAnchor.BELOW_CROSSHAIR;
+        }
+
+        if (config.providers == null) {
+            config.providers = new HashMap<>();
+        }
+
+        config.providers.entrySet().removeIf(entry ->
+                entry.getKey() == null || entry.getValue() == null
+        );
     }
 
     public static void save(){
