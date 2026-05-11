@@ -49,6 +49,8 @@
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
 
+  "hint.hover_hints.more": "+%s more",
+
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "Settings",
   "config.hover_hints.section.general": "General",
@@ -72,6 +74,10 @@
 
   "config.hover_hints.offset_x": "Offset X",
   "config.hover_hints.offset_y": "Offset Y",
+
+  "config.hover_hints.max_hint_columns": "Max hint columns",
+  "config.hover_hints.max_hint_rows": "Max hint rows",
+
   "config.hover_hints.section.hints": "Hints",
 
   "config.hover_hints.provider.composter": "Composting",

@@ -54,11 +54,20 @@ public class HoverHintsClient implements ClientModInitializer {
         HoverHintProviders.register(new ArchaeologyLootHintProvider());
         HoverHintProviders.register(new VillagerPoiHintProvider());
 
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
-            ClientAnimalAgeState.clear();
-            ClientMobLootCache.clear();
-            ClientArchaeologyState.clear();
-            ClientVillagerPoiState.clear();
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            clearClientWorldState();
         });
+
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            clearClientWorldState();
+        });
+    }
+
+    private static void clearClientWorldState() {
+        ClientAnimalAgeState.clear();
+        ClientMobLootCache.clear();
+        ClientArchaeologyState.clear();
+        ClientArchaeologyLootCache.clear();
+        ClientVillagerPoiState.clear();
     }
 }

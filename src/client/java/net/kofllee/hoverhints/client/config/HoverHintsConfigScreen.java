@@ -75,6 +75,26 @@ public final class HoverHintsConfigScreen {
                                 )
                                 .setDefaultValue(0)
                                 .setSaveConsumer(value -> config.renderConfig.offsetY = value)
+                                .build(),
+
+                        entryBuilder.startIntSlider(
+                                        Text.translatable("config.hover_hints.max_hint_rows"),
+                                        config.renderConfig.maxHintRows,
+                                        1,
+                                        20
+                                )
+                                .setDefaultValue(4)
+                                .setSaveConsumer(value -> config.renderConfig.maxHintRows = value)
+                                .build(),
+
+                        entryBuilder.startIntSlider(
+                                        Text.translatable("config.hover_hints.max_hint_columns"),
+                                        config.renderConfig.maxHintColumns,
+                                        1,
+                                        20
+                                )
+                                .setDefaultValue(8)
+                                .setSaveConsumer(value -> config.renderConfig.maxHintColumns = value)
                                 .build()
                 )).setExpanded(true).build()
         );
