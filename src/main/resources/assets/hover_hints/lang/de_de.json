@@ -49,6 +49,8 @@
   "hint.hover_hints.time.minutes": "%s min",
   "hint.hover_hints.time.minutes_seconds": "%s min %s s",
 
+  "hint.hover_hints.more": "+%s mehr",
+
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "Einstellungen",
   "config.hover_hints.section.general": "Allgemein",
@@ -73,6 +75,9 @@
   "config.hover_hints.offset_x": "X-Versatz",
   "config.hover_hints.offset_y": "Y-Versatz",
   "config.hover_hints.section.hints": "Hinweise",
+
+  "config.hover_hints.max_hint_columns": "Maximale Anzahl an Spalten",
+  "config.hover_hints.max_hint_rows": "Maximale Anzahl an Zeilen",
 
   "config.hover_hints.provider.composter": "Komposter",
   "config.hover_hints.provider.composter.desc": "Zeigt die Kompostchance für geeignete Gegenstände",

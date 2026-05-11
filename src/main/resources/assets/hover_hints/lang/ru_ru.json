@@ -49,6 +49,8 @@
   "hint.hover_hints.time.minutes": "%sм",
   "hint.hover_hints.time.minutes_seconds": "%sм %sс",
 
+  "hint.hover_hints.more": "+%s ещё",
+
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "Настройки",
   "config.hover_hints.section.general": "Основное",
@@ -73,6 +75,9 @@
   "config.hover_hints.offset_x": "Смещение X",
   "config.hover_hints.offset_y": "Смещение Y",
   "config.hover_hints.section.hints": "Подсказки",
+
+  "config.hover_hints.max_hint_columns": "Максимальное число столбцов",
+  "config.hover_hints.max_hint_rows": "Максимальное число строк",
 
   "config.hover_hints.provider.composter": "Компостер",
   "config.hover_hints.provider.composter.desc": "Показывает шанс компостирования для подходящих предметов",
