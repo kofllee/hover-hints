@@ -17,6 +17,7 @@ import net.kofllee.hoverhints.client.network.ArchaeologyLootClientNetworking;
 import net.kofllee.hoverhints.client.network.MobLootClientNetworking;
 import net.kofllee.hoverhints.client.network.VillagerPoiClientNetworking;
 import net.kofllee.hoverhints.client.villager.ClientVillagerPoiState;
+import net.kofllee.hoverhints.network.HoverHintsPayloads;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import net.kofllee.hoverhints.client.hint.provider.*;
@@ -27,6 +28,8 @@ public class HoverHintsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         LOGGER.info("HoverHints client initialized");
+
+        HoverHintsPayloads.register();
 
         MobLootClientNetworking.register();
         ArchaeologyLootClientNetworking.register();
