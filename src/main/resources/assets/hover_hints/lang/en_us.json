@@ -75,8 +75,8 @@
   "config.hover_hints.offset_x": "Offset X",
   "config.hover_hints.offset_y": "Offset Y",
 
-  "config.hover_hints.max_hint_columns": "Max hint columns",
-  "config.hover_hints.max_hint_rows": "Max hint rows",
+  "config.hover_hints.max_hint_columns": "Maximum number of columns",
+  "config.hover_hints.max_hint_rows": "Maximum number of rows",
 
   "config.hover_hints.section.hints": "Hints",
 
