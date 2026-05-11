@@ -7,14 +7,16 @@ import net.kofllee.hoverhints.client.hint.HintActivationController;
 import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintManager;
 import net.kofllee.hoverhints.client.hint.HintResult;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
-import net.minecraft.client.DeltaTracker;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class HintHudRenderer {
@@ -23,82 +25,86 @@ public final class HintHudRenderer {
 
     private static final int TOOLTIP_PADDING = 4;
     private static final int LINE_GAP = 1;
-
     private static final int ICON_GAP = 4;
-    
 
-    private HintHudRenderer(){}
+    public static final int COLUMN_GAP = 4;
 
-    public static void register(){
-        HudElementRegistry.addLast(
-                Identifier.fromNamespaceAndPath("hover_hints", "hints"),
-                HintHudRenderer::render
-        );
+    private HintHudRenderer() {}
+
+    public static void register() {
+        HudElementRegistry.addLast(Identifier.fromNamespaceAndPath("hover_hints", "hints"),
+                HintHudRenderer::render);
     }
 
-    private static void render(GuiGraphics drawContext, DeltaTracker renderTickCounter) {
+    private static void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
+        Minecraft minecraft = Minecraft.getInstance();
 
-        Minecraft client = Minecraft.getInstance();
-
-        if(client.player == null || client.level == null) {
+        if (minecraft.player == null || minecraft.level == null) {
             return;
         }
 
-        if(client.screen != null) {
+        if (minecraft.screen != null) {
             return;
         }
 
-        if(client.hitResult == null) {
+        if (minecraft.hitResult == null) {
             return;
         }
 
-        if(!HintActivationController.shouldShowHints()) {
+        if (!HintActivationController.shouldShowHints()) {
             return;
         }
 
         HintContext hintContext = new HintContext(
-                client,
-                client.player,
-                client.level,
-                client.hitResult,
-                client.player.getMainHandItem());
+                minecraft,
+                minecraft.player,
+                minecraft.level,
+                minecraft.hitResult,
+                minecraft.player.getMainHandItem()
+        );
+
         List<HintResult> results = HINT_MANAGER.resolve(hintContext);
 
-        if(results.isEmpty()) {
+        if (results.isEmpty()) {
             return;
         }
 
-        drawHints(drawContext, client, results);
+        drawHints(graphics, minecraft, results);
     }
 
-    private static void drawHints(GuiGraphics drawContext, Minecraft client, List<HintResult> results) {
+    private static void drawHints(
+            GuiGraphics graphics,
+            Minecraft minecraft,
+            List<HintResult> results
+    ) {
         HintRenderConfig config = HoverHintsConfigManager.getConfig().renderConfig;
+
+        List<HintResult> visibleResults = limitResults(results, config);
+        List<List<HintResult>> columns = buildColumns(visibleResults, config);
+
+        if (columns.isEmpty()) {
+            return;
+        }
 
         int contentWidth = 0;
         int contentHeight = 0;
 
-        for(int i = 0; i < results.size(); i++) {
-            HintResult result = results.get(i);
+        for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
+            List<HintResult> column = columns.get(columnIndex);
 
-            int textWidth = client.font.width(result.text());
-            int textHeight = client.font.lineHeight;
+            contentWidth += getColumnWidth(minecraft, column);
 
-            boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
+            if (columnIndex < columns.size() - 1) {
+                contentWidth += COLUMN_GAP;
+            }
+        }
 
-            Vec2 iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2.ZERO;
-            iconSize = result.iconStack() != null ? new Vec2(16, 16) : iconSize;
+        int rowCount = getMaxColumnSize(columns);
 
-            int iconWidth = (int) iconSize.x;
-            int iconHeight= (int) iconSize.y;
-            int iconSpace = hasIcon ? iconWidth + ICON_GAP : 0;
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            contentHeight += getGridRowHeight(minecraft, columns, rowIndex);
 
-            int lineWidth = iconSpace + textWidth;
-            int lineHeight = Math.max(iconHeight, textHeight);
-
-            contentWidth = Math.max(contentWidth, lineWidth);
-            contentHeight += lineHeight;
-
-            if(i < results.size() - 1) {
+            if (rowIndex < rowCount - 1) {
                 contentHeight += LINE_GAP;
             }
         }
@@ -106,12 +112,12 @@ public final class HintHudRenderer {
         int hintWidth = contentWidth + TOOLTIP_PADDING * 2;
         int hintHeight = contentHeight + TOOLTIP_PADDING * 2;
 
-        int screenWidth = client.getWindow().getGuiScaledWidth();
-        int screenHeight = client.getWindow().getGuiScaledHeight();
+        int screenWidth = minecraft.getWindow().getGuiScaledWidth();
+        int screenHeight = minecraft.getWindow().getGuiScaledHeight();
 
         Vec2 position = HintAnchorResolver.resolveAnchor(
                 config.anchor,
-                client,
+                minecraft,
                 screenWidth,
                 screenHeight,
                 hintWidth,
@@ -121,10 +127,8 @@ public final class HintHudRenderer {
         int contentX = (int) position.x + config.offsetX + TOOLTIP_PADDING;
         int contentY = (int) position.y + config.offsetY + TOOLTIP_PADDING;
 
-        drawContext.pose().pushMatrix();
-
         TooltipRenderUtil.renderTooltipBackground(
-                drawContext,
+                graphics,
                 contentX,
                 contentY,
                 contentWidth,
@@ -132,66 +136,223 @@ public final class HintHudRenderer {
                 null
         );
 
-        int y = contentY;
+        int x = contentX;
+        rowCount = getMaxColumnSize(columns);
 
-        for(int i = 0; i < results.size(); i++) {
-            HintResult result = results.get(i);
+        for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
+            List<HintResult> column = columns.get(columnIndex);
 
-            int textHeight = client.font.lineHeight;
+            int y = contentY;
+            int columnWidth = getColumnWidth(minecraft, column);
 
-            boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
+            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+                int rowHeight = getGridRowHeight(minecraft, columns, rowIndex);
 
-            Vec2 iconSize = result.iconTexture() != null ? TextureSizeCache.getSize(client, result.iconTexture()) : Vec2.ZERO;
-            iconSize = result.iconStack() != null ? new Vec2(16, 16) : iconSize;
+                if (rowIndex < column.size()) {
+                    HintResult result = column.get(rowIndex);
 
-            int iconWidth = (int) iconSize.x;
-            int iconHeight= (int) iconSize.y;
-            int lineHeight = Math.max(textHeight, iconHeight);
-
-            int x = contentX;
-            int textX = x;
-
-            if(hasIcon) {
-                int iconY = y + (lineHeight - iconHeight) / 2;
-
-                if (result.iconStack() != null) {
-                    drawContext.renderItem(result.iconStack(), x, iconY);
-                } else {
-                    drawContext.blit(
-                            RenderPipelines.GUI_TEXTURED,
-                            result.iconTexture(),
+                    drawHintResult(
+                            graphics,
+                            minecraft,
+                            result,
                             x,
-                            iconY,
-                            0.0F,
-                            0.0F,
-                            iconWidth,
-                            iconHeight,
-                            iconWidth,
-                            iconHeight
+                            y,
+                            rowHeight
                     );
                 }
 
-                textX += iconWidth + ICON_GAP;
+                y += rowHeight;
+
+                if (rowIndex < rowCount - 1) {
+                    y += LINE_GAP;
+                }
             }
 
-            int textY = y + Math.round((lineHeight - textHeight) / 2f);
+            x += columnWidth;
 
-            drawContext.drawString(
-                    client.font,
-                    result.text(),
-                    textX,
-                    textY,
-                    0xFFFFFFFF,
-                    true
-            );
-
-            y +=  lineHeight;
-
-             if(i < results.size() - 1) {
-                y += LINE_GAP;
+            if (columnIndex < columns.size() - 1) {
+                x += COLUMN_GAP;
             }
         }
+    }
 
-        drawContext.pose().popMatrix();
+    private static int getMaxColumnSize(List<List<HintResult>> columns) {
+        int max = 0;
+
+        for (List<HintResult> column : columns) {
+            max = Math.max(max, column.size());
+        }
+
+        return max;
+    }
+
+    private static int getGridRowHeight(
+            Minecraft minecraft,
+            List<List<HintResult>> columns,
+            int rowIndex
+    ) {
+        int height = 0;
+
+        for (List<HintResult> column : columns) {
+            if (rowIndex >= column.size()) {
+                continue;
+            }
+
+            height = Math.max(height, getItemHeight(minecraft, column.get(rowIndex)));
+        }
+
+        return height;
+    }
+
+    private static List<HintResult> limitResults(List<HintResult> results, HintRenderConfig config) {
+        int maxRows = Math.max(1, config.maxHintRows);
+        int maxColumns = Math.max(1, config.maxHintColumns);
+        int maxResults = maxRows * maxColumns;
+
+        if (results.size() <= maxResults) {
+            return results;
+        }
+
+        int hiddenCount = results.size() - maxResults + 1;
+        int visibleCount = maxResults - 1;
+
+        List<HintResult> limited = new ArrayList<>();
+
+        for (int i = 0; i < visibleCount; i++) {
+            limited.add(results.get(i));
+        }
+
+        limited.add(new HintResult(
+                (Identifier) null,
+                Component.translatable("hint.hover_hints.more", hiddenCount)
+                        .withStyle(style -> style.withColor(0xAAAAAA))
+        ));
+
+        return limited;
+    }
+
+    private static List<List<HintResult>> buildColumns(List<HintResult> results, HintRenderConfig config) {
+        int maxRows = Math.max(1, config.maxHintRows);
+        int maxColumns = Math.max(1, config.maxHintColumns);
+        int maxResults = maxRows * maxColumns;
+
+        int visibleResults = Math.min(results.size(), maxResults);
+
+        List<List<HintResult>> columns = new ArrayList<>();
+
+        for (int i = 0; i < visibleResults; i++) {
+            if (i % maxRows == 0) {
+                columns.add(new ArrayList<>());
+            }
+
+            columns.getLast().add(results.get(i));
+        }
+
+        return columns;
+    }
+
+    private static int getColumnWidth(Minecraft minecraft, List<HintResult> column) {
+        int width = 0;
+
+        for (HintResult result : column) {
+            width = Math.max(width, getItemWidth(minecraft, result));
+        }
+
+        return width;
+    }
+
+    private static int getItemWidth(Minecraft minecraft, HintResult result) {
+        int textWidth = minecraft.font.width(result.text());
+
+        boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
+
+        if (!hasIcon) {
+            return textWidth;
+        }
+
+        return getIconWidth(minecraft, result) + ICON_GAP + textWidth;
+    }
+
+    private static int getItemHeight(Minecraft minecraft, HintResult result) {
+        int textHeight = minecraft.font.lineHeight;
+        int iconHeight = getIconHeight(minecraft, result);
+
+        return Math.max(textHeight, iconHeight);
+    }
+
+    private static int getIconWidth(Minecraft minecraft, HintResult result) {
+        if (result.iconStack() != null) {
+            return 16;
+        }
+
+        if (result.iconTexture() != null) {
+            return (int) TextureSizeCache.getSize(minecraft, result.iconTexture()).x;
+        }
+
+        return 0;
+    }
+
+    private static int getIconHeight(Minecraft minecraft, HintResult result) {
+        if (result.iconStack() != null) {
+            return 16;
+        }
+
+        if (result.iconTexture() != null) {
+            return (int) TextureSizeCache.getSize(minecraft, result.iconTexture()).y;
+        }
+
+        return 0;
+    }
+
+    private static void drawHintResult(
+            GuiGraphics graphics,
+            Minecraft minecraft,
+            HintResult result,
+            int x,
+            int y,
+            int rowHeight
+    ) {
+        int textHeight = minecraft.font.lineHeight;
+
+        boolean hasIcon = result.iconTexture() != null || result.iconStack() != null;
+
+        int iconWidth = getIconWidth(minecraft, result);
+        int iconHeight = getIconHeight(minecraft, result);
+
+        int textX = x;
+
+        if (hasIcon) {
+            int iconY = y + (rowHeight - iconHeight) / 2;
+
+            if (result.iconStack() != null) {
+                graphics.renderItem(result.iconStack(), x, iconY);
+            } else {
+                graphics.blit(
+                        RenderPipelines.GUI_TEXTURED,
+                        result.iconTexture(),
+                        x,
+                        iconY,
+                        0,
+                        0,
+                        iconWidth,
+                        iconHeight,
+                        iconWidth,
+                        iconHeight
+                );
+            }
+
+            textX += iconWidth + ICON_GAP;
+        }
+
+        int textY = y + Math.round((rowHeight - textHeight) / 2.0F);
+
+        graphics.drawString(
+                minecraft.font,
+                result.text(),
+                textX,
+                textY,
+                0xFFFFFFFF,
+                true
+        );
     }
 }

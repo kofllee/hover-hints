@@ -49,6 +49,8 @@
   "hint.hover_hints.time.minutes": "%s分",
   "hint.hover_hints.time.minutes_seconds": "%s分 %s秒",
 
+  "hint.hover_hints.more": "还有 %s 项",
+
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "设置",
   "config.hover_hints.section.general": "常规",
@@ -73,6 +75,9 @@
   "config.hover_hints.offset_x": "X 偏移",
   "config.hover_hints.offset_y": "Y 偏移",
   "config.hover_hints.section.hints": "提示",
+
+  "config.hover_hints.max_hint_columns": "最大列数",
+  "config.hover_hints.max_hint_rows": "最大行数",
 
   "config.hover_hints.provider.composter": "堆肥",
   "config.hover_hints.provider.composter.desc": "手持可堆肥物品时显示堆肥概率",

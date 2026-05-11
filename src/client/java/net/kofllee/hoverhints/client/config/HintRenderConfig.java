@@ -6,5 +6,8 @@ public class HintRenderConfig {
 
     public int offsetX = 0;
     public int offsetY = 0;
+
+    public int maxHintColumns = 8;
+    public int maxHintRows = 4;
 }
 

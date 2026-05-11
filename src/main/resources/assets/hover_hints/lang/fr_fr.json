@@ -49,6 +49,8 @@
   "hint.hover_hints.time.minutes": "%smin",
   "hint.hover_hints.time.minutes_seconds": "%smin %ss",
 
+  "hint.hover_hints.more": "+%s de plus",
+
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "Paramètres",
   "config.hover_hints.section.general": "Général",
@@ -73,6 +75,9 @@
   "config.hover_hints.offset_x": "Décalage X",
   "config.hover_hints.offset_y": "Décalage Y",
   "config.hover_hints.section.hints": "Indications",
+
+  "config.hover_hints.max_hint_columns": "Nombre maximal de colonnes",
+  "config.hover_hints.max_hint_rows": "Nombre maximal de lignes",
 
   "config.hover_hints.provider.composter": "Compostage",
   "config.hover_hints.provider.composter.desc": "Affiche la chance de compostage pour les objets compostables",
