@@ -1,48 +1,56 @@
 package net.kofllee.hoverhints.loot;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 
-import java.util.List;
+import java.util.Optional;
 
 public final class LootConditionReader {
 
-    private LootConditionReader(){}
+    private LootConditionReader() {}
 
-    public static LootChance readChance(List<LootItemCondition> conditions, int lootingLevel){
-        float chance = 1.0f;
-
-        for (LootItemCondition condition : conditions) {
-            LootChance conditionChance = readSingleChance(condition, lootingLevel);
-
-            if(!conditionChance.known()){
-                continue;
-            }
-
-            chance *= conditionChance.value();
+    public static LootChance readChance(
+            Optional<Holder<LootItemCondition>> condition,
+            int lootingLevel
+    ) {
+        if (condition.isEmpty()) {
+            return LootChance.known(1.0F);
         }
 
-        return LootChance.known(chance);
+        return readSingleChance(
+                condition.get().value(),
+                lootingLevel
+        );
     }
 
-    private static LootChance readSingleChance(LootItemCondition condition, int lootingLevel){
-        if(condition instanceof LootItemRandomChanceCondition randomChance){
-            Float value = LootNumberProviderReader.readConstantFLoat(randomChance.chance());
+    private static LootChance readSingleChance(
+            LootItemCondition condition,
+            int lootingLevel
+    ) {
+        if (condition instanceof LootItemRandomChanceCondition randomChance) {
+            LootFloatRange range =
+                    LootNumberProviderReader.readFloatRange(
+                            randomChance.chance()
+                    );
 
-            if(value == null){
+            if (range.min() != range.max()) {
                 return LootChance.unknown();
             }
 
-            return LootChance.known(value);
+            return LootChance.known(range.min());
         }
 
-        if(condition instanceof LootItemRandomChanceWithEnchantedBonusCondition enchantedChance){
-            float chance = lootingLevel > 0 ? enchantedChance.enchantedChance().calculate(lootingLevel) : enchantedChance.unenchantedChance();
+        if (condition instanceof LootItemRandomChanceWithEnchantedBonusCondition enchantedChance) {
+            float chance =
+                    lootingLevel > 0
+                            ? enchantedChance.enchantedChance().calculate(lootingLevel)
+                            : enchantedChance.unenchantedChance();
 
             return LootChance.known(chance);
         }
 
-        return LootChance.known(1.0f);
+        return LootChance.known(1.0F);
     }
 }

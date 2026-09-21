@@ -1,33 +1,74 @@
 package net.kofllee.hoverhints.loot;
 
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
 
 public final class LootNumberProviderReader {
 
-    private LootNumberProviderReader(){}
+    private LootNumberProviderReader() {}
 
-    public static LootNumberRange readIntRange(NumberProvider provider){
-        if(provider instanceof ConstantValue constant){
-            int value = Math.round(constant.value());
+    public static LootNumberRange readIntRange(
+            Holder<ContextIntProvider> holder
+    ) {
+        return readIntRange(holder.value());
+    }
+
+    private static LootNumberRange readIntRange(
+            ContextIntProvider provider
+    ) {
+        if (provider instanceof
+                net.minecraft.world.level.storage.loot.providers.number.ints.ConstantValue constant) {
+
+            int value = constant.value();
+
             return new LootNumberRange(value, value);
         }
 
-        if(provider instanceof UniformGenerator uniform){
-            int min = Math.round(uniform.min().getFloat(null));
-            int max = Math.round(uniform.max().getFloat(null));
-            return new LootNumberRange(min, max);
+        if (provider instanceof
+                net.minecraft.world.level.storage.loot.providers.number.ints.UniformGenerator uniform) {
+
+            LootNumberRange min = readIntRange(uniform.min());
+            LootNumberRange max = readIntRange(uniform.max());
+
+            return new LootNumberRange(
+                    min.min(),
+                    max.max()
+            );
         }
 
         return LootNumberRange.one();
     }
 
-    public static Float readConstantFLoat(NumberProvider provider){
-        if(provider instanceof ConstantValue constant){
-            return constant.value();
+    public static LootFloatRange readFloatRange(
+            Holder<ContextFloatProvider> holder
+    ) {
+        return readFloatRange(holder.value());
+    }
+
+    private static LootFloatRange readFloatRange(
+            ContextFloatProvider provider
+    ) {
+        if (provider instanceof
+                net.minecraft.world.level.storage.loot.providers.number.floats.ConstantValue constant) {
+
+            float value = constant.value();
+
+            return new LootFloatRange(value, value);
         }
 
-        return null;
+        if (provider instanceof
+                net.minecraft.world.level.storage.loot.providers.number.floats.UniformGenerator uniform) {
+
+            LootFloatRange min = readFloatRange(uniform.min());
+            LootFloatRange max = readFloatRange(uniform.max());
+
+            return new LootFloatRange(
+                    min.min(),
+                    max.max()
+            );
+        }
+
+        return LootFloatRange.one();
     }
 }

@@ -7,7 +7,6 @@ import net.kofllee.hoverhints.client.config.HoverHintsConfigManager;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 public final class HoverHintKeybinds {
     public static KeyMapping SHOW_HINTS;
@@ -21,12 +20,14 @@ public final class HoverHintKeybinds {
     private HoverHintKeybinds() {}
 
     public static void register() {
-        SHOW_HINTS = KeyMappingHelper.registerKeyMapping(new KeyMapping(
-                "key.hover_hints.show_hints",
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_LEFT_ALT,
-                CATEGORY
-        ));
+        SHOW_HINTS = KeyMappingHelper.registerKeyMapping(
+                new KeyMapping(
+                        "key.hover_hints.show_hints",
+                        InputConstants.Type.KEYBOARD,
+                        InputConstants.KEY_LALT,
+                        CATEGORY
+                )
+        );
     }
 
     public static void tick() {

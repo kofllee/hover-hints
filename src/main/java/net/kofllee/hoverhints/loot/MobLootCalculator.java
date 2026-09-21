@@ -1,89 +1,161 @@
 package net.kofllee.hoverhints.loot;
 
-import net.kofllee.hoverhints.mixin.loot.*;
 import net.kofllee.hoverhints.mixin.loot.EnchantedCountIncreaseFunctionAccessor;
 import net.kofllee.hoverhints.mixin.loot.LootItemAccessor;
 import net.kofllee.hoverhints.mixin.loot.LootPoolAccessor;
-import net.kofllee.hoverhints.mixin.loot.LootPoolSingletonContainerAccessor;
+import net.kofllee.hoverhints.mixin.loot.LootPoolEntryContainerAccessor;
 import net.kofllee.hoverhints.mixin.loot.LootTableAccessor;
+import net.kofllee.hoverhints.mixin.loot.SequenceFunctionAccessor;
 import net.kofllee.hoverhints.mixin.loot.SetItemCountFunctionAccessor;
+import net.kofllee.hoverhints.mixin.loot.UniformContainerBaseAccessor;
+
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.UniformContainerBase;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.functions.SequenceFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProvider;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public final class MobLootCalculator {
 
     private MobLootCalculator() {}
 
-    public static List<MobLootEntry> calculate(ServerLevel world, MobLootKey key) {
-        LootTable table = world.getServer().reloadableRegistries().getLootTable(key.entityType().getDefaultLootTable().get());
+    public static List<MobLootEntry> calculate(
+            ServerLevel world,
+            MobLootKey key
+    ) {
+        LootTable table = world.getServer()
+                .reloadableRegistries()
+                .getLootTable(
+                        key.entityType()
+                                .getDefaultLootTable()
+                                .get()
+                );
 
         List<MobLootEntry> entries = new ArrayList<>();
 
-        for(LootPool pool : ((LootTableAccessor) table).hoverHints$getPools()){
-            readPool(pool, key.lootingLevel(), entries);
+        for (LootPool pool :
+                ((LootTableAccessor) table).hoverHints$getPools()) {
+
+            readPool(
+                    pool,
+                    key.lootingLevel(),
+                    entries
+            );
         }
 
-        return entries.stream().sorted(Comparator.comparingDouble(MobLootEntry::chancePercent).reversed()).toList();
+        return entries.stream()
+                .sorted(
+                        Comparator.comparingDouble(
+                                MobLootEntry::chancePercent
+                        ).reversed()
+                )
+                .toList();
     }
 
-    private static void readPool(LootPool pool, int lootingLevel, List<MobLootEntry> out) {
-        LootPoolAccessor accessor = (LootPoolAccessor) pool;
+    private static void readPool(
+            LootPool pool,
+            int lootingLevel,
+            List<MobLootEntry> out
+    ) {
+        LootPoolAccessor accessor =
+                (LootPoolAccessor) pool;
 
-        List<LootPoolEntryContainer> poolEntries = accessor.hoverHints$getEntries();
-        List<LootItemCondition> poolConditions = accessor.hoverHints$getConditions();
+        List<LootPoolEntryContainer> poolEntries =
+                accessor.hoverHints$getEntries();
 
-        int totalWeight = getTotalWeight(poolEntries);
+        int totalWeight =
+                getTotalWeight(poolEntries);
 
-        if(totalWeight <= 0){
+        if (totalWeight <= 0) {
             return;
         }
 
-        LootChance poolChance = LootConditionReader.readChance(poolConditions, lootingLevel);
-        
-        for(LootPoolEntryContainer poolEntry : poolEntries){
-            if(!(poolEntry instanceof LootItem itemEntry)){
+        LootChance poolChance =
+                LootConditionReader.readChance(
+                        accessor.hoverHints$getCondition(),
+                        lootingLevel
+                );
+
+        for (LootPoolEntryContainer poolEntry : poolEntries) {
+            if (!(poolEntry instanceof LootItem itemEntry)) {
                 continue;
             }
 
-            readItemEntry(itemEntry, poolChance, totalWeight, lootingLevel, out);
+            readItemEntry(
+                    itemEntry,
+                    poolChance,
+                    totalWeight,
+                    lootingLevel,
+                    out
+            );
         }
     }
 
-    private static void readItemEntry(LootItem itemEntry, LootChance poolChance, int totalWeight, int lootingLevel, List<MobLootEntry> out) {
-        int weight = ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getWeight();
-        if(weight <= 0){
+    private static void readItemEntry(
+            LootItem itemEntry,
+            LootChance poolChance,
+            int totalWeight,
+            int lootingLevel,
+            List<MobLootEntry> out
+    ) {
+        int weight =
+                ((UniformContainerBaseAccessor) itemEntry)
+                        .hoverHints$getWeight();
+
+        if (weight <= 0) {
             return;
         }
 
-        float entryChance = (float) weight / (float) totalWeight;
-        float finalChance = poolChance.value() * entryChance;
+        float entryChance =
+                (float) weight / (float) totalWeight;
 
-        LootNumberRange countRange = readCountRange(itemEntry);
+        float finalChance =
+                poolChance.value() * entryChance;
+
+        LootNumberRange countRange =
+                readCountRange(itemEntry);
 
         List<LootItemFunction> functions =
-                ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getFunctions();
+                getFunctions(itemEntry);
 
-        countRange = applyLooting(countRange, functions, lootingLevel);
+        countRange =
+                applyLooting(
+                        countRange,
+                        functions,
+                        lootingLevel
+                );
 
-        ItemStack stack = new ItemStack(((LootItemAccessor) itemEntry).hoverHints$getItem().value());
+        ItemStack stack =
+                new ItemStack(
+                        ((LootItemAccessor) itemEntry)
+                                .hoverHints$getItem()
+                                .value()
+                );
 
-        float chancePercent = Math.round(finalChance * 1000.0f) / 10.0f;
+        float chancePercent =
+                Math.round(finalChance * 1000.0F) / 10.0F;
 
-        out.add(new MobLootEntry(stack.getItem(), countRange.min(), countRange.max(), chancePercent));
+        out.add(
+                new MobLootEntry(
+                        stack.getItem(),
+                        countRange.min(),
+                        countRange.max(),
+                        chancePercent
+                )
+        );
     }
 
     private static LootNumberRange applyLooting(
@@ -99,50 +171,111 @@ public final class MobLootCalculator {
         int max = baseRange.max();
 
         for (LootItemFunction function : functions) {
+            if (!(function instanceof EnchantedCountIncreaseFunction enchantedCount)) {
+                continue;
+            }
 
-            if (function instanceof EnchantedCountIncreaseFunction enchantedCount) {
-                NumberProvider countProvider =
-                        ((EnchantedCountIncreaseFunctionAccessor) enchantedCount)
-                                .hoverHints$getValue();
+            Holder<ContextFloatProvider> countProvider =
+                    ((EnchantedCountIncreaseFunctionAccessor) enchantedCount)
+                            .hoverHints$getCount();
 
-                LootNumberRange bonusRange = LootNumberProviderReader.readIntRange(countProvider);
+            LootFloatRange bonusRange =
+                    LootNumberProviderReader.readFloatRange(
+                            countProvider
+                    );
 
-                int bonusMin = bonusRange.min() * lootingLevel;
-                int bonusMax = bonusRange.max() * lootingLevel;
+            int bonusMin =
+                    Math.round(
+                            bonusRange.min() * lootingLevel
+                    );
 
-                min += bonusMin;
-                max += bonusMax;
+            int bonusMax =
+                    Math.round(
+                            bonusRange.max() * lootingLevel
+                    );
 
-                int limit =
-                        ((EnchantedCountIncreaseFunctionAccessor) enchantedCount)
-                                .hoverHints$getLimit();
+            min += bonusMin;
+            max += bonusMax;
 
-                if (limit > 0) {
-                    max = Math.min(max, limit);
-                }
+            int limit =
+                    ((EnchantedCountIncreaseFunctionAccessor) enchantedCount)
+                            .hoverHints$getLimit();
+
+            if (limit > 0) {
+                min = Math.min(min, limit);
+                max = Math.min(max, limit);
             }
         }
 
         return new LootNumberRange(min, max);
     }
 
-    private static LootNumberRange readCountRange(LootItem itemEntry) {
-        for(LootItemFunction function : ((LootPoolSingletonContainerAccessor) itemEntry).hoverHints$getFunctions()){
-            if(function instanceof SetItemCountFunction setCount){
-                return LootNumberProviderReader.readIntRange(((SetItemCountFunctionAccessor)setCount).hoverHints$getValue());
+    private static LootNumberRange readCountRange(
+            LootItem itemEntry
+    ) {
+        for (LootItemFunction function : getFunctions(itemEntry)) {
+            if (!(function instanceof SetItemCountFunction setCount)) {
+                continue;
             }
+
+            return LootNumberProviderReader.readIntRange(
+                    ((SetItemCountFunctionAccessor) setCount)
+                            .hoverHints$getCount()
+            );
         }
 
         return LootNumberRange.one();
     }
 
-    private static int getTotalWeight(List<LootPoolEntryContainer> entries) {
+    private static List<LootItemFunction> getFunctions(
+            LootPoolEntryContainer entry
+    ) {
+        Optional<Holder<LootItemFunction>> modifier =
+                ((LootPoolEntryContainerAccessor) entry)
+                        .hoverHints$getModifier();
+
+        if (modifier.isEmpty()) {
+            return List.of();
+        }
+
+        return flattenFunction(
+                modifier.get().value()
+        );
+    }
+
+    private static List<LootItemFunction> flattenFunction(
+            LootItemFunction function
+    ) {
+        if (!(function instanceof SequenceFunction sequence)) {
+            return List.of(function);
+        }
+
+        List<LootItemFunction> result =
+                new ArrayList<>();
+
+        for (Holder<LootItemFunction> holder :
+                ((SequenceFunctionAccessor) sequence)
+                        .hoverHints$getFunctions()) {
+
+            result.add(holder.value());
+        }
+
+        return result;
+    }
+
+    private static int getTotalWeight(
+            List<LootPoolEntryContainer> entries
+    ) {
         int total = 0;
 
-        for(LootPoolEntryContainer poolEntry : entries){
-            if(poolEntry instanceof LootPoolSingletonContainer) {
-                total += ((LootPoolSingletonContainerAccessor) poolEntry).hoverHints$getWeight();
+        for (LootPoolEntryContainer entry : entries) {
+            if (!(entry instanceof UniformContainerBase uniformEntry)) {
+                continue;
             }
+
+            total +=
+                    ((UniformContainerBaseAccessor) uniformEntry)
+                            .hoverHints$getWeight();
         }
 
         return total;

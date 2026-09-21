@@ -6,6 +6,7 @@ import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
 import net.kofllee.hoverhints.client.hint.util.BoneMealInfo;
 import net.kofllee.hoverhints.client.hint.util.BoneMealResolver;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -50,7 +51,7 @@ public class BoneMealHintProvider implements HintProvider {
             return;
         }
 
-        if(!fertilizable.isValidBonemealTarget(hintContext.world(), blockHitResult.getBlockPos(), state)) {
+        if(!fertilizable.isValidBonemealTarget(hintContext.world(), blockHitResult.getBlockPos(), state, BonemealSource.INTERACTION)) {
             return;
         }
 

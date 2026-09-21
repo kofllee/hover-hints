@@ -4,6 +4,8 @@ import net.kofllee.hoverhints.client.hint.HintContext;
 import net.kofllee.hoverhints.client.hint.HintIcons;
 import net.kofllee.hoverhints.client.hint.HintProvider;
 import net.kofllee.hoverhints.client.hint.HintResult;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.Compostable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.item.ItemStack;
@@ -41,7 +43,11 @@ public final class ComposterHintProvider implements HintProvider {
             return;
         }
 
-        Float chance = ComposterBlock.COMPOSTABLES.get(stack.getItem());
+        Compostable compostable = stack.get(DataComponents.COMPOSTABLE);
+
+        if (compostable == null) {
+            return;
+        }
 
         if(chance == null) {
             return;
