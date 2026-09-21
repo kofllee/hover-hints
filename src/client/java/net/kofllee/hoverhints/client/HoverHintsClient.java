@@ -51,6 +51,7 @@ public class HoverHintsClient implements ClientModInitializer {
         HoverHintProviders.register(new TameableAnimalHintProvider());
         HoverHintProviders.register(new RedstonePowerHintProvider());
         HoverHintProviders.register(new SilkTouchHintProvider());
+        HoverHintProviders.register(new SulfurCubeHintProvider());
         HoverHintProviders.register(new AnimalFeedHintProvider());
         HoverHintProviders.register(new MobLootHintProvider());
         HoverHintProviders.register(new ArchaeologyLootHintProvider());

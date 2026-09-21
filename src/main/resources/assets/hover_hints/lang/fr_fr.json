@@ -2,14 +2,11 @@
   "modmenu.nameTranslation.hover_hints": "Hover Hints",
   "modmenu.descriptionTranslation.hover_hints": "Affiche de petites indications contextuelles sur les mécaniques cachées du Minecraft vanilla",
   "modmenu.summaryTranslation.hover_hints": "Petites indications contextuelles sur les mécaniques cachées du Minecraft vanilla",
-
   "key.hover_hints.show_hints": "Afficher Hover Hints",
   "key.category.hover_hints.main": "Hover Hints",
-
   "hint.hover_hints.fuel_burn_time": "Combustion : %s",
   "hint.hover_hints.compost_chance": "Chance de compostage : %s%%",
   "hint.hover_hints.grindstone_xp": "%s-%s XP",
-
   "hint.hover_hints.bone_meal_chance": "Croissance : %s%%",
   "hint.hover_hints.bone_meal_stage_chance": "Croissance : %s%% (+%s stades)",
   "hint.hover_hints.bone_meal_stages": "Croissance : +%s-%s stades",
@@ -21,36 +18,26 @@
   "hint.hover_hints.bone_meal_drops_item": "Donne un objet",
   "hint.hover_hints.bone_meal_taller": "Pousse plus haut",
   "hint.hover_hints.bone_meal_spread": "Se propage à proximité",
-
   "hint.hover_hints.mob_loot_entry_short": "%s-%s, %s%%",
-
   "hint.hover_hints.animal_feed_baby": "Réduit le temps de croissance de 10 %",
   "hint.hover_hints.animal_can_breed": "Peut se reproduire",
   "hint.hover_hints.animal_can_breed.vanilla_suffix": " (5 min de recharge)",
   "hint.hover_hints.animal_grows_in": "Grandit dans %s",
   "hint.hover_hints.animal_breed_cooldown": "Avant reproduction : %s",
   "hint.hover_hints.animal_love_time": "Mode amour : %s",
-
   "hint.hover_hints.tame_chance": "Apprivoisement : %s%%",
   "hint.hover_hints.trust_chance": "Confiance : %s%%",
   "hint.hover_hints.ride_to_tame": "Montez dessus pour l'apprivoiser",
-
   "hint.hover_hints.redstone_unpowered": "Aucun signal",
   "hint.hover_hints.redstone_power": "Signal : %s",
-
   "hint.hover_hints.archaeology_loot_entry": "%s%%",
-
   "hint.hover_hints.villager_poi_occupied": "Occupé",
   "hint.hover_hints.villager_poi_free": "Libre",
-
   "hint.hover_hints.silk_touch": "Toucher de soie requis",
-
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%smin",
   "hint.hover_hints.time.minutes_seconds": "%smin %ss",
-
   "hint.hover_hints.more": "+%s de plus",
-
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "Paramètres",
   "config.hover_hints.section.general": "Général",
@@ -60,9 +47,7 @@
   "config.hover_hints.activation_mode.always": "Toujours",
   "config.hover_hints.activation_mode.toggle_key": "Basculer avec la touche",
   "config.hover_hints.section.rendering": "Affichage",
-
   "config.hover_hints.anchor": "Position de l'indication",
-
   "config.hover_hints.anchor.below_crosshair": "Sous le réticule",
   "config.hover_hints.anchor.above_crosshair": "Au-dessus du réticule",
   "config.hover_hints.anchor.screen_top_left": "En haut à gauche",
@@ -71,46 +56,48 @@
   "config.hover_hints.anchor.screen_center_left": "Au centre à gauche",
   "config.hover_hints.anchor.screen_center": "Au centre",
   "config.hover_hints.anchor.screen_center_right": "Au centre à droite",
-
   "config.hover_hints.offset_x": "Décalage X",
   "config.hover_hints.offset_y": "Décalage Y",
   "config.hover_hints.section.hints": "Indications",
-
   "config.hover_hints.max_hint_columns": "Nombre maximal de colonnes",
   "config.hover_hints.max_hint_rows": "Nombre maximal de lignes",
-
   "config.hover_hints.provider.composter": "Compostage",
   "config.hover_hints.provider.composter.desc": "Affiche la chance de compostage pour les objets compostables",
-
   "config.hover_hints.provider.fuel": "Combustible",
   "config.hover_hints.provider.fuel.desc": "Affiche le temps de combustion en tenant du combustible et en regardant un fourneau",
-
   "config.hover_hints.provider.grindstone": "Meule",
   "config.hover_hints.provider.grindstone.desc": "Affiche l'expérience obtenue en désenchantant des objets",
-
   "config.hover_hints.provider.bone_meal": "Poudre d'os",
   "config.hover_hints.provider.bone_meal.desc": "Affiche l'effet de croissance en tenant de la poudre d'os et en visant des plantes",
-
   "config.hover_hints.provider.animal_feed": "Nourrissage des animaux",
   "config.hover_hints.provider.animal_feed.desc": "Affiche le temps de croissance et l'état de reproduction en tenant de la nourriture adaptée",
-
   "config.hover_hints.provider.tameable_animal": "Apprivoisement",
   "config.hover_hints.provider.tameable_animal.desc": "Affiche la chance d'apprivoisement en tenant les objets adaptés",
-
   "config.hover_hints.provider.redstone_power": "Signal de redstone",
   "config.hover_hints.provider.redstone_power.desc": "Affiche la puissance du signal en tenant de la poudre de redstone ou une torche de redstone",
-
   "config.hover_hints.provider.mob_loot": "Butin des mobs",
   "config.hover_hints.provider.mob_loot.desc": "Affiche les butins possibles en visant des mobs avec une arme",
-
   "config.hover_hints.provider.archaeology_loot": "Archéologie",
   "config.hover_hints.provider.archaeology_loot.desc": "Affiche les butins possibles en tenant un pinceau et en visant des blocs suspects",
-
   "config.hover_hints.provider.villager_poi": "Points d'intérêt des villageois",
   "config.hover_hints.provider.villager_poi.desc": "Affiche si un point d'intérêt de villageois est occupé : poste de travail, lit ou cloche",
-
   "config.hover_hints.provider.silk_touch": "Toucher de soie",
   "config.hover_hints.provider.silk_touch.desc": "Affiche si Toucher de soie est requis en tenant des outils",
-
-  "config.hover_hints.server_only": " (installation sur le serveur requise)"
+  "config.hover_hints.server_only": " (installation sur le serveur requise)",
+  "hint.hover_hints.sulfur_cube_growth": "Croissance : +%s%%",
+  "hint.hover_hints.sulfur_cube_archetype": "Effet : %s",
+  "hint.hover_hints.sulfur_cube_archetype.regular": "Normal",
+  "hint.hover_hints.sulfur_cube_archetype.bouncy": "Rebondissant",
+  "hint.hover_hints.sulfur_cube_archetype.slow_flat": "Lent",
+  "hint.hover_hints.sulfur_cube_archetype.fast_flat": "Rapide",
+  "hint.hover_hints.sulfur_cube_archetype.light": "Léger",
+  "hint.hover_hints.sulfur_cube_archetype.fast_sliding": "Glisse rapide",
+  "hint.hover_hints.sulfur_cube_archetype.slow_sliding": "Glisse lente",
+  "hint.hover_hints.sulfur_cube_archetype.high_resistance": "Haute résistance",
+  "hint.hover_hints.sulfur_cube_archetype.sticky": "Collant",
+  "hint.hover_hints.sulfur_cube_archetype.explosive": "Explosif",
+  "hint.hover_hints.sulfur_cube_archetype.slow_bouncy": "Rebond lent",
+  "hint.hover_hints.sulfur_cube_archetype.hot": "Chaud",
+  "config.hover_hints.provider.sulfur_cube": "Cube de soufre",
+  "config.hover_hints.provider.sulfur_cube.desc": "Affiche la croissance et les effets des blocs absorbés lors des interactions avec les cubes de soufre"
 }

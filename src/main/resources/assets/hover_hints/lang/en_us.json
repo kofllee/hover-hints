@@ -2,14 +2,11 @@
   "modmenu.nameTranslation.hover_hints": "Hover Hints",
   "modmenu.descriptionTranslation.hover_hints": "Shows small contextual hints for hidden vanilla Minecraft mechanics",
   "modmenu.summaryTranslation.hover_hints": "Small contextual hints for hidden vanilla mechanics",
-
   "key.hover_hints.show_hints": "Show Hover Hints",
   "key.category.hover_hints.main": "Hover Hints",
-
   "hint.hover_hints.fuel_burn_time": "Burn time: %s",
   "hint.hover_hints.compost_chance": "Compost chance: %s%%",
   "hint.hover_hints.grindstone_xp": "%s-%s XP",
-
   "hint.hover_hints.bone_meal_chance": "Grow chance: %s%%",
   "hint.hover_hints.bone_meal_stage_chance": "Grow chance: %s%% (+%s stages)",
   "hint.hover_hints.bone_meal_stages": "Growth: +%s-%s stages",
@@ -21,36 +18,40 @@
   "hint.hover_hints.bone_meal_drops_item": "Drops item",
   "hint.hover_hints.bone_meal_taller": "Grows taller",
   "hint.hover_hints.bone_meal_spread": "Spreads nearby",
-
   "hint.hover_hints.mob_loot_entry_short": "%s-%s, %s%%",
-
   "hint.hover_hints.animal_feed_baby": "Reduce growth time by 10%",
   "hint.hover_hints.animal_can_breed": "Can breed",
   "hint.hover_hints.animal_can_breed.vanilla_suffix": " (5 min cooldown)",
   "hint.hover_hints.animal_grows_in": "Grows in %s",
   "hint.hover_hints.animal_breed_cooldown": "Breed cooldown: %s",
   "hint.hover_hints.animal_love_time": "Love mode: %s",
-
   "hint.hover_hints.tame_chance": "Tame chance: %s%%",
   "hint.hover_hints.trust_chance": "Trust chance: %s%%",
   "hint.hover_hints.ride_to_tame": "Ride to tame",
-
   "hint.hover_hints.redstone_unpowered": "Unpowered",
   "hint.hover_hints.redstone_power": "Power: %s",
-
   "hint.hover_hints.archaeology_loot_entry": "%s%%",
-
   "hint.hover_hints.villager_poi_occupied": "Occupied",
   "hint.hover_hints.villager_poi_free": "Free",
-
   "hint.hover_hints.silk_touch": "Needs Silk Touch",
-
   "hint.hover_hints.time.seconds": "%ss",
   "hint.hover_hints.time.minutes": "%sm",
   "hint.hover_hints.time.minutes_seconds": "%sm %ss",
-
   "hint.hover_hints.more": "+%s more",
-
+  "hint.hover_hints.sulfur_cube_growth": "Growth: +%s%%",
+  "hint.hover_hints.sulfur_cube_archetype": "Effect: %s",
+  "hint.hover_hints.sulfur_cube_archetype.regular": "Regular",
+  "hint.hover_hints.sulfur_cube_archetype.bouncy": "Bouncy",
+  "hint.hover_hints.sulfur_cube_archetype.slow_flat": "Slow",
+  "hint.hover_hints.sulfur_cube_archetype.fast_flat": "Fast",
+  "hint.hover_hints.sulfur_cube_archetype.light": "Light",
+  "hint.hover_hints.sulfur_cube_archetype.fast_sliding": "Fast sliding",
+  "hint.hover_hints.sulfur_cube_archetype.slow_sliding": "Slow sliding",
+  "hint.hover_hints.sulfur_cube_archetype.high_resistance": "High resistance",
+  "hint.hover_hints.sulfur_cube_archetype.sticky": "Sticky",
+  "hint.hover_hints.sulfur_cube_archetype.explosive": "Explosive",
+  "hint.hover_hints.sulfur_cube_archetype.slow_bouncy": "Slow bouncy",
+  "hint.hover_hints.sulfur_cube_archetype.hot": "Hot",
   "config.hover_hints.title": "Hover Hints",
   "config.hover_hints.category.settings": "Settings",
   "config.hover_hints.section.general": "General",
@@ -60,9 +61,7 @@
   "config.hover_hints.activation_mode.always": "Always",
   "config.hover_hints.activation_mode.toggle_key": "Toggle Key",
   "config.hover_hints.section.rendering": "Rendering",
-
   "config.hover_hints.anchor": "Hint position",
-
   "config.hover_hints.anchor.below_crosshair": "Below crosshair",
   "config.hover_hints.anchor.above_crosshair": "Above crosshair",
   "config.hover_hints.anchor.screen_top_left": "Top left",
@@ -71,47 +70,34 @@
   "config.hover_hints.anchor.screen_center_left": "Center left",
   "config.hover_hints.anchor.screen_center": "Center",
   "config.hover_hints.anchor.screen_center_right": "Center right",
-
   "config.hover_hints.offset_x": "Offset X",
   "config.hover_hints.offset_y": "Offset Y",
-
   "config.hover_hints.max_hint_columns": "Maximum number of columns",
   "config.hover_hints.max_hint_rows": "Maximum number of rows",
-
   "config.hover_hints.section.hints": "Hints",
-
   "config.hover_hints.provider.composter": "Composting",
   "config.hover_hints.provider.composter.desc": "Shows composting chance when holding compostable items",
-
   "config.hover_hints.provider.fuel": "Fuel Burn Time",
   "config.hover_hints.provider.fuel.desc": "Shows burn time when holding fuel and looking at furnaces",
-
   "config.hover_hints.provider.grindstone": "Grindstone XP",
   "config.hover_hints.provider.grindstone.desc": "Shows XP gained when holding enchantable items",
-
   "config.hover_hints.provider.bone_meal": "Bone Meal Chance",
   "config.hover_hints.provider.bone_meal.desc": "Shows growth effect when holding bone meal and targeting plants",
-
   "config.hover_hints.provider.animal_feed": "Animal Feeding",
   "config.hover_hints.provider.animal_feed.desc": "Shows growth time and breeding state when holding valid food",
-
   "config.hover_hints.provider.tameable_animal": "Taming Chance",
   "config.hover_hints.provider.tameable_animal.desc": "Shows taming chance when holding taming items",
-
   "config.hover_hints.provider.redstone_power": "Redstone Power",
   "config.hover_hints.provider.redstone_power.desc": "Shows power level when holding redstone dust or a redstone torch",
-
   "config.hover_hints.provider.mob_loot": "Mob Loot",
   "config.hover_hints.provider.mob_loot.desc": "Shows possible drops when targeting mobs with a weapon",
-
   "config.hover_hints.provider.archaeology_loot": "Archaeology Loot",
   "config.hover_hints.provider.archaeology_loot.desc": "Shows possible loot when holding brush and targeting suspicious blocks",
-
   "config.hover_hints.provider.villager_poi": "Villager POIs",
   "config.hover_hints.provider.villager_poi.desc": "Shows if a villager POI (workstations, beds, bell) is claimed",
-
   "config.hover_hints.provider.silk_touch": "Silk Touch Requirement",
   "config.hover_hints.provider.silk_touch.desc": "Shows if Silk Touch is required when holding tools",
-
-  "config.hover_hints.server_only": " (server installation required)"
+  "config.hover_hints.server_only": " (server installation required)",
+  "config.hover_hints.provider.sulfur_cube": "Sulfur Cube",
+  "config.hover_hints.provider.sulfur_cube.desc": "Shows growth and absorbed-block effects when interacting with Sulfur Cubes"
 }
