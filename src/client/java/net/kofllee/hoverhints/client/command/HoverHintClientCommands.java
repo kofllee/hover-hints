@@ -25,7 +25,7 @@ public final class HoverHintClientCommands {
 
         if (!HoverHintsConfigDependencies.hasClothConfig()) {
             if (client.player != null) {
-                client.gui.getChat().addClientSystemMessage(
+                client.gui.hud.getChat().addClientSystemMessage(
                         Component.literal("Cloth Config is required to open Hover Hints settings.")
                 );
             }
@@ -33,7 +33,7 @@ public final class HoverHintClientCommands {
             return 0;
         }
 
-        client.schedule(() -> client.setScreen(
+        client.schedule(() -> client.gui.setScreen(
                 HoverHintsConfigScreen.create(null)
         ));
 
