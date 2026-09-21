@@ -14,5 +14,7 @@ public class HoverHints implements ModInitializer {
         ArchaeologyLootServerNetworking.register();
         VillagerPoiServerNetworking.register();
         AnimalAgeServerNetworking.register();
+
+        ContextualValueServerNetworking.register();
     }
 }

@@ -54,5 +54,15 @@ public final class HoverHintsPayloads {
                 AnimalAgeResponsePayload.ID,
                 AnimalAgeResponsePayload.CODEC
         );
+
+        PayloadTypeRegistry.serverboundPlay().register(
+                ContextualValueRequestPayload.ID,
+                ContextualValueRequestPayload.CODEC
+        );
+
+        PayloadTypeRegistry.clientboundPlay().register(
+                ContextualValueResponsePayload.ID,
+                ContextualValueResponsePayload.CODEC
+        );
     }
 }
